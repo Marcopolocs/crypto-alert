@@ -1,0 +1,10 @@
+.body {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  background-color: rgb(235, 235, 235);
+}
+
+.listitems {
+  margin-top: 2rem;
+  margin-left: 2rem;
+}

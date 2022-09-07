@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.register-container {
+  align-items: center;
+  justify-content: center;
+  background-color: #a9656aa9;
+  padding: 2rem 6rem;
+  border-radius: 0.5%;
+  color: white;
+}
+
+.btn {
+  justify-content: center;
+}

@@ -1,0 +1,8 @@
+.title {
+  margin: 0.5rem 0 2rem 0;
+  font-style: italic;
+}
+
+h1 {
+  color: var(--bitcoin-color);
+}

@@ -1,0 +1,53 @@
+body {
+  color: #f7931a;
+}
+
+h1 {
+  font-size: 60px;
+  padding-bottom: 1rem;
+  color: #f7931a;
+}
+
+.list-header {
+  font-weight: 700;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 0.2fr 0.6fr 0.4fr 0.3fr 0.3fr 0.5fr 0.5fr 0.4fr;
+  width: 95%;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  background-color: var(--third-bg-color);
+  padding-top: 0.7rem;
+}
+
+.refresh-section {
+  display: flex;
+  margin: 3rem 0 1rem 0;
+  align-items: center;
+}
+
+.refresh-section .btn {
+  background-color: #f7931a;
+  color: white;
+}
+
+.refresh-section .refresh-date {
+  text-align: center;
+  padding: 0.6rem 0 0 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.index {
+  margin-left: 2rem;
+}
+
+.text-center {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

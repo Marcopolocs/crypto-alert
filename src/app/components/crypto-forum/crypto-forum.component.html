@@ -1,0 +1,21 @@
+<section>
+  <header>
+    <h1>Share your feedback with us!</h1>
+    <h3>
+      Tell us what you think about our webpage, what you want to see improved or
+      <br />
+      if you want a
+      <span [ngStyle]="{ color: '#f7931a' }">new cryptocurrency</span> being
+      added to our list. We are here to listen!
+    </h3>
+  </header>
+  <main class="main-container">
+    <div class="comment-section-wrapper">
+      <div class="new-comment-section">
+        <app-new-comment></app-new-comment>
+      </div>
+      <hr />
+      <app-comment-list></app-comment-list>
+    </div>
+  </main>
+</section>

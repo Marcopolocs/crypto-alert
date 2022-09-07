@@ -1,0 +1,82 @@
+<section class="comment-main-container">
+  <div class="comment-body-wrapper">
+    <div class="avatar-wrapper">
+      <img
+        src="https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+        alt="user-avatar"
+        width="44px"
+      />
+    </div>
+    <div class="comment-wrapper">
+      <div class="first-line-wrapper">
+        <div class="username-wrapper">
+          <p class="username">
+            Username -
+            <span class="date" *ngIf="commentObject.date; else defaultDate">{{
+              commentObject.date
+            }}</span>
+            <ng-template #defaultDate
+              ><span class="date">Today</span></ng-template
+            >
+          </p>
+        </div>
+        <div class="btn-wrapper" [ngClass]="{ editMode: isEditMode }">
+          <button
+            class="btn"
+            title="Edit comment"
+            (click)="onEditComment(commentObject.id)"
+          >
+            <i class="fa-solid fa-pen"></i>
+          </button>
+          <button
+            class="btn"
+            title="Delete comment"
+            (click)="onDeleteComment(commentObject.id)"
+          >
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <div class="comment-text-wrapper">
+        <ng-container *ngIf="!isEditMode">
+          <p class="comment-paragraph">
+            {{ commentObject.text }}
+          </p>
+          <p class="edit-string" *ngIf="commentObject.editDate">
+            This feedback was edited:
+            <span [ngClass]="{ editDate: commentObject.editDate }">{{
+              commentObject.editDate
+            }}</span>
+          </p>
+        </ng-container>
+        <div class="edit-wrapper" *ngIf="isEditMode">
+          <div class="text-wrapper">
+            <textarea
+              class="edit-comment-textarea"
+              wrap="hard"
+              name="new-comment-area"
+              autofocus
+              [value]="editedText"
+              (keyup)="changeText($event)"
+            ></textarea>
+          </div>
+
+          <div class="comment-footer">
+            <div class="btn-wrapper">
+              <button
+                type="button"
+                class="btn btn-edit"
+                (click)="onCancelEdit()"
+              >
+                <span>Cancel</span>
+              </button>
+              <button type="button" class="btn" (click)="onSaveEditedComment()">
+                <span>Save changes</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

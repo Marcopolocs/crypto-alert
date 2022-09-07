@@ -1,0 +1,62 @@
+section {
+  box-sizing: border-box;
+}
+
+.main-container {
+  margin-top: 3rem;
+}
+
+h1 {
+  font-size: 56px;
+}
+
+.price {
+  color: var(--main-bg-color);
+  font-size: 44px;
+}
+
+.details {
+  padding: 1rem 0 0 2rem;
+  border: 1px solid #ccc;
+}
+
+.table-details {
+  margin-top: 3rem;
+}
+
+.table-row {
+  padding-bottom: 10rem;
+}
+
+.table-item-header {
+  padding-right: 4rem;
+}
+
+.table-element {
+  padding-bottom: 2.5rem;
+}
+
+.description {
+  margin-right: 30rem;
+  padding-top: 2rem;
+}
+
+.link-list {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0 1rem 0;
+}
+
+.link-list-item {
+  border: 1px solid var(--main-bg-color);
+  background-color: var(--main-bg-color);
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 7px;
+  color: #fff;
+}
+
+.link-list-item:hover {
+  background-color: #fff;
+  color: #000;
+}

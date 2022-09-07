@@ -1,0 +1,49 @@
+<section *ngIf="cryptoItemAllDetails$ | async as cryptoItems; else loading">
+  <h1>Top cryptocurrencies</h1>
+  <h3>
+    Real time prices for more than 10 top cryptocurrencies in one place!
+    <br />Create a
+
+    <span [ngStyle]="{ color: '#f7931a' }">Custom Crypto Scanner Alert</span>
+    based on price changes!
+  </h3>
+  <div class="refresh-details">
+    <div class="refresh-section">
+      <button class="btn" (click)="onRefreshPrice()">
+        <i class="fa-solid fa-rotate"></i>
+      </button>
+      <div class="refresh-date" *ngIf="date$ | async as date">
+        <p class="date-details">
+          Last refreshed:
+          <span [ngStyle]="{ color: '#f7931a' }">{{ date }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="crypto-table">
+    <div class="row-items">
+      <div class="pull-left item">
+        <p class="list-header index">#</p>
+        <p class="list-header">Name</p>
+        <p class="list-header">Price</p>
+        <p class="list-header">1h %</p>
+        <p class="list-header">24h %</p>
+        <p class="list-header">Market Cap</p>
+        <p class="list-header">Circulating Supply</p>
+      </div>
+      <app-crypto-item
+        *ngFor="let item of cryptoItems; index as i; even as e"
+        [cryptoItem]="item"
+        [index]="i"
+        [even]="e"
+      ></app-crypto-item>
+    </div>
+  </div>
+</section>
+<ng-template #loading>
+  <div class="text-center" #loading>
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</ng-template>

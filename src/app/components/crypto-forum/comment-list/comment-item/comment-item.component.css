@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+}
+
+.comment-main-container {
+  padding: 1rem;
+  max-width: 60rem;
+  border-top: 0.5px solid var(--main-bg-color);
+  box-shadow: -15px 0 15px -15px inset var(--main-bg-color),
+    15px 0 15px -15px inset var(--main-bg-color);
+}
+
+.comment-main-container:last-child {
+  border-bottom: 0.5px solid var(--main-bg-color);
+}
+
+.comment-body-wrapper {
+  display: flex;
+  margin: 1rem 1rem;
+  min-height: 7rem;
+}
+
+.avatar-wrapper {
+  padding-right: 1rem;
+}
+
+.first-line-wrapper {
+  display: flex;
+}
+
+.username-wrapper {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--main-bg-color);
+}
+
+.date {
+  font-style: italic;
+  color: #bbb;
+  font-size: 16px;
+}
+
+.btn {
+  background-color: var(--main-bg-color);
+  margin-right: 5px;
+  color: #fff;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.6);
+}
+
+.btn:hover {
+  background-color: #fff;
+  border: 1px solid var(--main-bg-color);
+  color: var(--main-bg-color);
+}
+
+.btn-edit {
+  background-color: #bbb;
+  color: #000;
+}
+
+.btn-edit:hover .btn-edit:active {
+  border: 1px solid #000;
+}
+
+.comment-wrapper {
+  width: 100%;
+}
+
+.comment-paragraph {
+  max-width: 45rem;
+  word-break: break-word;
+}
+
+.edit-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-wrapper {
+  justify-content: flex-end;
+}
+
+textarea {
+  width: 87%;
+  resize: none;
+  outline: none;
+  min-height: 7rem;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.7);
+  padding: 0.4rem 0 0 0.7rem;
+  font-size: 16px;
+  border: white;
+  border-radius: 5px;
+}
+
+.editMode {
+  display: none;
+}
+
+.edit-string {
+  font-size: 14px;
+  font-style: italic;
+  color: #aaa;
+}
+
+.editDate {
+  color: var(--main-bg-color);
+  font-weight: 600;
+}

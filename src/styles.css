@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --main-bg-color: rgb(36, 36, 37);
+  --second-bg-color: rgb(71, 71, 76);
+  --third-bg-color: #87878af5;
+  --fourth-bg-color: #ccdfeef5;
+  --bitcoin-color: #f7931a;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

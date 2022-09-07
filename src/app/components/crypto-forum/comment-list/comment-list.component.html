@@ -1,0 +1,15 @@
+<section class="comment-list-container">
+  <ng-container *ngIf="comments$ | async as comments">
+    <ng-container *ngIf="comments.length > 0; else noComments">
+      <h1 class="title">Community feedback</h1>
+      <app-comment-item
+        *ngFor="let item of comments; index as i"
+        [commentObject]="item"
+        [index]="i"
+      ></app-comment-item>
+    </ng-container>
+    <ng-template #noComments>
+      <h1>Be the first to share a feedback with us!</h1>
+    </ng-template>
+  </ng-container>
+</section>

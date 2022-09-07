@@ -1,0 +1,45 @@
+<a
+  style="cursor: pointer"
+  class="list-group-item"
+  routerLink="/all-cryptos/detail/{{ cryptoItem.slug }}"
+  [ngStyle]="{ backgroundColor: even ? '#f2f2f2' : 'white' }"
+>
+  <div class="pull-left item">
+    <p class="list-group-item-text index">{{ index + 1 }}</p>
+    <p class="list-group-item-text">
+      <span
+        ><img
+          [src]="cryptoItem.logoPath"
+          alt="{{ cryptoItem.name }}"
+          width="32px"
+      /></span>
+      {{ cryptoItem.name }} ({{ cryptoItem.symbol }})
+    </p>
+    <p class="list-group-item-text">{{ "$" + cryptoItem.price }}</p>
+    <p
+      class="list-group-item-text"
+      [ngStyle]="{
+        color: cryptoItem.percentChange1h > 0 ? '#00cc00' : '#ff1a1a',
+        fontWeight: '600'
+      }"
+    >
+      {{ cryptoItem.percentChange1h > 0 ? "+" : ""
+      }}{{ cryptoItem.percentChange1h + "%" }}
+    </p>
+    <p
+      class="list-group-item-text"
+      [ngStyle]="{
+        color: cryptoItem.percentChange24h > 0 ? '#00cc00' : '#ff1a1a',
+        fontWeight: '600'
+      }"
+    >
+      {{ cryptoItem.percentChange24h > 0 ? "+" : ""
+      }}{{ cryptoItem.percentChange24h + "%" }}
+    </p>
+    <p class="list-group-item-text">
+      {{ "$" + cryptoItem.marketCap }}
+    </p>
+    <p class="list-group-item-text">{{ cryptoItem.circulatingSupply }}</p>
+    <button class="btn">Set Alert</button>
+  </div>
+</a>

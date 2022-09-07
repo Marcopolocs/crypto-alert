@@ -1,0 +1,28 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: var(--bitcoin-color);
+}
+
+.comment-section-wrapper {
+  display: flex;
+
+  margin-top: 2rem;
+  flex-direction: column;
+}
+
+.new-comment-section {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+hr {
+  color: var(--main-bg-color);
+  width: 60rem;
+}

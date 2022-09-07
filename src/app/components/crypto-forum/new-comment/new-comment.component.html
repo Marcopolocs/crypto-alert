@@ -1,0 +1,39 @@
+<section class="section-container">
+  <form [formGroup]="newCommentForm" (ngSubmit)="onCreateComment()">
+    <div class="data-container">
+      <div class="form-wrapper">
+        <div class="user-detail-container">
+          <div class="user-avatar">
+            <img
+              src="https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+              alt="user-avatar"
+              width="32px"
+            />
+          </div>
+          <div class="user-name">Username</div>
+        </div>
+        <div class="textarea-wrapper">
+          <div class="text-wrapper">
+            <textarea
+              class="forum-comment-textarea scroll"
+              wrap="hard"
+              name="new-comment-area"
+              placeholder="Add a new comment.."
+              formControlName="text"
+              autofocus
+            ></textarea>
+          </div>
+          <div class="btn-wrapper">
+            <button
+              type="submit"
+              class="btn"
+              [disabled]="!newCommentForm.valid"
+            >
+              <span>Post feedback</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

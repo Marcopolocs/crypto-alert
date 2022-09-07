@@ -1,0 +1,30 @@
+<section class="nav-bar">
+  <div class="navbar-container">
+    <div class="logo-container">
+      <img [src]="imageSrc" alt="header-logo" width="120px" />
+      <a href="#" class="nav-bar-brand">Coinbase-Alert</a>
+    </div>
+    <section *ngIf="searchResults$ | async as searchResult">
+      <p>{{ searchResult }}</p>
+    </section>
+    <div class="btn-wrapper">
+      <div class="search-element">
+        <form role="search">
+          <input
+            class="form-control"
+            type="search"
+            placeholder="Search crypto"
+            aria-label="Search"
+            [formControl]="searchInput"
+          />
+        </form>
+      </div>
+      <div class="btns">
+        <button class="btn btn-login" type="button" routerLink="/login">
+          Sign in
+        </button>
+        <button class="btn btn-register" type="button">Sign up</button>
+      </div>
+    </div>
+  </div>
+</section>
