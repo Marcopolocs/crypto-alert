@@ -17,6 +17,7 @@ import { CryptoLocalService } from 'src/app/services/crypto-local.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  isActive: boolean = true;
   imageSrc: string = 'assets/bitcoin-logo.png';
   searchInput: FormControl = new FormControl('');
 
@@ -30,9 +31,9 @@ export class HeaderComponent implements OnInit {
   searchResults$ = this.searchTerms$.pipe(
     switchMap((data) =>
       this.cryptoLocalService.storedCryptoNames.pipe(
-        map((cryptoList) =>
-          cryptoList.filter((cryptoItem) => cryptoItem.startsWith(data))
-        ),
+        map((cryptoList) => {
+          return cryptoList.filter((cryptoItem) => cryptoItem.startsWith(data));
+        }),
         tap((data) => console.log(data))
       )
     )
@@ -42,4 +43,12 @@ export class HeaderComponent implements OnInit {
   constructor(private cryptoLocalService: CryptoLocalService) {}
 
   ngOnInit(): void {}
+
+  setIsActiveStateToTrue() {
+    this.isActive = true;
+  }
+
+  hideSearchSectionAfterClick() {
+    this.isActive = !this.isActive;
+  }
 }

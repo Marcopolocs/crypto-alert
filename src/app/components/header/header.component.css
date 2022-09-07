@@ -35,11 +35,55 @@
 
 form {
   display: flex;
-  padding-right: 3rem;
+}
+
+.form-control {
+  background-color: rgb(235, 235, 235);
+  border: none;
+}
+
+.search-element {
+  display: flex;
+  flex-direction: column;
+  margin-right: 3rem;
+  position: relative;
+}
+
+.search-result {
+  margin-top: 2.3rem;
+  position: absolute;
+  width: 100%;
+}
+
+.search-row:first-child {
+  margin-top: 0.3rem;
+}
+
+.search-row {
+  cursor: pointer;
+  margin: 0.1rem 0 0.1rem 0;
+  display: flex;
+  background-color: var(--main-bg-color);
+  border-radius: 5px;
+  align-items: center;
+  height: 38px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.search-row:hover {
+  background-color: #fff;
+  border: 2px solid var(--main-bg-color);
+  color: var(--main-bg-color);
+  font-weight: 500;
+}
+
+.search-content {
+  padding: 12px 0 0 10px;
 }
 
 input:focus {
-  box-shadow: 0 0 3px 3px rgba(88, 21, 34, 0.5);
+  box-shadow: 0 0 3px 3px var(--bitcoin-color);
   border: none;
 }
 
@@ -62,4 +106,8 @@ input:focus {
 .btn-register {
   background-color: var(--main-bg-color);
   color: #fff;
+}
+
+.hideSearchResults {
+  display: none;
 }
