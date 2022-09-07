@@ -1,21 +1,20 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
-  combineLatest,
   forkJoin,
   map,
   Observable,
-  Subject,
-  tap,
 } from 'rxjs';
+import { FETCH_CRYPTO_METADATA_HTTP_PARAMS } from '../constants/fetch-crypto-metadata-http-params.constants';
+import { FETCH_CRYPTOS_HTTP_PARAMS } from '../constants/fetch-cryptos-http-params.constants';
 import { CryptoItem } from '../shared/crypto-item.interface';
 import { CryptoLocalService } from './crypto-local.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CryptoItemsService implements OnInit {
+export class CryptoItemsService  {
   // API Documentation (COINMARKETCAP)
   // https://coinmarketcap.com/api/documentation/v1/#operation/getV2CryptocurrencyQuotesLatest
 
@@ -36,16 +35,7 @@ export class CryptoItemsService implements OnInit {
     private cryptoLocalService: CryptoLocalService
   ) {}
 
-  ngOnInit(): void {}
-
   fetchAllCryptos() {
-    const idParams = new HttpParams()
-      .set(
-        'symbol',
-        'BTC,ETH,XRP,LTC,DOGE,SHIB,BNB,USDC,BUSD,DOT,AVAX,MATIC,TRX,DAI,XLM,USDT'
-      )
-      .set('skip_invalid', true);
-
     return this.http
       .get<any>(
         'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest',
@@ -53,11 +43,13 @@ export class CryptoItemsService implements OnInit {
           headers: {
             'X-CMC_PRO_API_KEY': '3d4f7c0c-5ad5-4156-8199-d94f16f8eacf',
           },
-          params: idParams,
+          params: FETCH_CRYPTOS_HTTP_PARAMS,
         }
       )
       .pipe(
         map((fetchedItems) => {
+          // TODO: ez legyen refaktorálva, kiemelve az egyes részek külön függvényekbe, amik önálló egységek, pl a
+          // for eachek, a sortoláls,
           const { data: dataObject, status: statusObject } = fetchedItems;
           const cryptoItems: any = Object.values(dataObject);
 
@@ -109,19 +101,16 @@ export class CryptoItemsService implements OnInit {
   }
 
   fetchMetadata() {
-    const idParams = new HttpParams().set(
-      'symbol',
-      'BTC,ETH,XRP,LTC,DOGE,SHIB,BNB,USDC,BUSD,DOT,AVAX,MATIC,TRX,DAI,XLM,USDT'
-    );
     return this.http
       .get<any>('https://pro-api.coinmarketcap.com/v2/cryptocurrency/info', {
         headers: {
           'X-CMC_PRO_API_KEY': '3d4f7c0c-5ad5-4156-8199-d94f16f8eacf',
         },
-        params: idParams,
+        params: FETCH_CRYPTO_METADATA_HTTP_PARAMS,
       })
       .pipe(
         map((fetchedItems) => {
+          // TODO: refactor külön függvénybe
           const { status, data: metadata } = fetchedItems;
           const cryptoItems: any = Object.values(metadata);
 

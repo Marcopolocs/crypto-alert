@@ -55,7 +55,6 @@ export class CommentItemComponent implements OnInit {
       return;
     }
     this.commentsService.editComment(this.commentObject.id, this.editedText);
-    this.commentsStorageService.storeComments();
     this.router.navigate(['community']);
     this.isEditMode = false;
   }

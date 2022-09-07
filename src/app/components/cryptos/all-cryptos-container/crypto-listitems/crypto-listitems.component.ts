@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CryptoItemsService } from 'src/app/services/crypto-items.service';
-import { CryptoLocalService } from 'src/app/services/crypto-local.service';
+import { CryptoItem } from '../../../../shared/crypto-item.interface';
 
 @Component({
   selector: 'app-crypto-listitems',
@@ -10,12 +10,11 @@ import { CryptoLocalService } from 'src/app/services/crypto-local.service';
 })
 export class CryptoListitemsComponent implements OnInit {
   date$ = this.cryptoItemsService.getDate$;
-  cryptoItemAllDetails$: Observable<any> =
+  cryptoItemAllDetails$: Observable<CryptoItem[]> =
     this.cryptoItemsService.mergeFetchedObjects();
 
   constructor(
     public cryptoItemsService: CryptoItemsService,
-    private cryptoLocalService: CryptoLocalService
   ) {}
 
   ngOnInit(): void {}

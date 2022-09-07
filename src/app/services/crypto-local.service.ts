@@ -9,6 +9,7 @@ export interface searchData {
 @Injectable({
   providedIn: 'root',
 })
+// TODO: Nevezd át CryptoListStateService-re
 export class CryptoLocalService {
   storedCryptoNames = new BehaviorSubject<string[]>([]);
 

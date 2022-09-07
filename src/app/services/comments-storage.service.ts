@@ -64,3 +64,17 @@ export class CommentsStorageService {
     return date.toLocaleString();
   }
 }
+
+
+// get(url: string, params: string): Observable<any> => {
+//   return this.httpClient.get(url, params);
+// }
+// put(url: string, body: Object): Observable<any> => {
+//   return this.httpClient.get(url, body);
+// }
+// delete(url: string, params: string): Observable<any> => {
+//   return this.httpClient.get(url, params);
+// }
+// post(url: string, body: Object): Observable<any> => {
+//   return this.httpClient.get(url, body);
+// }
