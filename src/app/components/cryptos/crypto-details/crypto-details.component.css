@@ -60,3 +60,16 @@ h1 {
   background-color: #fff;
   color: #000;
 }
+.back-button {
+  margin-bottom: 2rem;
+}
+
+.back-button > button {
+  background-color: var(--bitcoin-color);
+  padding: 0.5rem 1rem;
+  color: #fff;
+}
+
+.fa-solid {
+  padding-right: 5px;
+}

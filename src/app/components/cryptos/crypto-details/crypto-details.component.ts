@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { CryptoItemsService } from 'src/app/services/crypto-items.service';
 import { CryptoItem } from 'src/app/shared/crypto-item.interface';
@@ -15,7 +15,8 @@ export class CryptoDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private cryptoItemsService: CryptoItemsService
+    private cryptoItemsService: CryptoItemsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -30,5 +31,9 @@ export class CryptoDetailsComponent implements OnInit {
           )
         );
       });
+  }
+
+  backToAllCryptoPage() {
+    this.router.navigate(['all-cryptos']);
   }
 }

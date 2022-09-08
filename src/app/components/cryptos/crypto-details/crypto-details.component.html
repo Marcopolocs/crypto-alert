@@ -1,4 +1,9 @@
 <section *ngIf="cryptoItem$ | async as cryptoItem">
+  <div class="back-button">
+    <button class="btn" (click)="backToAllCryptoPage()">
+      <i class="fa-solid fa-arrow-left"></i>Back
+    </button>
+  </div>
   <header>
     <h1>
       <span
