@@ -63,18 +63,18 @@ form {
   cursor: pointer;
   margin: 0.1rem 0 0.1rem 0;
   display: flex;
-  background-color: var(--main-bg-color);
+  background-color: var(--fourth-bg-color);
   border-radius: 5px;
   align-items: center;
   height: 38px;
+  border: 1px solid var(--third-bg-color);
+  color: var(--main-bg-color);
   font-weight: 500;
-  color: #fff;
 }
 
 .search-row:hover {
-  background-color: #fff;
-  border: 2px solid var(--main-bg-color);
-  color: var(--main-bg-color);
+  background-color: var(--main-bg-color);
+  color: #fff;
   font-weight: 500;
 }
 

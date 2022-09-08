@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 import {
   switchMap,
   catchError,
@@ -17,18 +18,18 @@ import { CryptoLocalService } from 'src/app/services/crypto-local.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  isActive: boolean = true;
+  isActiveState: boolean = true;
   imageSrc: string = 'assets/bitcoin-logo.png';
-  searchInput: FormControl = new FormControl('');
+  searchInput: FormControl = new FormControl(null);
 
-  searchTerms$ = this.searchInput.valueChanges.pipe(
+  searchTerms$: Observable<string> = this.searchInput.valueChanges.pipe(
     debounceTime(200),
     distinctUntilChanged(),
-    filter((input) => input !== ''),
+    filter((input) => input !== '' && input !== null),
     map((data) => data.toUpperCase())
   );
 
-  searchResults$ = this.searchTerms$.pipe(
+  searchResults$: Observable<string[]> = this.searchTerms$.pipe(
     switchMap((data) =>
       this.cryptoLocalService.storedCryptoNames.pipe(
         map((cryptoList) => {
@@ -45,10 +46,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {}
 
   setIsActiveStateToTrue() {
-    this.isActive = true;
+    this.isActiveState = true;
   }
 
   hideSearchSectionAfterClick() {
-    this.isActive = !this.isActive;
+    this.isActiveState = !this.isActiveState;
+    this.searchInput.reset();
   }
 }

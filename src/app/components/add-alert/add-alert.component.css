@@ -1,0 +1,100 @@
+.body-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.alert-container {
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+  display: flex;
+  border-radius: 5px;
+  padding: 1rem 2rem;
+  background-color: var(--main-bg-color);
+  box-shadow: 0 0 3px 1px var(--main-bg-color);
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+form > p {
+  color: #fff;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.alert-container-header {
+  font-weight: 500;
+  display: flex;
+  margin-bottom: 2rem;
+  font-size: 1.3rem;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+}
+
+.alert-details {
+  display: flex;
+  flex-direction: column;
+}
+
+select {
+  cursor: pointer;
+  border-radius: 5px;
+  width: 16rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0 0.5rem 0.7rem;
+}
+
+select:first-child {
+  margin-top: 0;
+}
+
+select:focus {
+  box-shadow: 0 0 3px 3px var(--bitcoin-color);
+}
+
+.input-note {
+  padding-top: 4px;
+  color: var(--bitcoin-color);
+  font-size: 0.6rem;
+  line-height: 12px;
+}
+
+input {
+  text-align: center;
+  font-size: large;
+  color: var(--bitcoin-color);
+  font-weight: 600;
+  width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  padding: 0.5rem 0 0.5rem 0.7rem;
+}
+
+input:focus {
+  box-shadow: 0 0 3px 3px var(--bitcoin-color);
+}
+
+.submit-button {
+  justify-content: center;
+  display: flex;
+}
+
+button {
+  margin-top: 1rem;
+  padding: 0.5rem 1.3rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  box-shadow: 0 0 3px 3px var(--bitcoin-color);
+}
