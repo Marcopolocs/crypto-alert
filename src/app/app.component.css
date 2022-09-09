@@ -1,7 +1,11 @@
-.body {
+.page-wrapper {
+  background-color: rgb(235, 235, 235);
+  height: 100%;
+}
+
+.main-container-body {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  background-color: rgb(235, 235, 235);
 }
 
 .listitems {

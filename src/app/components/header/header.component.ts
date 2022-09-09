@@ -10,7 +10,7 @@ import {
   map,
   debounceTime,
 } from 'rxjs/operators';
-import { CryptoLocalService } from 'src/app/services/crypto-local.service';
+import { CryptoListStateService } from 'src/app/services/crypto-list-state.service';
 
 @Component({
   selector: 'app-header',
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
   );
   // catchError((e) => [{ data: undefined, error: 'Cannot find crypto' }]))
 
-  constructor(private cryptoLocalService: CryptoLocalService) {}
+  constructor(private cryptoLocalService: CryptoListStateService) {}
 
   ngOnInit(): void {}
 

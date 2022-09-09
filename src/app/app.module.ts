@@ -19,7 +19,8 @@ import { CommentListComponent } from './components/crypto-forum/comment-list/com
 import { CommentItemComponent } from './components/crypto-forum/comment-list/comment-item/comment-item.component';
 import { NewCommentComponent } from './components/crypto-forum/new-comment/new-comment.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule } from '@angular/material/dialog';
+import { AddAlertComponent } from './components/add-alert/add-alert.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     CommentListComponent,
     CommentItemComponent,
     NewCommentComponent,
+    AddAlertComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,20 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  forkJoin,
-  map,
-  Observable,
-} from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Observable } from 'rxjs';
 import { FETCH_CRYPTO_METADATA_HTTP_PARAMS } from '../constants/fetch-crypto-metadata-http-params.constants';
 import { FETCH_CRYPTOS_HTTP_PARAMS } from '../constants/fetch-cryptos-http-params.constants';
 import { CryptoItem } from '../shared/crypto-item.interface';
-import { CryptoLocalService } from './crypto-local.service';
+import { CryptoListStateService } from './crypto-local.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CryptoItemsService  {
+export class CryptoItemsService {
   // API Documentation (COINMARKETCAP)
   // https://coinmarketcap.com/api/documentation/v1/#operation/getV2CryptocurrencyQuotesLatest
 
@@ -32,7 +27,7 @@ export class CryptoItemsService  {
 
   constructor(
     private http: HttpClient,
-    private cryptoLocalService: CryptoLocalService
+    private cryptoLocalService: CryptoListStateService
   ) {}
 
   fetchAllCryptos() {

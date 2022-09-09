@@ -4,6 +4,7 @@ import { CryptoListitemsComponent } from './components/cryptos/all-cryptos-conta
 import { CryptoContainerComponent } from './components/cryptos/all-cryptos-container/crypto-container.component';
 import { CryptoDetailsComponent } from './components/cryptos/crypto-details/crypto-details.component';
 import { CryptoForumComponent } from './components/crypto-forum/crypto-forum.component';
+import { AddAlertComponent } from './components/add-alert/add-alert.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/all-cryptos', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'detail/:name', component: CryptoDetailsComponent },
     ],
   },
+  { path: 'add-alert', component: AddAlertComponent },
   { path: 'community', component: CryptoForumComponent },
 ];
 
