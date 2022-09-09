@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { CryptoItemsService } from 'src/app/services/crypto-items.service';
 import { CryptoItem } from 'src/app/shared/crypto-item.interface';
@@ -21,14 +21,21 @@ export class CryptoDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.cryptoName = this.route.snapshot.params['name'];
+    // this.route.params.subscribe((params: Params) => {
+    //   this.cryptoName = params['name'];
+    // });
+
+    // this.cryptoItemsService.setSingleCryptoItemParam(this.cryptoName);
+
+    // this.cryptoItemsService.mergingSingleCryptoDataForDetailsPage().subscribe();
 
     this.cryptoItemsService
-      .mergeFetchedObjects()
+      .mergeFetchedAllCryptos()
       .subscribe((everyCryptoItem) => {
         this.cryptoItem$.next(
-          everyCryptoItem.find(
-            (cryptoItem: CryptoItem) => cryptoItem.slug === this.cryptoName
-          )
+          everyCryptoItem.find((cryptoItem: CryptoItem) => {
+            return cryptoItem.slug === this.cryptoName;
+          })
         );
       });
   }

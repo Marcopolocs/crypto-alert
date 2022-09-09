@@ -19,16 +19,15 @@
         </form>
         <section
           class="search-result"
-          *ngIf="searchResults$ | async as searchResult"
+          *ngIf="searchResults$ | async as searchResults"
           [ngClass]="{ hideSearchResults: !isActiveState }"
         >
           <div
             class="search-row"
-            *ngFor="let searchItem of searchResult"
-            routerLink="/all-cryptos/detail/{{ searchItem }}"
-            (click)="hideSearchSectionAfterClick()"
+            *ngFor="let searchItem of searchResults"
+            (click)="hideSearchSectionAfterClick(searchItem.slug)"
           >
-            <p class="search-content">{{ searchItem }}</p>
+            <p class="search-content">{{ searchItem.symbol }}</p>
           </div>
         </section>
       </div>

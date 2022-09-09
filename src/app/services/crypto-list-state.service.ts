@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CryptoItem } from '../shared/crypto-item.interface';
 
 export interface searchData {
   data: string[];
@@ -10,11 +11,11 @@ export interface searchData {
   providedIn: 'root',
 })
 export class CryptoListStateService {
-  storedCryptoNames = new BehaviorSubject<string[]>([]);
+  storedCryptoItems = new BehaviorSubject<CryptoItem[]>([]);
 
   constructor() {}
 
-  settingCryptoNamesIntoSubject(cryptoItem: any): void {
-    this.storedCryptoNames.next(cryptoItem);
+  settingCryptoItemsIntoSubject(cryptoItem: any): void {
+    this.storedCryptoItems.next(cryptoItem);
   }
 }

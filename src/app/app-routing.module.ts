@@ -13,7 +13,7 @@ const routes: Routes = [
     component: CryptoContainerComponent,
     children: [
       { path: '', component: CryptoListitemsComponent },
-      { path: 'detail/:name', component: CryptoDetailsComponent },
+      { path: 'details/:name', component: CryptoDetailsComponent },
     ],
   },
   { path: 'add-alert', component: AddAlertComponent },

@@ -11,15 +11,14 @@ import { CryptoItem } from '../../../../shared/crypto-item.interface';
 export class CryptoListitemsComponent implements OnInit {
   date$ = this.cryptoItemsService.getDate$;
   cryptoItemAllDetails$: Observable<CryptoItem[]> =
-    this.cryptoItemsService.mergeFetchedObjects();
+    this.cryptoItemsService.mergeFetchedAllCryptos();
 
-  constructor(
-    public cryptoItemsService: CryptoItemsService,
-  ) {}
+  constructor(public cryptoItemsService: CryptoItemsService) {}
 
   ngOnInit(): void {}
 
   onRefreshPrice() {
-    this.cryptoItemAllDetails$ = this.cryptoItemsService.mergeFetchedObjects();
+    this.cryptoItemAllDetails$ =
+      this.cryptoItemsService.mergeFetchedAllCryptos();
   }
 }

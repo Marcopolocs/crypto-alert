@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, map, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Observable, tap } from 'rxjs';
 import { FETCH_CRYPTO_METADATA_HTTP_PARAMS } from '../constants/fetch-crypto-metadata-http-params.constants';
 import { FETCH_CRYPTOS_HTTP_PARAMS } from '../constants/fetch-cryptos-http-params.constants';
 import { CryptoItem } from '../shared/crypto-item.interface';
-import { CryptoListStateService } from './crypto-local.service';
+import { CryptoListStateService } from './crypto-list-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,13 +24,72 @@ export class CryptoItemsService {
   // 6v5wfy5lhxg
 
   getDate$ = new BehaviorSubject<string>('');
+  cryptoParam!: string;
 
   constructor(
     private http: HttpClient,
     private cryptoLocalService: CryptoListStateService
   ) {}
 
-  fetchAllCryptos() {
+  // fetchingSingleCryptoPricesForDetailsPage() {
+  //   return this.http
+  //     .get<any>(
+  //       `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=${this.cryptoParam}`,
+  //       {
+  //         headers: {
+  //           'X-CMC_PRO_API_KEY': '3d4f7c0c-5ad5-4156-8199-d94f16f8eacf',
+  //         },
+  //       }
+  //     )
+  //     .pipe(
+  //       map((fetchedItem) => {
+  //         const { data: dataObject, status: statusObject } = fetchedItem;
+  //         const cryptoItem: any = Object.values(dataObject);
+  //         const [destructuredCryptoItem] = cryptoItem;
+  //         return this.structuringNewCryptoObjectFromPriceDetails(
+  //           destructuredCryptoItem
+  //         );
+  //       })
+  //     );
+  // }
+
+  // fetchingSingleCryptoMetadataForDetailsPage() {
+  //   return this.http
+  //     .get<any>(
+  //       `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?slug=${this.cryptoParam}`,
+  //       {
+  //         headers: {
+  //           'X-CMC_PRO_API_KEY': '3d4f7c0c-5ad5-4156-8199-d94f16f8eacf',
+  //         },
+  //       }
+  //     )
+  //     .pipe(
+  //       map((fetchedItem) => {
+  //         const { data: dataObject, status: statusObject } = fetchedItem;
+  //         const cryptoItem: any = Object.values(dataObject);
+  //         const [destructuredCryptoItem] = cryptoItem;
+  //         return this.structuringNewMetadataObject(destructuredCryptoItem);
+  //       })
+  //     );
+  // }
+
+  // setSingleCryptoItemParam(item: string) {
+  //   this.cryptoParam = item;
+  // }
+
+  // mergingSingleCryptoDataForDetailsPage() {
+  //   return forkJoin(
+  //     this.fetchingSingleCryptoPricesForDetailsPage(),
+  //     this.fetchingSingleCryptoMetadataForDetailsPage()
+  //   ).pipe(
+  //     map(([prices, details]) => {
+  //       const mergedObjects = { ...prices, ...details };
+  //       return mergedObjects;
+  //     })
+  //   );
+  // }
+
+  fetchingAllCryptoPriceDetails() {
     return this.http
       .get<any>(
         'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest',
@@ -51,41 +110,15 @@ export class CryptoItemsService {
           this.getDate$.next(this.formattedDate());
 
           const items: any = [];
-
           cryptoItems.forEach((item: any) => {
             const [itemPieces] = item;
             items.push(itemPieces);
           });
 
           const newItemList: any = [];
-
           items.forEach((item: any) => {
-            const formattedObject = {
-              id: item.id,
-              name: item.name,
-              symbol: item.symbol,
-              price: this.formattedPrice(item.quote.USD.price),
-              percentChange1h: this.formattedPercentage(
-                item.quote.USD.percent_change_1h
-              ),
-              percentChange24h: this.formattedPercentage(
-                item.quote.USD.percent_change_24h
-              ),
-              percentChange7d: +item.quote.USD.percent_change_7d.toFixed(2),
-              percentChange30d: +item.quote.USD.percent_change_30d.toFixed(2),
-              volume24h: this.formattedPrice(
-                +item.quote.USD.volume_24h.toFixed(2)
-              ),
-              marketCap: this.formattedPrice(item.quote.USD.market_cap),
-              circulatingSupply: this.formattedPrice(
-                Math.round(item.circulating_supply)
-              ),
-              maxSupply: this.formattedPrice(Math.round(item.max_supply)),
-              totalSupply: this.formattedPrice(Math.round(item.total_supply)),
-              rank: item.cmc_rank,
-              slug: item.slug,
-              latestUpdate: item.last_updated,
-            };
+            const formattedObject =
+              this.structuringNewCryptoObjectFromPriceDetails(item);
             newItemList.push(formattedObject);
           });
 
@@ -95,7 +128,7 @@ export class CryptoItemsService {
       );
   }
 
-  fetchMetadata() {
+  fetchingMetadata() {
     return this.http
       .get<any>('https://pro-api.coinmarketcap.com/v2/cryptocurrency/info', {
         headers: {
@@ -110,23 +143,14 @@ export class CryptoItemsService {
           const cryptoItems: any = Object.values(metadata);
 
           const items: any[] = [];
-
           cryptoItems.forEach((item: any) => {
             const [itemPieces] = item;
             items.push(itemPieces);
           });
 
           const newItemList: any[] = [];
-
           items.forEach((item) => {
-            const newObject = {
-              id: item.id,
-              description: item.description,
-              logoPath: item.logo,
-              officialWebsite: item.urls.website[0],
-              reddit: item.urls.reddit,
-              twitter: item.urls.twitter,
-            };
+            const newObject = this.structuringNewMetadataObject(item);
             newItemList.push(newObject);
           });
 
@@ -135,11 +159,53 @@ export class CryptoItemsService {
       );
   }
 
-  mergeFetchedObjects(): Observable<CryptoItem[]> {
-    return forkJoin(this.fetchAllCryptos(), this.fetchMetadata()).pipe(
+  structuringNewMetadataObject(item: any) {
+    const newObject = {
+      id: item.id,
+      description: item.description,
+      logoPath: item.logo,
+      officialWebsite: item.urls.website[0],
+      reddit: item.urls.reddit,
+      twitter: item.urls.twitter,
+    };
+    return newObject;
+  }
+
+  structuringNewCryptoObjectFromPriceDetails(item: any) {
+    const newItem = {
+      id: item.id,
+      name: item.name,
+      symbol: item.symbol,
+      price: this.formattedPrice(item.quote.USD.price),
+      percentChange1h: this.formattedPercentage(
+        item.quote.USD.percent_change_1h
+      ),
+      percentChange24h: this.formattedPercentage(
+        item.quote.USD.percent_change_24h
+      ),
+      percentChange7d: +item.quote.USD.percent_change_7d.toFixed(2),
+      percentChange30d: +item.quote.USD.percent_change_30d.toFixed(2),
+      volume24h: this.formattedPrice(+item.quote.USD.volume_24h.toFixed(2)),
+      marketCap: this.formattedPrice(item.quote.USD.market_cap),
+      circulatingSupply: this.formattedPrice(
+        Math.round(item.circulating_supply)
+      ),
+      maxSupply: this.formattedPrice(Math.round(item.max_supply)),
+      totalSupply: this.formattedPrice(Math.round(item.total_supply)),
+      rank: item.cmc_rank,
+      slug: item.slug,
+      latestUpdate: item.last_updated,
+    };
+    return newItem;
+  }
+
+  mergeFetchedAllCryptos(): Observable<CryptoItem[]> {
+    return forkJoin(
+      this.fetchingAllCryptoPriceDetails(),
+      this.fetchingMetadata()
+    ).pipe(
       map(([prices, details]) => {
         const mergedObjects: CryptoItem[] = [];
-        const cryptoNames: string[] = [];
 
         prices.forEach((item: any) => {
           const currentDetailObject = details.find(
@@ -149,11 +215,9 @@ export class CryptoItemsService {
             ...item,
             ...currentDetailObject,
           });
-          cryptoNames.push(item.symbol);
         });
 
-        this.cryptoLocalService.settingCryptoNamesIntoSubject(cryptoNames);
-
+        this.cryptoLocalService.settingCryptoItemsIntoSubject(mergedObjects);
         return mergedObjects;
       })
     );
