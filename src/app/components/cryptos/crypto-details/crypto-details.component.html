@@ -1,123 +1,133 @@
-<section *ngIf="cryptoItem$ | async as cryptoItem">
+<section>
   <div class="back-button">
-    <button class="btn" (click)="backToAllCryptoPage()">
+    <button class="btn" (click)="backToAllCryptosPage()">
       <i class="fa-solid fa-arrow-left"></i>Back
     </button>
   </div>
-  <header>
-    <h1>
-      <span
-        ><img
-          [src]="cryptoItem.logoPath"
-          alt="{{ cryptoItem.name }}"
-          class="logo"
-      /></span>
-      {{ cryptoItem.name }} ({{ cryptoItem.symbol }}) -
-      <span class="price">{{ "$" + cryptoItem.price }}</span>
-    </h1>
-  </header>
-  <main>
-    <div class="main-container">
-      <section class="details">
-        <h3>Market stats</h3>
-        <table class="table-details">
-          <tr class="table-row">
-            <th class="table-item-header">PRICE CHANGE (1H)</th>
-            <th class="table-item-header">PRICE CHANGE (24H)</th>
-            <th class="table-item-header">PRICE CHANGE (7D)</th>
-            <th class="table-item-header">PRICE CHANGE (30D)</th>
-          </tr>
-          <tr class="table-row">
-            <td
-              class="table-element"
-              [ngStyle]="{
-                color: cryptoItem.percentChange1h > 0 ? '#00cc00' : '#ff1a1a',
-                fontWeight: '600'
-              }"
+  <section
+    class="crypto-details-container"
+    *ngIf="cryptoItem$ | async as cryptoItem; else loading"
+  >
+    <header>
+      <h1>
+        <span
+          ><img
+            [src]="cryptoItem.logoPath"
+            alt="{{ cryptoItem.name }}"
+            class="logo"
+        /></span>
+        {{ cryptoItem.name }} ({{ cryptoItem.symbol }}) -
+        <span class="price">{{ "$" + cryptoItem.price }}</span>
+      </h1>
+    </header>
+    <main>
+      <div class="main-container">
+        <section class="details">
+          <h3>Market stats</h3>
+          <table class="table-details">
+            <tr class="table-row">
+              <th class="table-item-header">PRICE CHANGE (1H)</th>
+              <th class="table-item-header">PRICE CHANGE (24H)</th>
+              <th class="table-item-header">PRICE CHANGE (7D)</th>
+              <th class="table-item-header">PRICE CHANGE (30D)</th>
+            </tr>
+            <tr class="table-row">
+              <td
+                class="table-element"
+                [ngStyle]="{
+                  color: cryptoItem.percentChange1h > 0 ? '#00cc00' : '#ff1a1a',
+                  fontWeight: '600'
+                }"
+              >
+                {{ cryptoItem.percentChange1h > 0 ? "+" : ""
+                }}{{ cryptoItem.percentChange1h + "%" }}
+              </td>
+              <td
+                class="table-element"
+                [ngStyle]="{
+                  color:
+                    cryptoItem.percentChange24h > 0 ? '#00cc00' : '#ff1a1a',
+                  fontWeight: '600'
+                }"
+              >
+                {{ cryptoItem.percentChange24h > 0 ? "+" : ""
+                }}{{ cryptoItem.percentChange24h + "%" }}
+              </td>
+              <td
+                class="table-element"
+                [ngStyle]="{
+                  color: cryptoItem.percentChange7d > 0 ? '#00cc00' : '#ff1a1a',
+                  fontWeight: '600'
+                }"
+              >
+                {{ cryptoItem.percentChange7d > 0 ? "+" : ""
+                }}{{ cryptoItem.percentChange7d + "%" }}
+              </td>
+              <td
+                class="table-element"
+                [ngStyle]="{
+                  color:
+                    cryptoItem.percentChange30d > 0 ? '#00cc00' : '#ff1a1a',
+                  fontWeight: '600'
+                }"
+              >
+                {{ cryptoItem.percentChange30d > 0 ? "+" : ""
+                }}{{ cryptoItem.percentChange30d + "%" }}
+              </td>
+            </tr>
+            <tr class="table-row">
+              <th class="table-item table-item-header">MARKET CAP</th>
+              <th class="table-item table-item-header">VOLUME (24H)</th>
+              <th class="table-item table-item-header">CIRCULATING SUPPLY</th>
+              <th class="table-item table-item-header">MAXIMUM SUPPLY</th>
+              <th class="table-item table-item-header">TOTAL SUPPLY</th>
+            </tr>
+            <tr class="table-row">
+              <td class="table-element">{{ "$" + cryptoItem.marketCap }}</td>
+              <td class="table-element">{{ "$" + cryptoItem.volume24h }}</td>
+              <td class="table-element">
+                {{ cryptoItem.circulatingSupply }} {{ cryptoItem.symbol }}
+              </td>
+              <td class="table-element">
+                {{ cryptoItem.maxSupply }} {{ cryptoItem.symbol }}
+              </td>
+              <td class="table-element">
+                {{ cryptoItem.totalSupply }} {{ cryptoItem.symbol }}
+              </td>
+            </tr>
+          </table>
+        </section>
+        <section class="details">
+          <h3>Details</h3>
+          <p class="description">{{ cryptoItem.description }}</p>
+        </section>
+        <section class="details">
+          <h3>Useful links</h3>
+          <div class="link-list">
+            <a
+              *ngIf="cryptoItem.officialWebsite.length > 0"
+              class="link-list-item"
+              [href]="cryptoItem.officialWebsite"
+              >Official website</a
             >
-              {{ cryptoItem.percentChange1h > 0 ? "+" : ""
-              }}{{ cryptoItem.percentChange1h + "%" }}
-            </td>
-            <td
-              class="table-element"
-              [ngStyle]="{
-                color: cryptoItem.percentChange24h > 0 ? '#00cc00' : '#ff1a1a',
-                fontWeight: '600'
-              }"
+            <a
+              *ngIf="cryptoItem.twitter.length > 0"
+              class="link-list-item"
+              [href]="cryptoItem.twitter"
+              >Twitter</a
             >
-              {{ cryptoItem.percentChange24h > 0 ? "+" : ""
-              }}{{ cryptoItem.percentChange24h + "%" }}
-            </td>
-            <td
-              class="table-element"
-              [ngStyle]="{
-                color: cryptoItem.percentChange7d > 0 ? '#00cc00' : '#ff1a1a',
-                fontWeight: '600'
-              }"
+            <a
+              *ngIf="cryptoItem.reddit.length > 0"
+              class="link-list-item"
+              [href]="cryptoItem.reddit"
+              >Reddit</a
             >
-              {{ cryptoItem.percentChange7d > 0 ? "+" : ""
-              }}{{ cryptoItem.percentChange7d + "%" }}
-            </td>
-            <td
-              class="table-element"
-              [ngStyle]="{
-                color: cryptoItem.percentChange30d > 0 ? '#00cc00' : '#ff1a1a',
-                fontWeight: '600'
-              }"
-            >
-              {{ cryptoItem.percentChange30d > 0 ? "+" : ""
-              }}{{ cryptoItem.percentChange30d + "%" }}
-            </td>
-          </tr>
-          <tr class="table-row">
-            <th class="table-item table-item-header">MARKET CAP</th>
-            <th class="table-item table-item-header">VOLUME (24H)</th>
-            <th class="table-item table-item-header">CIRCULATING SUPPLY</th>
-            <th class="table-item table-item-header">MAXIMUM SUPPLY</th>
-            <th class="table-item table-item-header">TOTAL SUPPLY</th>
-          </tr>
-          <tr class="table-row">
-            <td class="table-element">{{ "$" + cryptoItem.marketCap }}</td>
-            <td class="table-element">{{ "$" + cryptoItem.volume24h }}</td>
-            <td class="table-element">
-              {{ cryptoItem.circulatingSupply }} {{ cryptoItem.symbol }}
-            </td>
-            <td class="table-element">
-              {{ cryptoItem.maxSupply }} {{ cryptoItem.symbol }}
-            </td>
-            <td class="table-element">
-              {{ cryptoItem.totalSupply }} {{ cryptoItem.symbol }}
-            </td>
-          </tr>
-        </table>
-      </section>
-      <section class="details">
-        <h3>Details</h3>
-        <p class="description">{{ cryptoItem.description }}</p>
-      </section>
-      <section class="details">
-        <h3>Useful links</h3>
-        <div class="link-list">
-          <a
-            *ngIf="cryptoItem.officialWebsite.length > 0"
-            class="link-list-item"
-            [href]="cryptoItem.officialWebsite"
-            >Official website</a
-          >
-          <a
-            *ngIf="cryptoItem.twitter.length > 0"
-            class="link-list-item"
-            [href]="cryptoItem.twitter"
-            >Twitter</a
-          >
-          <a
-            *ngIf="cryptoItem.reddit.length > 0"
-            class="link-list-item"
-            [href]="cryptoItem.reddit"
-            >Reddit</a
-          >
-        </div>
-      </section>
-    </div>
-  </main>
+          </div>
+        </section>
+      </div>
+    </main>
+  </section>
+  <ng-template #loading>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
 </section>

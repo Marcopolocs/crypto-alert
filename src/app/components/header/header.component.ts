@@ -28,8 +28,7 @@ export class HeaderComponent implements OnInit {
   searchTerms$: Observable<string> = this.searchInput.valueChanges.pipe(
     debounceTime(200),
     distinctUntilChanged(),
-    filter((input) => input !== '' && input !== null),
-    tap((data) => console.log(data))
+    filter((input) => input !== '' && input !== null)
   );
 
   searchResults$: Observable<CryptoItem[]> = this.searchTerms$.pipe(
@@ -56,7 +55,7 @@ export class HeaderComponent implements OnInit {
     this.isActiveState = true;
   }
 
-  hideSearchSectionAfterClick(clickedCrypto: string) {
+  setCryptoName(clickedCrypto: string) {
     this.cryptoName = clickedCrypto;
     this.router.navigate(['/all-cryptos/details', this.cryptoName]);
     this.isActiveState = !this.isActiveState;
