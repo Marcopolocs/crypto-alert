@@ -1,4 +1,10 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -23,8 +29,12 @@ export class HeaderComponent implements OnInit {
   imageSrc: string = 'assets/bitcoin-logo.png';
   searchInput: FormControl = new FormControl(null);
   cryptoName!: string;
-  @HostListener('click', ['$event']) clickEvent(event: any) {
-    if (this.isActiveState === true) {
+  @ViewChild('searchInputElement', {
+    static: true,
+  })
+  searchInputElement!: ElementRef;
+  @HostListener('window:click', ['$event']) clickEvent(event: any) {
+    if (event.target !== this.searchInputElement.nativeElement) {
       this.isActiveState = false;
       this.searchInput.reset();
     }
@@ -35,7 +45,6 @@ export class HeaderComponent implements OnInit {
     filter((input) => input !== '' && input !== null),
     map((result) => {
       this.isActiveState = true;
-
       return result;
     })
   );
@@ -63,7 +72,5 @@ export class HeaderComponent implements OnInit {
   setCryptoName(clickedCrypto: string) {
     this.cryptoName = clickedCrypto;
     this.router.navigate(['/all-cryptos/details', this.cryptoName]);
-    this.isActiveState = !this.isActiveState;
-    this.searchInput.reset();
   }
 }
