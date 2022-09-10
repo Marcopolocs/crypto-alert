@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -7,7 +7,6 @@ import {
   catchError,
   distinctUntilChanged,
   filter,
-  tap,
   map,
   debounceTime,
 } from 'rxjs/operators';
@@ -24,7 +23,9 @@ export class HeaderComponent implements OnInit {
   imageSrc: string = 'assets/bitcoin-logo.png';
   searchInput: FormControl = new FormControl(null);
   cryptoName!: string;
-
+  @HostListener('window:keyup.escape', ['$event']) escapeEvent(event: any) {
+    this.isActiveState = false;
+  }
   searchTerms$: Observable<string> = this.searchInput.valueChanges.pipe(
     debounceTime(200),
     distinctUntilChanged(),
