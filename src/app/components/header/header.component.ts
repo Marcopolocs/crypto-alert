@@ -19,17 +19,25 @@ import { CryptoItem } from 'src/app/shared/crypto-item.interface';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  isActiveState: boolean = true;
+  isActiveState: boolean = false;
   imageSrc: string = 'assets/bitcoin-logo.png';
   searchInput: FormControl = new FormControl(null);
   cryptoName!: string;
-  @HostListener('window:keyup.escape', ['$event']) escapeEvent(event: any) {
-    this.isActiveState = false;
+  @HostListener('click', ['$event']) clickEvent(event: any) {
+    if (this.isActiveState === true) {
+      this.isActiveState = false;
+      this.searchInput.reset();
+    }
   }
   searchTerms$: Observable<string> = this.searchInput.valueChanges.pipe(
     debounceTime(200),
     distinctUntilChanged(),
-    filter((input) => input !== '' && input !== null)
+    filter((input) => input !== '' && input !== null),
+    map((result) => {
+      this.isActiveState = true;
+
+      return result;
+    })
   );
 
   searchResults$: Observable<CryptoItem[]> = this.searchTerms$.pipe(
@@ -51,10 +59,6 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
-
-  setIsActiveStateToTrue() {
-    this.isActiveState = true;
-  }
 
   setCryptoName(clickedCrypto: string) {
     this.cryptoName = clickedCrypto;
