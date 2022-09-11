@@ -11,7 +11,7 @@ import { CryptoItem } from '../../../../shared/crypto-item.interface';
 export class CryptoListitemsComponent implements OnInit {
   date$ = this.cryptoItemsService.getDate$;
   cryptoItemAllDetails$: Observable<CryptoItem[]> =
-    this.cryptoItemsService.mergeFetchedAllCryptos();
+    this.cryptoItemsService.mergeFetchedAllCryptoObjects();
 
   constructor(public cryptoItemsService: CryptoItemsService) {}
 
@@ -19,6 +19,6 @@ export class CryptoListitemsComponent implements OnInit {
 
   onRefreshPrice() {
     this.cryptoItemAllDetails$ =
-      this.cryptoItemsService.mergeFetchedAllCryptos();
+      this.cryptoItemsService.mergeFetchedAllCryptoObjects();
   }
 }

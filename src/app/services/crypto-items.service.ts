@@ -4,7 +4,6 @@ import { BehaviorSubject, forkJoin, map, Observable, tap } from 'rxjs';
 import { FETCH_CRYPTO_METADATA_HTTP_PARAMS } from '../constants/fetch-crypto-metadata-http-params.constants';
 import { FETCH_CRYPTOS_HTTP_PARAMS } from '../constants/fetch-cryptos-http-params.constants';
 import { CryptoItem } from '../shared/crypto-item.interface';
-import { CryptoListStateService } from './crypto-list-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,10 +25,7 @@ export class CryptoItemsService {
   getDate$ = new BehaviorSubject<string>('');
   cryptoParam!: string;
 
-  constructor(
-    private http: HttpClient,
-    private cryptoLocalService: CryptoListStateService
-  ) {}
+  constructor(private http: HttpClient) {}
 
   // fetchingSingleCryptoPricesForDetailsPage() {
   //   return this.http
@@ -118,7 +114,7 @@ export class CryptoItemsService {
           const newItemList: any = [];
           items.forEach((item: any) => {
             const formattedObject =
-              this.structuringNewCryptoObjectFromPriceDetails(item);
+              this.structuringNewCryptoPriceDetailsObject(item);
             newItemList.push(formattedObject);
           });
 
@@ -171,7 +167,7 @@ export class CryptoItemsService {
     return newObject;
   }
 
-  structuringNewCryptoObjectFromPriceDetails(item: any) {
+  structuringNewCryptoPriceDetailsObject(item: any) {
     const newItem = {
       id: item.id,
       name: item.name,
@@ -199,7 +195,7 @@ export class CryptoItemsService {
     return newItem;
   }
 
-  mergeFetchedAllCryptos(): Observable<CryptoItem[]> {
+  mergeFetchedAllCryptoObjects(): Observable<CryptoItem[]> {
     return forkJoin(
       this.fetchingAllCryptoPriceDetails(),
       this.fetchingMetadata()
@@ -217,7 +213,6 @@ export class CryptoItemsService {
           });
         });
 
-        this.cryptoLocalService.settingCryptoItemsIntoSubject(mergedObjects);
         return mergedObjects;
       })
     );

@@ -11,9 +11,6 @@ export class CommentsService implements OnInit {
   // TODO: törölhető, szerintem felesleges
   private comments: Comment[] = [];
 
-  // TODO: nem használatos dolgokat ki lehet törölni
-  constructor() {}
-
   ngOnInit(): void {}
 
   addComment(newComment: Comment): void {
@@ -33,7 +30,9 @@ export class CommentsService implements OnInit {
 
   deleteComment(id: string): void {
     // TODO: ahol ilyen js függvények vannak, mint a filter, find stb., ott írjunk ki interfacet
-    const newCommentArray = this.comments.filter((comment: Comment) => comment.id !== id);
+    const newCommentArray = this.comments.filter(
+      (comment: Comment) => comment.id !== id
+    );
     this.comments = newCommentArray;
     this.commentsSubject$.next(this.comments.slice());
     // this.commentsStorageService.storeComments();

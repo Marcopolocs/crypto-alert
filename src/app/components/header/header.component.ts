@@ -16,7 +16,7 @@ import {
   map,
   debounceTime,
 } from 'rxjs/operators';
-import { CryptoListStateService } from 'src/app/services/crypto-list-state.service';
+import { CryptoItemsService } from 'src/app/services/crypto-items.service';
 import { CryptoItem } from 'src/app/shared/crypto-item.interface';
 
 @Component({
@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
 
   searchResults$: Observable<CryptoItem[]> = this.searchTerms$.pipe(
     switchMap((data) =>
-      this.cryptoListStateService.storedCryptoItems.pipe(
+      this.cryptoItemsService.mergeFetchedAllCryptoObjects().pipe(
         map((cryptoList) => {
           return cryptoList.filter((cryptoItem) =>
             cryptoItem.slug.startsWith(data)
@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit {
   // catchError((e) => [{ data: undefined, error: 'Cannot find crypto' }]))
 
   constructor(
-    private cryptoListStateService: CryptoListStateService,
+    private cryptoItemsService: CryptoItemsService,
     private router: Router
   ) {}
 
