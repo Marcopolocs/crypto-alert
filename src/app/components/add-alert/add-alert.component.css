@@ -68,6 +68,7 @@ select:focus {
 }
 
 input {
+  border: none;
   text-align: center;
   font-size: large;
   color: var(--bitcoin-color);
@@ -75,10 +76,11 @@ input {
   width: 100%;
   margin-top: 0.5rem;
   border-radius: 5px;
-  padding: 0.5rem 0 0.5rem 0.7rem;
+  padding: 0.7rem 0 0.7rem 0.7rem;
 }
 
 input:focus {
+  outline: none;
   box-shadow: 0 0 3px 3px var(--bitcoin-color);
 }
 

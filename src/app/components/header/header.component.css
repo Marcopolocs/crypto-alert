@@ -37,9 +37,15 @@ form {
   display: flex;
 }
 
-.form-control {
-  background-color: rgb(235, 235, 235);
+.form-container {
+  width: 13rem;
+  height: 2.4rem;
   border: none;
+  outline: none;
+  background-color: rgb(235, 235, 235);
+  border-radius: 5px;
+  padding: 0 0 0 0.7rem;
+  font-size: 0.9rem;
 }
 
 .search-element {
@@ -47,6 +53,10 @@ form {
   flex-direction: column;
   margin-right: 3rem;
   position: relative;
+}
+
+input::-webkit-search-cancel-button {
+  display: none;
 }
 
 .search-result {
@@ -110,4 +120,10 @@ input:focus {
 
 .hideSearchResults {
   display: none;
+}
+
+.spinner {
+  top: 2px;
+  left: 170px;
+  position: absolute;
 }

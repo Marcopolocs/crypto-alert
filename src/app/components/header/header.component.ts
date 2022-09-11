@@ -14,6 +14,7 @@ import {
   distinctUntilChanged,
   filter,
   map,
+  tap,
   debounceTime,
 } from 'rxjs/operators';
 import { CryptoItemsService } from 'src/app/services/crypto-items.service';
@@ -25,10 +26,12 @@ import { CryptoItem } from 'src/app/shared/crypto-item.interface';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  isLoading: boolean = false;
   isSearcResulthWindowOpen: boolean = false;
   imageSrc: string = 'assets/bitcoin-logo.png';
   searchInput: FormControl = new FormControl(null);
   cryptoName!: string;
+
   @ViewChild('searchInputElement', {
     static: true,
   })
@@ -39,11 +42,13 @@ export class HeaderComponent implements OnInit {
       this.searchInput.reset();
     }
   }
+
   searchTerms$: Observable<string> = this.searchInput.valueChanges.pipe(
     debounceTime(200),
     distinctUntilChanged(),
     filter((input) => input !== '' && input !== null),
     map((result) => {
+      this.isLoading = true;
       this.isSearcResulthWindowOpen = true;
       return result;
     })
@@ -53,10 +58,13 @@ export class HeaderComponent implements OnInit {
     switchMap((data) =>
       this.cryptoItemsService.mergeFetchedAllCryptoObjects().pipe(
         map((cryptoList) => {
-          return cryptoList.filter((cryptoItem) =>
-            cryptoItem.slug.startsWith(data)
+          return cryptoList.filter(
+            (cryptoItem) =>
+              cryptoItem.slug.startsWith(data) ||
+              cryptoItem.symbol.startsWith(data)
           );
-        })
+        }),
+        tap((item) => (this.isLoading = false))
       )
     )
   );
@@ -72,5 +80,9 @@ export class HeaderComponent implements OnInit {
   setCryptoName(clickedCrypto: string) {
     this.cryptoName = clickedCrypto;
     this.router.navigate(['/all-cryptos/details', this.cryptoName]);
+  }
+
+  preventPageReloadOnEnter(e: Event) {
+    e.preventDefault();
   }
 }

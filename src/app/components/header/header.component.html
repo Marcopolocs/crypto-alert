@@ -9,12 +9,13 @@
       <div class="search-element">
         <form role="search">
           <input
-            class="form-control"
+            class="form-container"
             type="search"
             placeholder="Search crypto"
             aria-label="Search"
             [formControl]="searchInput"
             #searchInputElement
+            (click)="preventPageReloadOnEnter($event)"
           />
         </form>
         <section
@@ -30,6 +31,11 @@
             <p class="search-content">{{ searchItem.symbol }}</p>
           </div>
         </section>
+        <ng-container *ngIf="isLoading">
+          <app-search-spinner
+            [ngClass]="{ spinner: isLoading }"
+          ></app-search-spinner>
+        </ng-container>
       </div>
       <div class="btns">
         <button class="btn btn-login" type="button" routerLink="/login">

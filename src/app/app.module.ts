@@ -21,6 +21,7 @@ import { NewCommentComponent } from './components/crypto-forum/new-comment/new-c
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddAlertComponent } from './components/add-alert/add-alert.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { SearchSpinnerComponent } from './shared/search-spinner/search-spinner.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     NewCommentComponent,
     AddAlertComponent,
     LoadingSpinnerComponent,
+    SearchSpinnerComponent,
   ],
   imports: [
     BrowserModule,

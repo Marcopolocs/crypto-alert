@@ -41,8 +41,9 @@ export class CryptoItemsService {
   //       map((fetchedItem) => {
   //         const { data: dataObject, status: statusObject } = fetchedItem;
   //         const cryptoItem: any = Object.values(dataObject);
+  //         console.log(fetchedItem);
   //         const [destructuredCryptoItem] = cryptoItem;
-  //         return this.structuringNewCryptoObjectFromPriceDetails(
+  //         return this.structuringNewCryptoPriceDetailsObject(
   //           destructuredCryptoItem
   //         );
   //       })
@@ -63,6 +64,7 @@ export class CryptoItemsService {
   //       map((fetchedItem) => {
   //         const { data: dataObject, status: statusObject } = fetchedItem;
   //         const cryptoItem: any = Object.values(dataObject);
+  //         console.log(fetchedItem);
   //         const [destructuredCryptoItem] = cryptoItem;
   //         return this.structuringNewMetadataObject(destructuredCryptoItem);
   //       })

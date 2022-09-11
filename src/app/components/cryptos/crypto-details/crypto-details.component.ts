@@ -31,6 +31,12 @@ export class CryptoDetailsComponent implements OnInit {
       .subscribe();
   }
 
+  // getCryptoDetails() {
+  //   this.cryptoItemsService
+  //     .mergingSingleCryptoDataForDetailsPage()
+  //     .subscribe((cryptoItem) => this.cryptoItem$.next(cryptoItem));
+  // }
+
   getCryptoDetails() {
     this.cryptoItemsService
       .mergeFetchedAllCryptoObjects()
