@@ -20,7 +20,7 @@
         <section
           class="search-result"
           *ngIf="searchResults$ | async as searchResults"
-          [ngClass]="{ hideSearchResults: !isActiveState }"
+          [ngClass]="{ hideSearchResults: !isSearcResulthWindowOpen }"
         >
           <div
             class="search-row"

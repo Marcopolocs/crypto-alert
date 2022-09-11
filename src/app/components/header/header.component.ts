@@ -25,7 +25,7 @@ import { CryptoItem } from 'src/app/shared/crypto-item.interface';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  isActiveState: boolean = false;
+  isSearcResulthWindowOpen: boolean = false;
   imageSrc: string = 'assets/bitcoin-logo.png';
   searchInput: FormControl = new FormControl(null);
   cryptoName!: string;
@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
   searchInputElement!: ElementRef;
   @HostListener('window:click', ['$event']) clickEvent(event: any) {
     if (event.target !== this.searchInputElement.nativeElement) {
-      this.isActiveState = false;
+      this.isSearcResulthWindowOpen = false;
       this.searchInput.reset();
     }
   }
@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
     distinctUntilChanged(),
     filter((input) => input !== '' && input !== null),
     map((result) => {
-      this.isActiveState = true;
+      this.isSearcResulthWindowOpen = true;
       return result;
     })
   );
