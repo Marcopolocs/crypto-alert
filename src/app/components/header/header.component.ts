@@ -40,6 +40,7 @@ export class HeaderComponent implements OnInit {
     if (event.target !== this.searchInputElement.nativeElement) {
       this.isSearcResulthWindowOpen = false;
       this.searchInput.reset();
+      this.isLoading = false;
     }
   }
 

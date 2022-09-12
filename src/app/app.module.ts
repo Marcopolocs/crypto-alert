@@ -6,8 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { LoginFormComponent } from './components/login/login-form/login-form.component';
-import { RegisterFormComponent } from './components/login/register-form/register-form.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CryptoListitemsComponent } from './components/cryptos/all-cryptos-container/crypto-listitems/crypto-listitems.component';
 import { CryptoItemComponent } from './components/cryptos/all-cryptos-container/crypto-listitems/crypto-item/crypto-item.component';
@@ -22,12 +20,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddAlertComponent } from './components/add-alert/add-alert.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { SearchSpinnerComponent } from './shared/search-spinner/search-spinner.component';
+import { LoginFormComponent } from './components/auth/login-form/login-form.component';
+import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginFormComponent,
-    RegisterFormComponent,
     NavbarComponent,
     CryptoListitemsComponent,
     CryptoItemComponent,
@@ -41,6 +39,8 @@ import { SearchSpinnerComponent } from './shared/search-spinner/search-spinner.c
     AddAlertComponent,
     LoadingSpinnerComponent,
     SearchSpinnerComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
   ],
   imports: [
     BrowserModule,

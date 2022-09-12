@@ -5,11 +5,11 @@ import { CryptoContainerComponent } from './components/cryptos/all-cryptos-conta
 import { CryptoDetailsComponent } from './components/cryptos/crypto-details/crypto-details.component';
 import { CryptoForumComponent } from './components/crypto-forum/crypto-forum.component';
 import { AddAlertComponent } from './components/add-alert/add-alert.component';
-import { RegisterFormComponent } from './components/login/register-form/register-form.component';
-import { LoginFormComponent } from './components/login/login-form/login-form.component';
+import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
+import { LoginFormComponent } from './components/auth/login-form/login-form.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/all-cryptos', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'all-cryptos',
     component: CryptoContainerComponent,

@@ -1,6 +1,6 @@
 <section>
   <main class="register-container">
-    <header><h1>Create your own account</h1></header>
+    <header><h1>Create an account</h1></header>
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
       <div class="input-container">
         <label for="emailFormControl" class="form-label">Email address</label>
@@ -41,7 +41,13 @@
         />
       </div>
       <div class="button-container">
-        <button class="button" type="submit">Register</button>
+        <button
+          class="button"
+          type="submit"
+          [disabled]="!registrationForm.valid"
+        >
+          Register
+        </button>
       </div>
     </form>
   </main>

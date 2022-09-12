@@ -19,22 +19,36 @@ h1 {
   font-size: 2rem;
 }
 
-.register-container {
+.login-container {
   align-items: center;
   justify-content: center;
   background-color: var(--main-bg-color);
   border-radius: 5px;
-  padding: 3rem 6rem;
+  padding: 3rem 4rem;
+  width: 100%;
   color: white;
+  box-shadow: 0 0 3px 1px var(--main-bg-color);
 }
 
 .input-container {
+  padding: 0 2rem;
   display: flex;
+  width: 100%;
   flex-direction: column;
   margin-bottom: 1.3rem;
 }
 
+input {
+  border: none;
+}
+
+input:focus {
+  box-shadow: 0 0 3px 3px var(--bitcoin-color);
+  border: none;
+}
+
 .form {
+  width: 15rem;
   border-radius: 5px;
   padding: 0.6rem 0.5rem;
   outline: none;
@@ -64,4 +78,29 @@ label {
   border: none;
   outline: none;
   box-shadow: 0 0 3px 3px var(--bitcoin-color);
+}
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.button-signup {
+  background-color: var(--bitcoin-color);
+  color: #fff;
+}
+
+.button-signup:hover,
+.button-signup:active {
+  border-color: var(--main-bg-color);
+  background-color: #fff;
+  color: var(--main-bg-color);
+}
+
+.register-question {
+  display: flex;
+  justify-content: center;
+  font-size: 1.1rem;
+  margin-bottom: 1.3rem;
 }
