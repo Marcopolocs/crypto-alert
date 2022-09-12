@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormControl, UntypedFormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class RegisterFormComponent {
     ],
     password: [
       '',
-      { validators: [Validators.required, Validators.minLength(8)] },
+      { validators: [Validators.required, Validators.minLength(6)] },
     ],
     confirmedPassword: ['', { validators: [Validators.required] }],
   });
@@ -47,14 +47,29 @@ export class RegisterFormComponent {
           console.log(responseData);
           this.isLoading = false;
         },
-        (error) => {
+        (errorMessage) => {
           this.isLoading = false;
-          this.error = 'An error occurred';
-          console.log(error);
+          this.error = errorMessage;
+          console.log(errorMessage);
         }
       );
     } else return;
 
     this.registrationForm.reset();
+  }
+
+  matchingPasswords(control: FormControl) {
+    if (control.value.password !== control.value.confirmedPassword) {
+      return { passwordsDontMatch: true };
+    }
+    return null;
+  }
+
+  get email() {
+    return this.registrationForm.get('email');
+  }
+
+  get password() {
+    return this.registrationForm.get('password');
   }
 }

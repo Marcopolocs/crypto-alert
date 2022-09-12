@@ -14,6 +14,11 @@
           id="emailFormControl"
           formControlName="email"
         />
+        <ng-container *ngIf="email?.touched">
+          <small style="color: red" *ngIf="email?.errors?.['required']"
+            >Adding an email is required!</small
+          >
+        </ng-container>
       </div>
       <!-- <div class="input-container">
         <label for="Username" class="form-label">Username</label>
@@ -33,6 +38,11 @@
           id="password"
           formControlName="password"
         />
+        <ng-container *ngIf="password?.touched">
+          <small style="color: red" *ngIf="email?.errors?.['required']"
+            >Add at least 6 characters for your password!</small
+          >
+        </ng-container>
       </div>
       <div class="input-container">
         <label for="password" class="form-label">Confirm Password</label>
@@ -42,6 +52,13 @@
           id="password"
           formControlName="confirmedPassword"
         />
+        <ng-container *ngIf="password?.touched">
+          <small
+            style="color: red"
+            *ngIf="email?.errors?.['passwordsDontMatch']"
+            >Your passwords don't match!</small
+          >
+        </ng-container>
       </div>
       <div class="button-container">
         <button
