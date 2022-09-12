@@ -5,7 +5,7 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
   isLoading: boolean = false;
   isSearcResulthWindowOpen: boolean = false;
   imageSrc: string = 'assets/bitcoin-logo.png';
-  searchInput: FormControl = new FormControl(null);
+  searchInput: UntypedFormControl = new UntypedFormControl(null);
   cryptoName!: string;
 
   @ViewChild('searchInputElement', {

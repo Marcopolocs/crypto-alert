@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register-form',
@@ -22,7 +22,7 @@ export class RegisterFormComponent {
     confirmedPassword: ['', { validators: [Validators.required] }],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   onSubmit() {}
 }

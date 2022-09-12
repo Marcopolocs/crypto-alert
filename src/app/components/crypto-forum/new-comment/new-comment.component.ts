@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { CommentsStorageService } from 'src/app/services/comments-storage.service';
 import { CommentsService } from 'src/app/services/comments.service';
 import { Comment } from 'src/app/shared/comment.interface';
@@ -10,15 +10,15 @@ import { Comment } from 'src/app/shared/comment.interface';
   styleUrls: ['./new-comment.component.css'],
 })
 export class NewCommentComponent implements OnInit {
-  newCommentForm!: FormGroup;
+  newCommentForm!: UntypedFormGroup;
 
   constructor(
     private commentsService: CommentsService,
     private commentsStorageService: CommentsStorageService
   ) {}
   ngOnInit(): void {
-    this.newCommentForm = new FormGroup({
-      text: new FormControl(null, [
+    this.newCommentForm = new UntypedFormGroup({
+      text: new UntypedFormControl(null, [
         Validators.required,
         Validators.minLength(2),
       ]),
