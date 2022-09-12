@@ -1,7 +1,5 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CryptoItemsService } from 'src/app/services/crypto-items.service';
 
 @Component({
   selector: 'app-login-form',
@@ -9,16 +7,16 @@ import { CryptoItemsService } from 'src/app/services/crypto-items.service';
   styleUrls: ['./login-form.component.css'],
 })
 export class LoginFormComponent implements OnInit {
-  loginForm!: FormGroup;
+  loginForm = new FormGroup({
+    email: new FormControl('', {
+      validators: [Validators.required, Validators.email],
+    }),
+    password: new FormControl('', { validators: [Validators.required] }),
+  });
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.loginForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
-    });
-  }
+  ngOnInit(): void {}
 
   onSubmit() {}
 }

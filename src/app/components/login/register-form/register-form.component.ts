@@ -1,25 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.css'],
 })
-export class RegisterFormComponent implements OnInit {
-  registrationForm!: FormGroup;
+export class RegisterFormComponent {
+  registrationForm = this.fb.group({
+    email: [
+      '',
+      {
+        validators: [Validators.required, Validators.email],
+      },
+    ],
+    username: ['', { validators: [Validators.required] }],
+    password: [
+      '',
+      { validators: [Validators.required, Validators.minLength(8)] },
+    ],
+    confirmedPassword: ['', { validators: [Validators.required] }],
+  });
+
   constructor(private fb: FormBuilder) {}
 
-  ngOnInit(): void {
-    this.registrationForm = this.fb.group({
-      emailAddress: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmedPassword: ['', Validators.required],
-    });
-  }
-
-  onSubmit() {
-    console.log(this.registrationForm);
-  }
+  onSubmit() {}
 }
