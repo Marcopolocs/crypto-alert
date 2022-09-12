@@ -5,6 +5,8 @@ import { CryptoContainerComponent } from './components/cryptos/all-cryptos-conta
 import { CryptoDetailsComponent } from './components/cryptos/crypto-details/crypto-details.component';
 import { CryptoForumComponent } from './components/crypto-forum/crypto-forum.component';
 import { AddAlertComponent } from './components/add-alert/add-alert.component';
+import { RegisterFormComponent } from './components/login/register-form/register-form.component';
+import { LoginFormComponent } from './components/login/login-form/login-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/all-cryptos', pathMatch: 'full' },
@@ -18,6 +20,8 @@ const routes: Routes = [
   },
   { path: 'add-alert', component: AddAlertComponent },
   { path: 'community', component: CryptoForumComponent },
+  { path: 'sign-up', component: RegisterFormComponent },
+  { path: 'login', component: LoginFormComponent },
 ];
 
 @NgModule({

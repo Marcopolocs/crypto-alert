@@ -1,45 +1,48 @@
 <section>
   <main class="register-container">
-    <div><h2>Create your account</h2></div>
+    <header><h1>Create your own account</h1></header>
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-      <div class="mb-3">
+      <div class="input-container">
         <label for="emailFormControl" class="form-label">Email address</label>
         <input
           type="email"
-          class="form-control"
+          class="form"
           placeholder="name@example.com"
           id="emailFormControl"
           formControlName="email"
         />
       </div>
-      <div class="mb-3">
+      <div class="input-container">
         <label for="Username" class="form-label">Username</label>
         <input
           type="text"
-          class="form-control"
+          class="form"
+          placeholder="szeretemabanántot"
           id="Username"
           formControlName="username"
         />
       </div>
-      <div class="mb-3">
+      <div class="input-container">
         <label for="password" class="form-label">Password</label>
         <input
           type="password"
-          class="form-control"
+          class="form"
           id="password"
           formControlName="password"
         />
       </div>
-      <div class="mb-3">
+      <div class="input-container">
         <label for="password" class="form-label">Confirm Password</label>
         <input
           type="password"
-          class="form-control"
+          class="form"
           id="password"
           formControlName="confirmedPassword"
         />
       </div>
-      <button class="btn btn-outline-primary" type="submit">Register</button>
+      <div class="button-container">
+        <button class="button" type="submit">Register</button>
+      </div>
     </form>
   </main>
 </section>

@@ -98,7 +98,7 @@ input:focus {
 }
 
 .btn {
-  border: 0.5px solid var(--main-bg-color);
+  border: 0.1px solid var(--main-bg-color);
   box-shadow: 1px 1px 0 0.5px rgba(0, 0, 0, 0.2);
 }
 
@@ -109,13 +109,30 @@ input:focus {
 }
 
 .btn-login {
-  background-color: #fff;
+  background-color: var(--main-bg-color);
+  color: #fff;
   margin-right: 0.4rem;
 }
 
+.btn-login:hover,
+.btn-login:active {
+  background-color: #fff;
+  color: var(--main-bg-color);
+  transition: all 0.4s ease;
+}
+
 .btn-register {
-  background-color: var(--main-bg-color);
+  background-color: var(--bitcoin-color);
+  border-color: var(--bitcoin-color);
   color: #fff;
+}
+
+.btn-register:hover,
+.btn-register:active {
+  background-color: #fff;
+  border-color: var(--main-bg-color);
+  color: var(--main-bg-color);
+  transition: all 0.5s ease;
 }
 
 .hideSearchResults {
