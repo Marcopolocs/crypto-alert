@@ -37,10 +37,10 @@ import { RegisterFormComponent } from './components/auth/register-form/register-
     CommentItemComponent,
     NewCommentComponent,
     AddAlertComponent,
-    LoadingSpinnerComponent,
     SearchSpinnerComponent,
     LoginFormComponent,
     RegisterFormComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,

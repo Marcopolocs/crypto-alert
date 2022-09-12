@@ -1,4 +1,7 @@
-<section>
+<section *ngIf="!isLoading">
+  <div class="alert alert-danger" *ngIf="error !== null">
+    <p>{{ error }}</p>
+  </div>
   <main class="register-container">
     <header><h1>Create an account</h1></header>
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
@@ -12,7 +15,7 @@
           formControlName="email"
         />
       </div>
-      <div class="input-container">
+      <!-- <div class="input-container">
         <label for="Username" class="form-label">Username</label>
         <input
           type="text"
@@ -21,7 +24,7 @@
           id="Username"
           formControlName="username"
         />
-      </div>
+      </div> -->
       <div class="input-container">
         <label for="password" class="form-label">Password</label>
         <input
@@ -45,6 +48,7 @@
           class="button"
           type="submit"
           [disabled]="!registrationForm.valid"
+          *ngIf="!isLoading"
         >
           Register
         </button>
@@ -52,3 +56,6 @@
     </form>
   </main>
 </section>
+<ng-container *ngIf="isLoading">
+  <app-loading-spinner></app-loading-spinner>
+</ng-container>

@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-search-spinner',
-  templateUrl: './search-spinner.component.html',
-  styleUrls: ['./search-spinner.component.css']
+  template: `<div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div> `,
+  styleUrls: ['./search-spinner.component.css'],
 })
 export class SearchSpinnerComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
