@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { FormControl, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { RegistrationForm } from 'src/app/shared/registration-form.interface';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -11,35 +18,24 @@ export class RegisterFormComponent {
   isLoading: boolean = false;
   error: string | null = null;
 
-  registrationForm = this.fb.group({
-    email: [
-      '',
-      {
-        validators: [Validators.required, Validators.email],
-      },
-    ],
-    password: [
-      '',
-      { validators: [Validators.required, Validators.minLength(6)] },
-    ],
-    confirmedPassword: ['', { validators: [Validators.required] }],
+  registrationForm: FormGroup<RegistrationForm> = this.fb.nonNullable.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmedPassword: ['', [Validators.required]],
   });
 
-  constructor(
-    private fb: UntypedFormBuilder,
-    private authService: AuthService
-  ) {}
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
 
-  onSubmit() {
+  onSubmit(): void {
     if (!this.registrationForm.valid) {
       return;
     }
-    const email = this.registrationForm.value.email;
-    const password = this.registrationForm.value.password;
+    const email = this.registrationForm.controls.email.value;
+    const password = this.registrationForm.controls.password.value;
 
     if (
-      this.registrationForm.value.password ===
-      this.registrationForm.value.confirmedPassword
+      this.registrationForm.controls.password.value ===
+      this.registrationForm.controls.confirmedPassword.value
     ) {
       this.isLoading = true;
       this.authService.signUp(email, password).subscribe(
@@ -58,9 +54,9 @@ export class RegisterFormComponent {
     this.registrationForm.reset();
   }
 
-  matchingPasswords(control: FormControl) {
+  checkWhetherPasswordsMatch(control: FormControl) {
     if (control.value.password !== control.value.confirmedPassword) {
-      return { passwordsDontMatch: true };
+      return { passwordsMatch: false };
     }
     return null;
   }

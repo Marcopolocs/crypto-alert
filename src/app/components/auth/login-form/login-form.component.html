@@ -1,4 +1,4 @@
-<section>
+<section *ngIf="!isLoading">
   <main class="login-container">
     <div class="login-details-container">
       <header><h1>Welcome back!</h1></header>
@@ -46,3 +46,6 @@
     </div>
   </main>
 </section>
+<ng-container *ngIf="isLoading">
+  <app-loading-spinner></app-loading-spinner>
+</ng-container>

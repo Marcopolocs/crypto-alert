@@ -1,6 +1,7 @@
 import { FormControl } from '@angular/forms';
 
-export interface LoginForm {
+export interface RegistrationForm {
   email: FormControl<string>;
   password: FormControl<string>;
+  confirmedPassword: FormControl<string>;
 }
