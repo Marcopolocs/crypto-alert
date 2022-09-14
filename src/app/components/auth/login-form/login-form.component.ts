@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginForm } from 'src/app/shared/login-form.interface';
 import { AuthService } from '../auth.service';
 
@@ -23,7 +24,7 @@ export class LoginFormComponent implements OnInit {
     }),
   });
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -41,6 +42,7 @@ export class LoginFormComponent implements OnInit {
       (responseData) => {
         console.log(responseData);
         this.isLoading = false;
+        this.router.navigate(['all-cryptos']);
       },
       (errorMessage) => {
         this.isLoading = false;

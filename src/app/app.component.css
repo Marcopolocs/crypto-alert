@@ -8,8 +8,15 @@
   grid-template-columns: 1fr 4fr;
 }
 
-.listitems {
-  margin-top: 2rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
+.list-items {
+  margin-top: 3rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+.login-container {
+  display: flex;
+  margin-top: 8rem;
+  justify-content: center;
+  align-items: center;
 }

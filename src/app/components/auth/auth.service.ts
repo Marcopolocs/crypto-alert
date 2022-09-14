@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { AuthResponseData } from 'src/app/shared/auth-response-data.interface';
+import { User } from './user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  user = new Subject<User | null>();
+
   constructor(private http: HttpClient) {}
 
   signUp(email: string, password: string) {
@@ -30,6 +33,14 @@ export class AuthService {
                 'This email is already in use. Please use a different email!';
           }
           return throwError(errorMessage);
+        }),
+        tap((resData) => {
+          this.handleAuthentication(
+            resData.email,
+            resData.localId,
+            resData.idToken,
+            resData.expiresIn
+          );
         })
       );
   }
@@ -59,7 +70,30 @@ export class AuthService {
               errorMessage = 'Wrong password! Please try again!';
           }
           return throwError(errorMessage);
+        }),
+        tap((resData) => {
+          this.handleAuthentication(
+            resData.email,
+            resData.localId,
+            resData.idToken,
+            resData.expiresIn
+          );
         })
       );
+  }
+
+  logout() {
+    this.user.next(null);
+  }
+
+  private handleAuthentication(
+    email: string,
+    userId: string,
+    token: string,
+    expiresIn: number
+  ) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(email, userId, token, expirationDate);
+    this.user.next(user);
   }
 }

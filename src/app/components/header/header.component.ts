@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   switchMap,
   catchError,
@@ -19,6 +19,7 @@ import {
 } from 'rxjs/operators';
 import { CryptoItemsService } from 'src/app/services/crypto-items.service';
 import { CryptoItem } from 'src/app/shared/crypto-item.interface';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -26,8 +27,12 @@ import { CryptoItem } from 'src/app/shared/crypto-item.interface';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  isAuthenticated: boolean = false;
+  userSubscription!: Subscription;
+
   isLoading: boolean = false;
   isSearcResulthWindowOpen: boolean = false;
+
   imageSrc: string = 'assets/bitcoin-logo.png';
   searchInput: UntypedFormControl = new UntypedFormControl(null);
   cryptoName!: string;
@@ -37,10 +42,12 @@ export class HeaderComponent implements OnInit {
   })
   searchInputElement!: ElementRef;
   @HostListener('window:click', ['$event']) clickEvent(event: any) {
-    if (event.target !== this.searchInputElement.nativeElement) {
-      this.isSearcResulthWindowOpen = false;
-      this.searchInput.reset();
-      this.isLoading = false;
+    if (this.isAuthenticated) {
+      if (event.target !== this.searchInputElement.nativeElement) {
+        this.isSearcResulthWindowOpen = false;
+        this.searchInput.reset();
+        this.isLoading = false;
+      }
     }
   }
 
@@ -73,17 +80,31 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private cryptoItemsService: CryptoItemsService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userSubscription = this.authService.user.subscribe((user) => {
+      this.isAuthenticated = !user ? false : true;
+    });
+  }
 
-  setCryptoName(clickedCrypto: string) {
+  setCryptoName(clickedCrypto: string): void {
     this.cryptoName = clickedCrypto;
     this.router.navigate(['/all-cryptos/details', this.cryptoName]);
   }
 
   preventPageReloadOnEnter(e: Event) {
     e.preventDefault();
+  }
+
+  onLogout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   }
 }

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+
 import { RegistrationForm } from 'src/app/shared/registration-form.interface';
 import { AuthService } from '../auth.service';
 
@@ -24,7 +25,11 @@ export class RegisterFormComponent {
     confirmedPassword: ['', [Validators.required]],
   });
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   onSubmit(): void {
     if (!this.registrationForm.valid) {
@@ -42,6 +47,7 @@ export class RegisterFormComponent {
         (responseData) => {
           console.log(responseData);
           this.isLoading = false;
+          this.router.navigate(['login']);
         },
         (errorMessage) => {
           this.isLoading = false;

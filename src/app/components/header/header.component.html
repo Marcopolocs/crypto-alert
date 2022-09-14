@@ -6,7 +6,7 @@
     </div>
 
     <div class="btn-wrapper">
-      <div class="search-element">
+      <div class="search-element" *ngIf="isAuthenticated">
         <form role="search">
           <input
             class="form-container"
@@ -38,10 +38,29 @@
         </ng-container>
       </div>
       <div class="btns">
-        <button class="btn btn-login" type="button" routerLink="/login">
+        <button
+          class="btn btn-login"
+          type="button"
+          routerLink="/login"
+          *ngIf="!isAuthenticated"
+        >
           Sign in
         </button>
-        <button class="btn btn-register" type="button" routerLink="/sign-up">
+        <button
+          class="btn btn-login btn-logout"
+          type="button"
+          routerLink="/login"
+          *ngIf="isAuthenticated"
+          (click)="onLogout()"
+        >
+          Logout
+        </button>
+        <button
+          class="btn btn-register"
+          type="button"
+          routerLink="/sign-up"
+          *ngIf="!isAuthenticated"
+        >
           Sign up
         </button>
       </div>

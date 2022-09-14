@@ -15,6 +15,7 @@ header {
 }
 
 h1 {
+  color: var(--bitcoin-color);
   font-weight: 500;
   font-size: 2rem;
 }
