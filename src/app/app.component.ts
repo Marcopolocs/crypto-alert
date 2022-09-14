@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
     this.userSubscription = this.authService.user.subscribe((user) => {
       this.isAuthenticated = !user ? false : true;
     });
+
+    this.authService.autoLogin();
   }
 
   hasRoute(route: string): boolean {
