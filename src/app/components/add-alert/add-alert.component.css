@@ -17,7 +17,9 @@
 }
 
 h1 {
-  font-size: 3rem;
+  color: var(--bitcoin-color);
+  font-size: 60px;
+  padding-bottom: 1rem;
 }
 
 form > p {

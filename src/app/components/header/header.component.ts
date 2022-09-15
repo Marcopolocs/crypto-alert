@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit {
         this.searchInput.reset();
         this.isLoading = false;
       }
-    }
+    } else return;
   }
 
   searchTerms$: Observable<string> = this.searchInput.valueChanges.pipe(

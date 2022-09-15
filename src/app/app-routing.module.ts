@@ -7,6 +7,7 @@ import { CryptoForumComponent } from './components/crypto-forum/crypto-forum.com
 import { AddAlertComponent } from './components/add-alert/add-alert.component';
 import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
 import { LoginFormComponent } from './components/auth/login-form/login-form.component';
+import { AuthGuard } from './components/auth/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -19,7 +20,10 @@ const routes: Routes = [
     ],
   },
   { path: 'add-alert', component: AddAlertComponent },
-  { path: 'community', component: CryptoForumComponent },
+  {
+    path: 'community',
+    component: CryptoForumComponent,
+  },
   { path: 'sign-up', component: RegisterFormComponent },
   { path: 'login', component: LoginFormComponent },
 ];

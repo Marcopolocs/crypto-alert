@@ -84,30 +84,31 @@ export class AuthService {
 
   logout() {
     this.user.next(null);
+    localStorage.removeItem('userData');
   }
 
-  autoLogin() {
-    const userData: {
-      email: string;
-      id: string;
-      _token: string;
-      _tokenExpirationDate: string;
-    } = JSON.parse(localStorage.getItem('userData') || '{}');
-    if (!userData) {
-      return;
-    }
+  // autoLogin() {
+  //   const userData: {
+  //     email: string;
+  //     id: string;
+  //     _token: string;
+  //     _tokenExpirationDate: string;
+  //   } = JSON.parse(localStorage.getItem('userData') || '{}');
+  //   if (!userData) {
+  //     return;
+  //   }
 
-    const loadedUser = new User(
-      userData.email,
-      userData.id,
-      userData._token,
-      new Date(userData._tokenExpirationDate)
-    );
+  //   const loadedUser = new User(
+  //     userData.email,
+  //     userData.id,
+  //     userData._token,
+  //     new Date(userData._tokenExpirationDate)
+  //   );
 
-    if (loadedUser.token) {
-      this.user.next(loadedUser);
-    }
-  }
+  //   if (loadedUser.token) {
+  //     this.user.next(loadedUser);
+  //   }
+  // }
 
   private handleAuthentication(
     email: string,

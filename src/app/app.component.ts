@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
       this.isAuthenticated = !user ? false : true;
     });
 
-    this.authService.autoLogin();
+    // this.authService.autoLogin();
   }
 
   hasRoute(route: string): boolean {
