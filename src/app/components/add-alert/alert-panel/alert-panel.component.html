@@ -1,42 +1,39 @@
 <div class="alert-container">
-    <form action="">
-      <div class="alert-container-header">
-        <p>Set an alert!</p>
+  <form [formGroup]="newAlertForm" (ngSubmit)="onCreateAlert()">
+    <div class="alert-container-header">
+      <p>Set an alert!</p>
+    </div>
+    <p>Alert me when the price of</p>
+    <div class="alert-details">
+      <select name="crypto-name" id="select" formControlName="cryptoName">
+        <option [ngValue]="null" disabled>
+          Please select a cryptocurrency:
+        </option>
+        <ng-container *ngIf="cryptoItems; else notFound">
+          <option *ngFor="let cryptoName of cryptoNames" [ngValue]="cryptoName">
+            {{ cryptoName }}
+          </option>
+        </ng-container>
+
+        <ng-template #notFound>
+          <option>An error occurred! No crypto found. :(</option>
+        </ng-template>
+      </select>
+      <select name="condition" id="select" formControlName="isGreater">
+        <option [ngValue]="null" disabled>Please select a condition:</option>
+        <option [ngValue]="true">is greater than or equal</option>
+        <option [ngValue]="false">is less than or equal</option>
+      </select>
+      <div class="input-details">
+        <input type="text" formControlName="price" />
+        <p class="input-note">
+          *The prices here are in US dollar. Please keep this in mind when
+          setting an alert!
+        </p>
       </div>
-      <p>Alert me when the price of</p>
-      <div class="alert-details">
-        <select name="crypto-name" id="select">
-          <option selected disabled>Select a crypto</option>
-          <ng-container
-            *ngIf="cryptoItems; else notFound"
-          >
-            <option
-              *ngFor="let cryptoItem of cryptoItems"
-              [value]="cryptoItem"
-            >
-              {{ cryptoItem.symbol }}
-            </option>
-          </ng-container>
-          <ng-container>
-            <ng-template #notFound>
-              <option>No crypto found!</option>
-            </ng-template>
-          </ng-container>
-        </select>
-        <select name="condition" id="select">
-          <option value="">is greater than or equal</option>
-          <option value="">is less than or equal</option>
-        </select>
-        <div class="input-details">
-          <input type="text" [value]="5000" />
-          <p class="input-note">
-            *The prices here are in US dollar. Please keep this in mind when
-            setting an alert!
-          </p>
-        </div>
-      </div>
-      <div class="submit-button">
-        <button>Create alert</button>
-      </div>
-    </form>
-  </div>
+    </div>
+    <div class="submit-button">
+      <button type="submit">Create alert</button>
+    </div>
+  </form>
+</div>
