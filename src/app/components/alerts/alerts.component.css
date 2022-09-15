@@ -1,0 +1,5 @@
+h1 {
+  color: var(--bitcoin-color);
+  font-size: 60px;
+  padding-bottom: 1rem;
+}
