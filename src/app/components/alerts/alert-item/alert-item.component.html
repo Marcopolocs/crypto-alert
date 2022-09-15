@@ -1,9 +1,9 @@
 <section class="main-container">
   <div class="alerts-container">
-    <div class="alert-item">
+    <div class="alert-item" *ngFor="let alertObject of alertObjects">
       <p class="index">1.</p>
       <div class="text-container">
-        <p class="item-title">Alert for: Bitcoin</p>
+        <p class="item-title">Alert for: {{ alertObject }}</p>
         <p class="item-text">
           Alert me when the price of Bitcoin is greater than 100000
         </p>

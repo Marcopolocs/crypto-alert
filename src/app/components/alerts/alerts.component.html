@@ -9,7 +9,9 @@
   </div>
   <div class="body-container">
     <div class="alerts-list-container">
-      <app-alert-item></app-alert-item>
+      <ng-container *ngIf="alertItems$ | async as alertItems">
+        <app-alert-item [alertObjects]="alertItems"></app-alert-item>
+      </ng-container>
     </div>
   </div>
 </section>
