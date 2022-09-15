@@ -10,4 +10,5 @@ export interface AlertItem {
   cryptoName: string;
   price: number;
   isGreater: boolean;
+  id: number;
 }
