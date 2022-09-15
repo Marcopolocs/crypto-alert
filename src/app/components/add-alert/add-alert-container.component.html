@@ -8,9 +8,14 @@
   </div>
   <div class="body-container">
     <div class="alert-container">
-      <ng-container *ngIf="cryptoItems$ | async as items">
+      <ng-container *ngIf="cryptoItems$ | async as items; else loading">
         <app-alert-panel [cryptoItems]="items"></app-alert-panel>
       </ng-container>
+      <ng-template #loading>
+        <ng-container>
+          <app-loading-spinner></app-loading-spinner>
+        </ng-container>
+      </ng-template>
     </div>
   </div>
 </section>
