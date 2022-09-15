@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CryptoItem } from 'src/app/shared/crypto-item.interface';
 
 @Component({
   selector: 'app-crypto-item',
@@ -6,9 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./crypto-item.component.css'],
 })
 export class CryptoItemComponent implements OnInit {
-  @Input() cryptoItem: any;
-  @Input() index: any;
-  @Input() even: any;
+  @Input() cryptoItem!: CryptoItem;
+  @Input() index!: number;
+  @Input() even!: boolean;
 
   constructor() {}
 

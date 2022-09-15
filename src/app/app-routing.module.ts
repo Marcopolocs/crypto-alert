@@ -4,10 +4,11 @@ import { CryptoListitemsComponent } from './components/cryptos/all-cryptos-conta
 import { CryptoContainerComponent } from './components/cryptos/all-cryptos-container/crypto-container.component';
 import { CryptoDetailsComponent } from './components/cryptos/crypto-details/crypto-details.component';
 import { CryptoForumComponent } from './components/crypto-forum/crypto-forum.component';
-import { AddAlertComponent } from './components/add-alert/add-alert.component';
+import { AddAlertContainerComponent } from './components/add-alert/add-alert-container.component';
 import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
 import { LoginFormComponent } from './components/auth/login-form/login-form.component';
 import { AuthGuard } from './components/auth/auth.guard';
+import { AlertsComponent } from './components/alerts/alerts.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -19,7 +20,8 @@ const routes: Routes = [
       { path: 'details/:name', component: CryptoDetailsComponent },
     ],
   },
-  { path: 'add-alert', component: AddAlertComponent },
+  { path: 'add-alert', component: AddAlertContainerComponent },
+  { path: 'alerts', component: AlertsComponent },
   {
     path: 'community',
     component: CryptoForumComponent,
