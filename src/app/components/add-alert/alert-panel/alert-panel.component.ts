@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { AlertItem } from 'src/app/shared/alert-item.interface';
+import { AlertForm, AlertItem } from 'src/app/shared/alert-item.interface';
 import { CryptoItem } from 'src/app/shared/crypto-item.interface';
 
 @Component({
@@ -16,8 +16,9 @@ import { CryptoItem } from 'src/app/shared/crypto-item.interface';
 export class AlertPanelComponent implements OnInit {
   cryptoNames: string[] = [];
   @Input() cryptoItems!: CryptoItem[];
+  @Output() alertObject = new EventEmitter<AlertItem>();
 
-  newAlertForm: FormGroup<AlertItem> = this.fb.nonNullable.group({
+  newAlertForm: FormGroup<AlertForm> = this.fb.nonNullable.group({
     cryptoName: ['', [Validators.required]],
     price: [0, [Validators.required]],
     isGreater: [true, [Validators.required]],
@@ -30,16 +31,21 @@ export class AlertPanelComponent implements OnInit {
       this.cryptoNames.push(cryptopItem.symbol);
     });
 
-    this.setDefaults();
+    this.setDefaultCryptoNameValue();
   }
 
-  setDefaults() {
+  setDefaultCryptoNameValue() {
     this.newAlertForm.get('cryptoName')?.patchValue('BTC');
   }
 
   onCreateAlert() {
-    console.log(this.newAlertForm.controls.price.value);
-    console.log(this.newAlertForm.controls.isGreater.value);
-    console.log(this.newAlertForm.controls.cryptoName.value);
+    // const cryptoName = this.newAlertForm.controls.cryptoName.value;
+    // const price = this.newAlertForm.controls.price.value;
+    // const isGreater = this.newAlertForm.controls.isGreater.value;
+    this.alertObject.emit({
+      cryptoName: this.newAlertForm.controls.cryptoName.value,
+      price: this.newAlertForm.controls.price.value,
+      isGreater: this.newAlertForm.controls.isGreater.value,
+    });
   }
 }
