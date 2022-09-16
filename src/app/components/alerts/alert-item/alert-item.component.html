@@ -1,11 +1,24 @@
 <section class="main-container">
   <div class="alerts-container">
-    <div class="alert-item" *ngFor="let alertObject of alertObjects">
-      <p class="index">1.</p>
+    <div
+      class="alert-item"
+      *ngFor="let alertObject of alertObjects; index as i"
+    >
+      <p class="index">{{ i + 1 + "." }}</p>
       <div class="text-container">
-        <p class="item-title">Alert for: {{ alertObject }}</p>
+        <p class="item-title">
+          Alert for:
+          <span style="font-size: 28px">{{ alertObject.cryptoName }}</span>
+        </p>
         <p class="item-text">
-          Alert me when the price of Bitcoin is greater than 100000
+          Alert me when the price of {{ alertObject.cryptoName }} is equal or
+          <span>
+            {{ alertObject.isGreater === true ? "greater" : "less" }}</span
+          >
+          than
+          <span [ngStyle]="{ color: '#f7931a' }" style="font-size: 20px">{{
+            "$" + alertObject.price
+          }}</span>
         </p>
       </div>
       <div class="functions-container">

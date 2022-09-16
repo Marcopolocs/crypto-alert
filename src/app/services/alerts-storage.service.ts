@@ -21,15 +21,16 @@ export class AlertsStorageService {
   }
 
   fetchAllAlertItems() {
-    this.http
+    return this.http
       .get<any>(
         'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList.json'
       )
       .pipe(
         map((responseData) => {
-          console.log(responseData);
+          const object: AlertItem[] = Object.values(responseData);
+          console.log(object);
+          return object;
         })
-      )
-      .subscribe();
+      );
   }
 }

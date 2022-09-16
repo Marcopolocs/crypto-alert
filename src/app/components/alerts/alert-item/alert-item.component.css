@@ -9,10 +9,12 @@
   border-radius: 5px;
   background-color: var(--main-bg-color);
   padding: 1rem 2rem;
+  gap: 1rem;
 }
 
 .text-container {
   margin-right: 7rem;
+  width: 100%;
 }
 
 .alert-item {
@@ -33,6 +35,7 @@
 }
 
 .functions-container {
+  margin-left: 2rem;
   display: flex;
   align-items: center;
 }

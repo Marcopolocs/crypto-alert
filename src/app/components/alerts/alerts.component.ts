@@ -13,6 +13,6 @@ export class AlertsComponent implements OnInit {
   constructor(private alertsStorageService: AlertsStorageService) {}
 
   ngOnInit(): void {
-    // this.alertItems$ = this.alertsStorageService.fetchAllAlertItems();
+    this.alertItems$ = this.alertsStorageService.fetchAllAlertItems();
   }
 }
