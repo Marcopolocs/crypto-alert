@@ -118,7 +118,6 @@ export class CryptoItemsService {
               this.structuringNewCryptoPriceDetailsObject(item);
             newItemList.push(formattedObject);
           });
-
           newItemList.sort((a: any, b: any) => a.rank - b.rank);
           return newItemList;
         })
@@ -218,10 +217,11 @@ export class CryptoItemsService {
     );
   }
 
-  formattedPrice(price: number): number {
+  formattedPrice(price: number): number | string {
     if (price >= 300) {
       const item = +price.toFixed(0);
-      return +new Intl.NumberFormat('en-US').format(item);
+      const newItem = new Intl.NumberFormat('en-US').format(item);
+      return newItem;
     }
     if (price < 300 && price >= 10) {
       return +price.toFixed(2);

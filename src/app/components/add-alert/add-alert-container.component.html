@@ -12,6 +12,7 @@
         <app-alert-panel
           [cryptoItems]="items"
           (alertObject)="onPostObject($event)"
+          [singleCryptoItem]="pickedCryptoItem"
         ></app-alert-panel>
       </ng-container>
       <ng-template #loading>

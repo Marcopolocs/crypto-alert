@@ -21,5 +21,6 @@ export class CryptoItemComponent implements OnInit {
     event.stopPropagation();
     event.preventDefault();
     this.router.navigate(['add-alert']);
+    this.sendCryptoItemIntoAddAlert.emit(this.cryptoItem);
   }
 }

@@ -16,6 +16,7 @@ import { CryptoItem } from 'src/app/shared/crypto-item.interface';
 export class AlertPanelComponent implements OnInit {
   cryptoNames: string[] = [];
   @Input() cryptoItems!: CryptoItem[];
+  @Input() singleCryptoItem!: CryptoItem | null;
   @Output() alertObject = new EventEmitter<AlertItem>();
 
   newAlertForm: FormGroup<AlertForm> = this.fb.nonNullable.group({
@@ -35,7 +36,14 @@ export class AlertPanelComponent implements OnInit {
   }
 
   setDefaultCryptoNameValue() {
-    this.newAlertForm.get('cryptoName')?.patchValue('BTC');
+    if (this.singleCryptoItem !== null) {
+      this.newAlertForm
+        .get('cryptoName')
+        ?.patchValue(this.singleCryptoItem.symbol);
+      this.newAlertForm.get('price')?.patchValue(this.singleCryptoItem.price);
+    } else {
+      this.newAlertForm.get('cryptoName')?.patchValue('BTC');
+    }
   }
 
   onCreateAlert() {

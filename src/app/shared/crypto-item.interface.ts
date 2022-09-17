@@ -12,7 +12,7 @@ export interface CryptoItem {
   percentChange7d: number;
   percentChange24h: number;
   percentChange30d: number;
-  price: string;
+  price: number;
   rank: 1;
   reddit: string[];
   slug: string;
