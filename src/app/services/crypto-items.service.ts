@@ -104,7 +104,6 @@ export class CryptoItemsService {
           // for eachek, a sortoláls,
           const { data: dataObject, status: statusObject } = fetchedItems;
           const cryptoItems: any = Object.values(dataObject);
-
           this.getDate$.next(this.formattedDate());
 
           const items: any = [];
@@ -214,16 +213,15 @@ export class CryptoItemsService {
             ...currentDetailObject,
           });
         });
-
         return mergedObjects;
       })
     );
   }
 
-  formattedPrice(price: number): string | number {
+  formattedPrice(price: number): number {
     if (price >= 300) {
       const item = +price.toFixed(0);
-      return new Intl.NumberFormat('en-US').format(item);
+      return +new Intl.NumberFormat('en-US').format(item);
     }
     if (price < 300 && price >= 10) {
       return +price.toFixed(2);
@@ -234,7 +232,7 @@ export class CryptoItemsService {
     if (price <= 0.1) {
       return +price.toFixed(8);
     }
-    return price;
+    return +price;
   }
 
   formattedPercentage(percentage: number): number | null {

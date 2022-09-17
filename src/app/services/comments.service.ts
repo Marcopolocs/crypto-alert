@@ -29,7 +29,6 @@ export class CommentsService implements OnInit {
   }
 
   deleteComment(id: string): void {
-    // TODO: ahol ilyen js függvények vannak, mint a filter, find stb., ott írjunk ki interfacet
     const newCommentArray = this.comments.filter(
       (comment: Comment) => comment.id !== id
     );

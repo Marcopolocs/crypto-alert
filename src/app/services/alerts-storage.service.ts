@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 import { AlertItem } from '../shared/alert-item.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AlertsStorageService {
-  constructor(private http: HttpClient) {
-    this.fetchAllAlertItems();
-  }
+  alertsList$ = new BehaviorSubject<AlertItem[]>([]);
+  constructor(private http: HttpClient) {}
 
   postAlertItem(alertData: AlertItem) {
     this.http
@@ -21,16 +20,31 @@ export class AlertsStorageService {
   }
 
   fetchAllAlertItems() {
-    return this.http
-      .get<any>(
+    this.http
+      .get<{ [key: string]: AlertItem }>(
         'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList.json'
       )
       .pipe(
         map((responseData) => {
-          const object: AlertItem[] = Object.values(responseData);
-          console.log(object);
-          return object;
+          const alertItems: AlertItem[] = [];
+          for (const key in responseData) {
+            alertItems.push({ ...responseData[key], id: key });
+          }
+          return alertItems;
+        }),
+        tap((data) => {
+          // Ez a BehaviorSubject-em itt feljebb
+          this.alertsList$.next(data);
         })
-      );
+      )
+      .subscribe();
+  }
+
+  deleteAlertItemRequest(key: string) {
+    this.http
+      .delete(
+        `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList/${key}.json`
+      )
+      .subscribe();
   }
 }
