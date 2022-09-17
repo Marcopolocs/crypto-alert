@@ -40,6 +40,6 @@
       {{ "$" + cryptoItem.marketCap }}
     </p>
     <p class="list-group-item-text">{{ cryptoItem.circulatingSupply }}</p>
-    <button class="btn">Set Alert</button>
+    <button class="btn" (click)="navigateToAddAlert($event)">Set Alert</button>
   </div>
 </a>

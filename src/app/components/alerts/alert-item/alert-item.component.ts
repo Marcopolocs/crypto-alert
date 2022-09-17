@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlertItem } from 'src/app/shared/alert-item.interface';
 
 @Component({
@@ -8,7 +8,12 @@ import { AlertItem } from 'src/app/shared/alert-item.interface';
 })
 export class AlertItemComponent implements OnInit {
   @Input() alertObjects!: AlertItem[];
+  @Output() deletedAlertObject = new EventEmitter<AlertItem>();
   constructor() {}
 
   ngOnInit(): void {}
+
+  onDeleteAlertItem(item: AlertItem): void {
+    this.deletedAlertObject.emit(item);
+  }
 }

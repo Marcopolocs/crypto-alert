@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AlertsStorageService } from 'src/app/services/alerts-storage.service';
 import { AlertItem } from 'src/app/shared/alert-item.interface';
 
@@ -10,9 +10,21 @@ import { AlertItem } from 'src/app/shared/alert-item.interface';
 })
 export class AlertsComponent implements OnInit {
   alertItems$!: Observable<AlertItem[]>;
+
   constructor(private alertsStorageService: AlertsStorageService) {}
 
   ngOnInit(): void {
-    this.alertItems$ = this.alertsStorageService.fetchAllAlertItems();
+    this.alertsStorageService.fetchAllAlertItems();
+    this.alertItems$ = this.alertsStorageService.alertsList$;
+  }
+
+  deleteAlertObject(item: AlertItem) {
+    if (item.id) {
+      const itemId = item.id;
+      this.alertsStorageService.deleteAlertItemRequest(itemId);
+    }
+    const alerts = this.alertsStorageService.alertsList$.getValue();
+    const newAlertsList = alerts.filter((alert) => alert.id !== item.id);
+    this.alertsStorageService.alertsList$.next(newAlertsList);
   }
 }

@@ -10,7 +10,7 @@
   <div class="body-container">
     <div class="alerts-list-container">
       <ng-container *ngIf="alertItems$ | async as alertItems">
-        <app-alert-item [alertObjects]="alertItems"></app-alert-item>
+        <app-alert-item [alertObjects]="alertItems" (deletedAlertObject)="deleteAlertObject($event)"></app-alert-item>
       </ng-container>
     </div>
   </div>

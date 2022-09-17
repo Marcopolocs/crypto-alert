@@ -39,13 +39,10 @@ export class AlertPanelComponent implements OnInit {
   }
 
   onCreateAlert() {
-    
-    const generateID = Math.floor(Math.random() * Date.now());
     this.alertObject.emit({
       cryptoName: this.newAlertForm.controls.cryptoName.value,
       price: this.newAlertForm.controls.price.value,
       isGreater: this.newAlertForm.controls.isGreater.value,
-      id: generateID,
     });
   }
 }

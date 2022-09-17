@@ -23,7 +23,12 @@
       </div>
       <div class="functions-container">
         <button class="button edit-button">Edit</button>
-        <button class="button delete-buttion">Delete</button>
+        <button
+          class="button delete-buttion"
+          (click)="onDeleteAlertItem(alertObject)"
+        >
+          Delete
+        </button>
         <button class="button toggle-button">Toggle</button>
       </div>
     </div>
