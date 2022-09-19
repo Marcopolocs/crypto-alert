@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { CommentsStorageService } from 'src/app/services/comments-storage.service';
 import { CommentsService } from 'src/app/services/comments.service';
 import { Comment } from 'src/app/shared/comment.interface';
@@ -29,7 +33,7 @@ export class NewCommentComponent implements OnInit {
     const newComment: Comment = {
       id: Math.random().toString(16),
       text: this.newCommentForm.get('text')?.value,
-      timestamp: Date.now().toString(),
+      timestamp: Date.now(),
     };
     this.commentsService.addComment(newComment);
     this.commentsStorageService.storeComments();

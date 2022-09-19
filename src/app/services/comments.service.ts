@@ -16,11 +16,10 @@ export class CommentsService implements OnInit {
   addComment(newComment: Comment): void {
     this.comments.push(newComment);
     this.commentsSubject$.next(this.comments.slice());
-    // this.commentsStorageService.storeComments();
   }
 
   getComment(): Comment[] {
-    return this.commentsSubject$.getValue(); // this.comments.slice();
+    return this.commentsSubject$.getValue();
   }
 
   setComments(data: Comment[]): void {
@@ -34,7 +33,6 @@ export class CommentsService implements OnInit {
     );
     this.comments = newCommentArray;
     this.commentsSubject$.next(this.comments.slice());
-    // this.commentsStorageService.storeComments();
   }
 
   editComment(commentId: string, editedText: string): void {
@@ -43,7 +41,7 @@ export class CommentsService implements OnInit {
         return {
           ...comment,
           text: editedText,
-          editTimestamp: Date.now().toString(),
+          editTimestamp: Date.now(),
           editDate: 'Today',
         };
       }
@@ -51,6 +49,5 @@ export class CommentsService implements OnInit {
     });
     this.comments = updatedComments;
     this.commentsSubject$.next(this.comments.slice());
-    // this.commentsStorageService.storeComments();
   }
 }

@@ -12,12 +12,12 @@ const api_key = '742f5140f84afef89c1c38c587d5c33a';
 
 const request = {
   type: 'subscribe',
-  channel: 'heartbeat',
-  key: btoa(secret), // api_key, // access_key: btoa(secret),
-  passphrase: '6v5wfy5lhxg',
-  signature: btoa(secret),
-  timestamp: Date.now() / 1000,
+  channels: ['ticker'],
   product_ids: ['BTC-USD'],
+  signature: btoa(secret),
+  key: api_key,
+  passphrase: '6v5wfy5lhxg',
+  timestamp: Date.now() / 1000,
 };
 
 const data = {
@@ -25,7 +25,7 @@ const data = {
   product_ids: ['ETH-USD', 'ETH-EUR'],
   channels: [
     // "level2",
-    'ticker',
+    // 'ticker',
     {
       name: 'ticker',
       product_ids: ['ETH-BTC', 'ETH-USD'],

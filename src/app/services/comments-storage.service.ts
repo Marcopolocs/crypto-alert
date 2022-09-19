@@ -8,10 +8,10 @@ import { CommentsService } from './comments.service';
   providedIn: 'root',
 })
 export class CommentsStorageService {
+  FB_URL: string =
+    'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts.json';
   comments$ = this.http
-    .get<Comment[]>(
-      'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts.json'
-    )
+    .get<Comment[]>(this.FB_URL)
     .pipe(
       map((responseData) => {
         const newCommentArray: Comment[] = [];
@@ -43,28 +43,21 @@ export class CommentsStorageService {
 
   storeComments(): void {
     const commentArray: Comment[] = this.commentsService.getComment();
-    this.http
-      .put(
-        'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts.json',
-        commentArray
-      )
-      .subscribe();
+    this.http.put(this.FB_URL, commentArray).subscribe();
   }
 
-  dateFormatting(date: string): string {
+  dateFormatting(date: number): string {
+    console.log(date);
     const newDate = Date.now();
-    const result = Math.round(
-      Math.abs(newDate - +date) / (1000 * 60 * 60 * 24)
-    );
+    const result = Math.round(Math.abs(newDate - date) / (1000 * 60 * 60 * 24));
 
     if (result === 0) return 'Today';
     if (result === 1) return 'Yesterday';
     if (result <= 7) return `${result} days ago`;
 
-    return date.toLocaleString();
+    return new Date(date).toLocaleString();
   }
 }
-
 
 // get(url: string, params: string): Observable<any> => {
 //   return this.httpClient.get(url, params);

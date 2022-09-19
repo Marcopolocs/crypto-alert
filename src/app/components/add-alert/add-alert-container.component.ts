@@ -32,7 +32,8 @@ export class AddAlertContainerComponent implements OnInit {
   onPostObject(item: AlertItem) {
     this.alertsStorageService.postAlertItem(item);
     this.newCreatedAlertItemList.push(item);
-
+    // This could have been solved using a boolean value which we set dynamically
+    // but I found the shift method to be useful for such cases
     setTimeout(() => {
       this.newCreatedAlertItemList.shift();
     }, 3000);

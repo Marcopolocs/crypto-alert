@@ -1,8 +1,8 @@
 export interface Comment {
   id: string;
   text: string;
-  timestamp: string;
+  timestamp: number;
   date?: string;
-  editTimestamp?: string;
+  editTimestamp?: number;
   editDate?: string | null;
 }

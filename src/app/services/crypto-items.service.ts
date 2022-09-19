@@ -100,8 +100,6 @@ export class CryptoItemsService {
       )
       .pipe(
         map((fetchedItems) => {
-          // TODO: ez legyen refaktorálva, kiemelve az egyes részek külön függvényekbe, amik önálló egységek, pl a
-          // for eachek, a sortoláls,
           const { data: dataObject, status: statusObject } = fetchedItems;
           const cryptoItems: any = Object.values(dataObject);
           this.getDate$.next(this.formattedDate());

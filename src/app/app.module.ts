@@ -25,6 +25,7 @@ import { RegisterFormComponent } from './components/auth/register-form/register-
 import { AlertPanelComponent } from './components/add-alert/alert-panel/alert-panel.component';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { AlertItemComponent } from './components/alerts/alert-item/alert-item.component';
+import { AlertPopupComponent } from './components/add-alert/alert-popup/alert-popup.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { AlertItemComponent } from './components/alerts/alert-item/alert-item.co
     AddAlertContainerComponent,
     AlertsComponent,
     AlertItemComponent,
+    AlertPopupComponent,
   ],
   imports: [
     BrowserModule,
