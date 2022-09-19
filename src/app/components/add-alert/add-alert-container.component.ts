@@ -15,6 +15,7 @@ export class AddAlertContainerComponent implements OnInit {
   cryptoItems$: Observable<CryptoItem[]> =
     this.cryptoItemsService.mergeFetchedAllCryptoObjects();
   pickedCryptoItem!: CryptoItem | null;
+  newCreatedAlertItemList: AlertItem[] = [];
 
   constructor(
     private cryptoItemsService: CryptoItemsService,
@@ -30,5 +31,10 @@ export class AddAlertContainerComponent implements OnInit {
 
   onPostObject(item: AlertItem) {
     this.alertsStorageService.postAlertItem(item);
+    this.newCreatedAlertItemList.push(item);
+
+    setTimeout(() => {
+      this.newCreatedAlertItemList.shift();
+    }, 3000);
   }
 }

@@ -1,0 +1,11 @@
+<section class="alert-popup-container">
+  <p style="font-size: 20px">New alert created!</p>
+  <p>
+    Your alert will be triggered when
+    <span class="highlight">{{ alertItem.cryptoName }}</span
+    >'s price will be equal or
+    {{ alertItem.isGreater ? "greater" : "less" }} than
+    <span class="highlight">{{ "$" + alertItem.price }}</span>
+    !
+  </p>
+</section>

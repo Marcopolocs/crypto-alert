@@ -3,10 +3,18 @@
   justify-content: center;
   align-items: center;
   margin-top: 3rem;
+  position: relative;
 }
 
 h1 {
   color: var(--bitcoin-color);
   font-size: 60px;
   padding-bottom: 1rem;
+}
+
+.popup-window {
+  z-index: 10;
+  bottom: 0;
+  right: 0;
+  position: absolute;
 }

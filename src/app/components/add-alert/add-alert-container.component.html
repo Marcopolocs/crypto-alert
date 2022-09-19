@@ -21,5 +21,12 @@
         </ng-container>
       </ng-template>
     </div>
+    <ng-container *ngIf="newCreatedAlertItemList.length > 0">
+      <app-alert-popup
+        class="popup-window"
+        *ngFor="let item of newCreatedAlertItemList"
+        [alertItem]="item"
+      ></app-alert-popup>
+    </ng-container>
   </div>
 </section>
