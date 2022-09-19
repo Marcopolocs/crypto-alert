@@ -37,7 +37,7 @@ export class CommentItemComponent implements OnInit {
     this.isEditMode = true;
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
-      queryParams: { edit: commentItem.id },
+      queryParams: { edit: commentItem.firebaseId },
     });
   }
 
@@ -59,7 +59,10 @@ export class CommentItemComponent implements OnInit {
     const commentsList: Comment[] =
       this.commentsStorageService.commentsSubject$.getValue();
     const newCommentsList = commentsList.map((comment: Comment) => {
-      if (comment.id === this.commentObject.id) {
+      if (
+        comment.firebaseId &&
+        comment.firebaseId === this.commentObject.firebaseId
+      ) {
         const updateCommentItem = {
           ...comment,
           text: this.editedText,
@@ -67,7 +70,7 @@ export class CommentItemComponent implements OnInit {
           editDate: 'Today',
         };
         this.commentsStorageService.updateComment(
-          comment.id,
+          comment.firebaseId,
           updateCommentItem
         );
 

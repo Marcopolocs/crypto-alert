@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Comment } from '../shared/comment.interface';
-import { CommentsService } from './comments.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,16 +19,17 @@ export class CommentsStorageService {
       .pipe(
         map((responseData) => {
           const newCommentArray: Comment[] = [];
-
-          for (const [key, value] of Object.entries(responseData)) {
-            newCommentArray.push({
-              ...responseData[key],
-              firebaseId: key,
-              date: this.dateFormatting(responseData[key].timestamp),
-              editDate: responseData[key].editTimestamp
-                ? this.dateFormatting(responseData[key].editTimestamp)
-                : responseData[key].editTimestamp,
-            });
+          if (responseData) {
+            for (const [key, value] of Object.entries(responseData)) {
+              newCommentArray.push({
+                ...responseData[key],
+                firebaseId: key,
+                date: this.dateFormatting(responseData[key].timestamp),
+                editDate: responseData[key].editTimestamp
+                  ? this.dateFormatting(responseData[key].editTimestamp)
+                  : responseData[key].editTimestamp,
+              });
+            }
           }
           return newCommentArray ? newCommentArray : [];
         }),
@@ -41,13 +41,20 @@ export class CommentsStorageService {
   }
 
   storeComment(newComment: Comment): void {
-    console.log(newComment);
     this.http
       .post(
         'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts.json',
         newComment
       )
-      .subscribe();
+      .subscribe((data) => {
+        const addFirebaseIdToCommentObject = {
+          ...newComment,
+          firebaseId: Object.values(data)[0],
+        };
+        const retrieveItemsFromSubject = this.commentsSubject$.getValue();
+        retrieveItemsFromSubject.push(addFirebaseIdToCommentObject);
+        this.commentsSubject$.next(retrieveItemsFromSubject);
+      });
   }
 
   updateComment(firebaseId: string, newComment: Comment): void {

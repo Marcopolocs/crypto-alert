@@ -16,10 +16,7 @@ import { Comment } from 'src/app/shared/comment.interface';
 export class NewCommentComponent implements OnInit {
   newCommentForm!: UntypedFormGroup;
 
-  constructor(
-    private commentsService: CommentsService,
-    private commentsStorageService: CommentsStorageService
-  ) {}
+  constructor(private commentsStorageService: CommentsStorageService) {}
   ngOnInit(): void {
     this.newCommentForm = new UntypedFormGroup({
       text: new UntypedFormControl(null, [
@@ -35,9 +32,7 @@ export class NewCommentComponent implements OnInit {
       text: this.newCommentForm.get('text')?.value,
       timestamp: Date.now(),
     };
-    this.commentsService.addComment(newComment);
     this.commentsStorageService.storeComment(newComment);
-
     this.newCommentForm.reset();
   }
 }
