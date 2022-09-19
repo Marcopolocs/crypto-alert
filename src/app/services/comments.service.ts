@@ -1,53 +1,40 @@
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { Comment } from '../shared/comment.interface';
+import { CommentsStorageService } from './comments-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommentsService implements OnInit {
-  commentsSubject$ = new BehaviorSubject<Comment[]>([]);
-
-  // TODO: törölhető, szerintem felesleges
-  private comments: Comment[] = [];
+  constructor(private commentsStorageService: CommentsStorageService) {}
 
   ngOnInit(): void {}
 
   addComment(newComment: Comment): void {
-    this.comments.push(newComment);
-    this.commentsSubject$.next(this.comments.slice());
+    const commentList: Comment[] =
+      this.commentsStorageService.commentsSubject$.getValue();
+    commentList.push(newComment);
+    this.commentsStorageService.commentsSubject$.next(commentList);
   }
 
   getComment(): Comment[] {
-    return this.commentsSubject$.getValue();
+    return this.commentsStorageService.commentsSubject$.getValue();
   }
 
   setComments(data: Comment[]): void {
-    this.comments = data;
-    this.commentsSubject$.next(this.comments.slice());
+    this.commentsStorageService.commentsSubject$.next(data);
   }
 
   deleteComment(id: string): void {
-    const newCommentArray = this.comments.filter(
+    const commentList: Comment[] =
+      this.commentsStorageService.commentsSubject$.getValue();
+    const filteredList = commentList.filter(
       (comment: Comment) => comment.id !== id
     );
-    this.comments = newCommentArray;
-    this.commentsSubject$.next(this.comments.slice());
+    this.commentsStorageService.commentsSubject$.next(filteredList);
   }
 
-  editComment(commentId: string, editedText: string): void {
-    const updatedComments = this.comments.map((comment: Comment) => {
-      if (comment.id === commentId) {
-        return {
-          ...comment,
-          text: editedText,
-          editTimestamp: Date.now(),
-          editDate: 'Today',
-        };
-      }
-      return comment;
-    });
-    this.comments = updatedComments;
-    this.commentsSubject$.next(this.comments.slice());
+  editComment(commentList: Comment[]): void {
+    this.commentsStorageService.commentsSubject$.next(commentList);
   }
 }

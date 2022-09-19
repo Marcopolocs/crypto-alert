@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Comment } from '../shared/comment.interface';
 import { CommentsService } from './comments.service';
@@ -8,46 +9,66 @@ import { CommentsService } from './comments.service';
   providedIn: 'root',
 })
 export class CommentsStorageService {
-  FB_URL: string =
-    'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts.json';
-  comments$ = this.http
-    .get<Comment[]>(this.FB_URL)
-    .pipe(
-      map((responseData) => {
-        const newCommentArray: Comment[] = [];
-        if (responseData) {
-          for (const item of responseData) {
-            const newComment: Comment = {
-              ...item,
-              date: this.dateFormatting(item.timestamp),
-              editDate: item.editTimestamp
-                ? this.dateFormatting(item.editTimestamp)
-                : item.editDate,
-            };
-            newCommentArray.push(newComment);
+  commentsSubject$ = new BehaviorSubject<Comment[]>([]);
+  constructor(private http: HttpClient) {}
+
+  fetchComments() {
+    this.http
+      .get<any>(
+        `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts.json`
+      )
+      .pipe(
+        map((responseData) => {
+          const newCommentArray: Comment[] = [];
+
+          for (const [key, value] of Object.entries(responseData)) {
+            newCommentArray.push({
+              ...responseData[key],
+              firebaseId: key,
+              date: this.dateFormatting(responseData[key].timestamp),
+              editDate: responseData[key].editTimestamp
+                ? this.dateFormatting(responseData[key].editTimestamp)
+                : responseData[key].editTimestamp,
+            });
           }
-        }
+          return newCommentArray ? newCommentArray : [];
+        }),
+        tap((comments) => {
+          this.commentsSubject$.next(comments);
+        })
+      )
+      .subscribe();
+  }
 
-        return newCommentArray ? newCommentArray : [];
-      }),
-      tap((comments) => {
-        this.commentsService.setComments(comments);
-      })
-    )
-    .subscribe();
+  storeComment(newComment: Comment): void {
+    console.log(newComment);
+    this.http
+      .post(
+        'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts.json',
+        newComment
+      )
+      .subscribe();
+  }
 
-  constructor(
-    private http: HttpClient,
-    private commentsService: CommentsService
-  ) {}
+  updateComment(firebaseId: string, newComment: Comment): void {
+    console.log(firebaseId);
+    this.http
+      .put(
+        `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts/${firebaseId}.json`,
+        newComment
+      )
+      .subscribe();
+  }
 
-  storeComments(): void {
-    const commentArray: Comment[] = this.commentsService.getComment();
-    this.http.put(this.FB_URL, commentArray).subscribe();
+  deleteComment(firebaseId: string): void {
+    this.http
+      .delete(
+        `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts/${firebaseId}.json`
+      )
+      .subscribe();
   }
 
   dateFormatting(date: number): string {
-    console.log(date);
     const newDate = Date.now();
     const result = Math.round(Math.abs(newDate - date) / (1000 * 60 * 60 * 24));
 

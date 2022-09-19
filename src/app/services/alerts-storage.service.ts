@@ -33,7 +33,6 @@ export class AlertsStorageService {
           return alertItems;
         }),
         tap((data) => {
-          // Ez a BehaviorSubject-em itt feljebb
           this.alertsList$.next(data);
         })
       )

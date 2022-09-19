@@ -26,16 +26,18 @@ export class CommentItemComponent implements OnInit {
     this.editedText = this.commentObject.text;
   }
 
-  onDeleteComment(id: string): void {
-    this.commentsService.deleteComment(id);
-    this.commentsStorageService.storeComments();
+  onDeleteComment(commentItem: Comment): void {
+    this.commentsService.deleteComment(commentItem.id);
+    if (commentItem.firebaseId) {
+      this.commentsStorageService.deleteComment(commentItem.firebaseId);
+    }
   }
 
-  onEditComment(id: string): void {
+  onEditComment(commentItem: Comment): void {
     this.isEditMode = true;
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
-      queryParams: { edit: id },
+      queryParams: { edit: commentItem.id },
     });
   }
 
@@ -54,7 +56,26 @@ export class CommentItemComponent implements OnInit {
       this.router.navigate(['community']);
       return;
     }
-    this.commentsService.editComment(this.commentObject.id, this.editedText);
+    const commentsList: Comment[] =
+      this.commentsStorageService.commentsSubject$.getValue();
+    const newCommentsList = commentsList.map((comment: Comment) => {
+      if (comment.id === this.commentObject.id) {
+        const updateCommentItem = {
+          ...comment,
+          text: this.editedText,
+          editTimestamp: Date.now(),
+          editDate: 'Today',
+        };
+        this.commentsStorageService.updateComment(
+          comment.id,
+          updateCommentItem
+        );
+
+        return updateCommentItem;
+      }
+      return comment;
+    });
+    this.commentsService.editComment(newCommentsList);
     this.router.navigate(['community']);
     this.isEditMode = false;
   }

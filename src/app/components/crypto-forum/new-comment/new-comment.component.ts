@@ -36,7 +36,8 @@ export class NewCommentComponent implements OnInit {
       timestamp: Date.now(),
     };
     this.commentsService.addComment(newComment);
-    this.commentsStorageService.storeComments();
+    this.commentsStorageService.storeComment(newComment);
+
     this.newCommentForm.reset();
   }
 }
