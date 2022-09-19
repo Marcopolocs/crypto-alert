@@ -9,6 +9,7 @@ import { RegisterFormComponent } from './components/auth/register-form/register-
 import { LoginFormComponent } from './components/auth/login-form/login-form.component';
 import { AuthGuard } from './components/auth/auth.guard';
 import { AlertsComponent } from './components/alerts/alerts.component';
+import { HistoryAlertsContainerComponent } from './components/history-alerts/history-alerts-container.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -22,12 +23,14 @@ const routes: Routes = [
   },
   { path: 'add-alert', component: AddAlertContainerComponent },
   { path: 'alerts', component: AlertsComponent },
+  { path: 'alert-history', component: HistoryAlertsContainerComponent },
   {
     path: 'community',
     component: CryptoForumComponent,
   },
   { path: 'sign-up', component: RegisterFormComponent },
   { path: 'login', component: LoginFormComponent },
+  { path: '**', redirectTo: '/all-cryptos' },
 ];
 
 @NgModule({

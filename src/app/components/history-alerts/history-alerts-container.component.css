@@ -10,3 +10,14 @@ h1 {
   font-size: 60px;
   padding-bottom: 1rem;
 }
+
+.history-container {
+  color: var(--main-bg-color);
+  border: 1px solid var(--main-bg-color);
+  padding: 1rem 2rem;
+  border-radius: 5px;
+}
+
+.highlight {
+  color: var(--bitcoin-color);
+}
