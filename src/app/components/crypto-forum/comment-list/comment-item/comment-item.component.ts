@@ -50,7 +50,7 @@ export class CommentItemComponent implements OnInit {
     this.router.navigate(['community']);
   }
 
-  onSaveEditedComment() {
+  onSaveEditedComment(): void {
     if (this.commentObject.text === this.editedText) {
       this.isEditMode = false;
       this.router.navigate(['community']);

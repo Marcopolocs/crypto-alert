@@ -9,6 +9,10 @@
   box-shadow: 0 0 3px 1px var(--main-bg-color);
 }
 
+p {
+  color: var(--bitcoin-color);
+}
+
 form > p {
   color: #fff;
 }

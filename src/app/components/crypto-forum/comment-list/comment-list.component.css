@@ -6,3 +6,7 @@
 h1 {
   color: var(--bitcoin-color);
 }
+
+.comment-list-container {
+  margin-bottom: 3rem;
+}

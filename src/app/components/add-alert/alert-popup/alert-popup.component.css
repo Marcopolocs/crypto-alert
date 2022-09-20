@@ -6,7 +6,7 @@
   width: 26rem;
   padding: 0.7rem 0.8rem 0 1rem;
   margin-bottom: 0.5rem;
-  box-shadow: 2px 2px 1px #bbb;
+  box-shadow: 1px 1px 3px 1px rgba(247, 147, 26, 0.6);
 }
 
 .highlight {

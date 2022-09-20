@@ -12,6 +12,7 @@ h1 {
 }
 
 .history-container {
+  background-color: #fff;
   color: var(--main-bg-color);
   border: 1px solid var(--main-bg-color);
   padding: 1rem 2rem;

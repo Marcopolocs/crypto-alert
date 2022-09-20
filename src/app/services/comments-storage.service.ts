@@ -11,13 +11,14 @@ export class CommentsStorageService {
   commentsSubject$ = new BehaviorSubject<Comment[]>([]);
   constructor(private http: HttpClient) {}
 
-  fetchComments() {
+  fetchComments(): void {
     this.http
       .get<any>(
         `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts.json`
       )
       .pipe(
         map((responseData) => {
+          console.log(responseData);
           const newCommentArray: Comment[] = [];
           if (responseData) {
             for (const [key, value] of Object.entries(responseData)) {
@@ -51,14 +52,14 @@ export class CommentsStorageService {
           ...newComment,
           firebaseId: Object.values(data)[0],
         };
-        const retrieveItemsFromSubject = this.commentsSubject$.getValue();
+        const retrieveItemsFromSubject: Comment[] =
+          this.commentsSubject$.getValue();
         retrieveItemsFromSubject.push(addFirebaseIdToCommentObject);
         this.commentsSubject$.next(retrieveItemsFromSubject);
       });
   }
 
   updateComment(firebaseId: string, newComment: Comment): void {
-    console.log(firebaseId);
     this.http
       .put(
         `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts/${firebaseId}.json`,

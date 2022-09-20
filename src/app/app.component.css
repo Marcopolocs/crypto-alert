@@ -1,6 +1,6 @@
 .page-wrapper {
   background-color: rgb(235, 235, 235);
-  height: 100%;
+  min-height: 100%;
 }
 
 .main-container-body {

@@ -12,6 +12,10 @@
   gap: 1rem;
 }
 
+.alert-item:last-child {
+  margin-bottom: 3rem;
+}
+
 .text-container {
   margin-right: 7rem;
   width: 100%;
