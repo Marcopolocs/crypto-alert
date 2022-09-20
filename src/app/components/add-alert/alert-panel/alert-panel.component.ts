@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { AlertForm, AlertItem } from 'src/app/shared/alert-item.interface';
 import { CryptoItem } from 'src/app/shared/crypto-item.interface';
 
@@ -15,7 +16,7 @@ import { CryptoItem } from 'src/app/shared/crypto-item.interface';
 })
 export class AlertPanelComponent implements OnInit {
   cryptoNames: string[] = [];
-  @Input() cryptoItems!: CryptoItem[];
+  @Input() cryptoItems$!: Observable<CryptoItem[]>;
   @Input() singleCryptoItem!: CryptoItem | null;
   @Output() alertObject = new EventEmitter<AlertItem>();
 
@@ -28,9 +29,11 @@ export class AlertPanelComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.cryptoItems.forEach((cryptopItem) => {
-      this.cryptoNames.push(cryptopItem.symbol);
-    });
+    // this.cryptoItems.forEach((cryptopItem) => {
+    //   this.cryptoNames.push(cryptopItem.symbol);
+    // });
+    this.cryptoItems$.subscribe();
+    setTimeout(() => console.log(this.cryptoItems$), 3000);
 
     this.setDefaultCryptoNameValue();
   }

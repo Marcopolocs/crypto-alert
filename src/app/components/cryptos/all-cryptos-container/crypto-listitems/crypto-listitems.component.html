@@ -7,10 +7,7 @@
     <span [ngStyle]="{ color: '#f7931a' }">Custom Crypto Scanner Alert</span>
     based on price changes!
   </h3>
-  <div
-    class="crypto-related-container"
-    *ngIf="cryptoItemAllDetails$ | async as cryptoItems; else loading"
-  >
+  <div class="crypto-related-container">
     <div class="refresh-details">
       <div class="refresh-section">
         <button class="btn" (click)="onRefreshPrice()">
@@ -35,17 +32,21 @@
           <p class="list-header">Market Cap</p>
           <p class="list-header">Circulating Supply</p>
         </div>
-        <app-crypto-item
-          *ngFor="let item of cryptoItems; index as i; even as e"
-          [cryptoItem]="item"
-          [index]="i"
-          [even]="e"
-          (sendCryptoItemIntoAddAlert)="pickedCryptoItem($event)"
-        ></app-crypto-item>
+        <ng-container
+          *ngIf="cryptoItemAllDetails$ | async as cryptoItems; else loading"
+        >
+          <app-crypto-item
+            *ngFor="let item of cryptoItems; index as i; even as e"
+            [cryptoItem]="item"
+            [index]="i"
+            [even]="e"
+            (sendCryptoItemIntoAddAlert)="pickedCryptoItem($event)"
+          ></app-crypto-item>
+        </ng-container>
+        <ng-template #loading>
+          <app-loading-spinner></app-loading-spinner>
+        </ng-template>
       </div>
     </div>
   </div>
-  <ng-template #loading>
-    <app-loading-spinner></app-loading-spinner>
-  </ng-template>
 </section>

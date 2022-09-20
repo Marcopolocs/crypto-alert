@@ -9,14 +9,13 @@
         <option [ngValue]="null" disabled>
           Please select a cryptocurrency:
         </option>
-        <ng-container *ngIf="cryptoItems; else notFound">
-          <option *ngFor="let cryptoName of cryptoNames" [ngValue]="cryptoName">
-            {{ cryptoName }}
+        <ng-container *ngIf="cryptoItems$ | async as items; else loading">
+          <option *ngFor="let item of items" [ngValue]="item.symbol">
+            {{ item.symbol }}
           </option>
         </ng-container>
-
-        <ng-template #notFound>
-          <option>An error occurred! No crypto found. :(</option>
+        <ng-template #loading>
+          <option>Loading...</option>
         </ng-template>
       </select>
       <select name="condition" id="select" formControlName="isGreater">

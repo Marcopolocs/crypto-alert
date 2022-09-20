@@ -15,7 +15,7 @@ export class AddAlertContainerComponent implements OnInit {
   cryptoItems$: Observable<CryptoItem[]> =
     this.cryptoItemsService.mergeFetchedAllCryptoObjects();
   pickedCryptoItem!: CryptoItem | null;
-  newCreatedAlertItemList: AlertItem[] = [];
+  createdAlertItemPopupList: AlertItem[] = [];
 
   constructor(
     private cryptoItemsService: CryptoItemsService,
@@ -31,11 +31,11 @@ export class AddAlertContainerComponent implements OnInit {
 
   onPostObject(item: AlertItem) {
     this.alertsStorageService.postAlertItem(item);
-    this.newCreatedAlertItemList.push(item);
+    this.createdAlertItemPopupList.push(item);
     // This could have been solved using a boolean value which we set dynamically
     // but I found the shift method to be useful for such cases
     setTimeout(() => {
-      this.newCreatedAlertItemList.shift();
+      this.createdAlertItemPopupList.shift();
     }, 3000);
   }
 }

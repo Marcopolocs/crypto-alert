@@ -8,23 +8,23 @@
   </div>
   <div class="body-container">
     <div class="alert-container">
-      <ng-container *ngIf="cryptoItems$ | async as items; else loading">
+      <ng-container>
         <app-alert-panel
-          [cryptoItems]="items"
+          [cryptoItems$]="cryptoItems$"
           (alertObject)="onPostObject($event)"
           [singleCryptoItem]="pickedCryptoItem"
         ></app-alert-panel>
       </ng-container>
-      <ng-template #loading>
+      <!-- <ng-template #loading>
         <ng-container>
           <app-loading-spinner></app-loading-spinner>
         </ng-container>
-      </ng-template>
+      </ng-template> -->
     </div>
-    <ng-container *ngIf="newCreatedAlertItemList.length > 0">
+    <ng-container *ngIf="createdAlertItemPopupList.length > 0">
       <app-alert-popup
         class="popup-window"
-        *ngFor="let item of newCreatedAlertItemList"
+        *ngFor="let item of createdAlertItemPopupList"
         [alertItem]="item"
       ></app-alert-popup>
     </ng-container>

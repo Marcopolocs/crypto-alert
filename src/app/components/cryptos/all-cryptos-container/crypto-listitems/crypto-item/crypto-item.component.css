@@ -24,11 +24,20 @@ a {
 }
 
 .btn {
+  border: none;
   background-color: var(--main-bg-color);
   color: white;
   width: 7rem;
   justify-items: center;
   margin-bottom: 15px;
+  transition: 0.3s ease;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #fff;
+  color: var(--main-bg-color);
+  box-shadow: 0 0 3px 3px var(--bitcoin-color);
 }
 
 .index {
