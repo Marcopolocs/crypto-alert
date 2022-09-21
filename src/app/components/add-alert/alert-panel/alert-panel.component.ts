@@ -34,9 +34,10 @@ export class AlertPanelComponent implements OnInit {
 
   ngOnInit(): void {
     // THIS IF STATEMENT WAS NEEDED OTHERWISE THE LOGIC HERE WOULD RUN IN CASE OF EDITMODE AND RESULT IN ERROR
-    if (this.alertsService.alertPanelType$.getValue() !== AlertPanelEnum.EDIT) {
+    if (
+      this.alertsService.alertPanelType$.getValue() === AlertPanelEnum.CREATE
+    ) {
       this.setDefaultCryptoNameValue();
-      this.alertsService.alertPanelType$.next(AlertPanelEnum.CREATE);
     } else {
       this.editedCryptoItemObject = this.alertsService.setEditedCryptoItem;
       this.setEditedCryptoItemValuesAsDefault();
@@ -68,7 +69,6 @@ export class AlertPanelComponent implements OnInit {
       cryptoName: this.newAlertForm.controls.cryptoName.value,
       price: this.newAlertForm.controls.price.value,
       isGreater: this.newAlertForm.controls.isGreater.value,
-      id: Math.random().toString(),
     });
   }
 
@@ -77,6 +77,7 @@ export class AlertPanelComponent implements OnInit {
       cryptoName: this.newAlertForm.controls.cryptoName.value,
       price: this.newAlertForm.controls.price.value,
       isGreater: this.newAlertForm.controls.isGreater.value,
+      id: this.editedCryptoItemObject.id,
     });
   }
 }

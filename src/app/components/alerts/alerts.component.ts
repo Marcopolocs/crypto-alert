@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AlertsStorageService } from 'src/app/services/alerts-storage.service';
-import { CryptoItemsService } from 'src/app/services/crypto-items.service';
+import { AlertsService } from 'src/app/services/alerts.service';
 import { AlertItem } from 'src/app/shared/alert-item.interface';
 
 @Component({
@@ -12,23 +12,21 @@ import { AlertItem } from 'src/app/shared/alert-item.interface';
 export class AlertsComponent implements OnInit {
   alertItems$!: Observable<AlertItem[]>;
 
-  constructor(
-    private alertsStorageService: AlertsStorageService,
-    private cryptoItemsService: CryptoItemsService
-  ) {}
+  constructor(private alertsService: AlertsService) {}
 
   ngOnInit(): void {
-    this.alertsStorageService.fetchAllAlertItems();
-    this.alertItems$ = this.alertsStorageService.alertsList$;
+    this.alertsService.getAlertsList();
+    this.alertItems$ = this.alertsService.fetchedAlertsList$;
+  }
+
+  editAlertObject(item: AlertItem) {
+    this.alertsService.editAlertItem(item);
   }
 
   deleteAlertObject(item: AlertItem) {
     if (item.id) {
       const itemId = item.id;
-      this.alertsStorageService.deleteAlertItemRequest(itemId);
+      this.alertsService.deleteAlertItem(itemId);
     }
-    const alerts = this.alertsStorageService.alertsList$.getValue();
-    const newAlertsList = alerts.filter((alert) => alert.id !== item.id);
-    this.alertsStorageService.alertsList$.next(newAlertsList);
   }
 }

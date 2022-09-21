@@ -24,7 +24,7 @@
       <div class="functions-container">
         <button
           class="button edit-button"
-          (click)="onEditAlertItem(alertObject)"
+          (click)="setEditModeAndAlertItem(alertObject)"
         >
           Edit
         </button>
@@ -39,7 +39,10 @@
     </div>
     <ng-container *ngIf="isEditMode">
       <div class="edit-panel-container">
-        <app-alert-panel class="edit-panel"></app-alert-panel>
+        <app-alert-panel
+          class="edit-panel"
+          (alertObject)="editingAlertObject($event)"
+        ></app-alert-panel>
       </div>
     </ng-container>
   </div>

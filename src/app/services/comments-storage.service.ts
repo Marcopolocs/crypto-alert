@@ -41,7 +41,7 @@ export class CommentsStorageService {
       .subscribe();
   }
 
-  storeComment(newComment: Comment): void {
+  postComment(newComment: Comment): void {
     this.http
       .post(
         'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts.json',

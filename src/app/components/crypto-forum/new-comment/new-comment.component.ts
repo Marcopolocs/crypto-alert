@@ -32,7 +32,7 @@ export class NewCommentComponent implements OnInit {
       text: this.newCommentForm.get('text')?.value,
       timestamp: Date.now(),
     };
-    this.commentsStorageService.storeComment(newComment);
+    this.commentsStorageService.postComment(newComment);
     this.newCommentForm.reset();
   }
 }

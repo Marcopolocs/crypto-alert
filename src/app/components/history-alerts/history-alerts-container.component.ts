@@ -6,16 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./history-alerts-container.component.css'],
 })
 export class HistoryAlertsContainerComponent implements OnInit {
-  testObject: any = {
-    firstName: 'Mark',
-    lastName: 'Meszaros',
-    birthDate: 1992,
-    fullKok: 'no',
-  };
-
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(Object.entries(this.testObject));
-  }
+  ngOnInit(): void {}
 }

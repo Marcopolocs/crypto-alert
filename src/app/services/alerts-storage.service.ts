@@ -16,7 +16,19 @@ export class AlertsStorageService {
         'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList.json',
         alertData
       )
-      .subscribe();
+      .subscribe((respData) => {
+        console.log(respData);
+
+        const addFirebaseIdToCommentObject = {
+          ...alertData,
+          id: Object.values(respData)[0],
+        };
+        const retrieveItemsFromSubject: AlertItem[] =
+          this.alertsList$.getValue();
+        retrieveItemsFromSubject.push(addFirebaseIdToCommentObject);
+        this.alertsList$.next(retrieveItemsFromSubject);
+        console.log(this.alertsList$.getValue());
+      });
   }
 
   fetchAllAlertItems() {
@@ -39,7 +51,17 @@ export class AlertsStorageService {
       .subscribe();
   }
 
-  deleteAlertItemRequest(key: string) {
+  updateAlertItem(updatedAlertItem: AlertItem): void {
+    console.log(updatedAlertItem);
+    this.http
+      .put(
+        `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList/${updatedAlertItem.id}.json`,
+        updatedAlertItem
+      )
+      .subscribe();
+  }
+
+  deleteAlertItem(key: string): void {
     this.http
       .delete(
         `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList/${key}.json`

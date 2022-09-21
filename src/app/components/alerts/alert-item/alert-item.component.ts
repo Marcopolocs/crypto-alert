@@ -13,15 +13,22 @@ export class AlertItemComponent implements OnInit {
 
   @Input() alertObjects!: AlertItem[];
   @Output() deletedAlertObject = new EventEmitter<AlertItem>();
+  @Output() editedAlertObject = new EventEmitter<AlertItem>();
 
   constructor(private alertsService: AlertsService) {}
 
   ngOnInit(): void {}
 
-  onEditAlertItem(item: AlertItem) {
+  setEditModeAndAlertItem(item: AlertItem) {
     this.alertsService.alertPanelType$.next(AlertPanelEnum.EDIT);
     this.alertsService.settingEditedCryptoItem(item);
     this.isEditMode = true;
+  }
+
+  editingAlertObject(item: AlertItem) {
+    this.editedAlertObject.emit(item);
+    this.isEditMode = false;
+    this.alertsService.alertPanelType$.next(AlertPanelEnum.CREATE);
   }
 
   onDeleteAlertItem(item: AlertItem): void {
