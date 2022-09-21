@@ -4,6 +4,11 @@
   --third-bg-color: #87878af5;
   --fourth-bg-color: rgb(235, 235, 235);
   --bitcoin-color: rgb(247, 147, 26);
+  --linear-color: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255),
+    rgba(36, 36, 37)
+  );
 }
 
 html,

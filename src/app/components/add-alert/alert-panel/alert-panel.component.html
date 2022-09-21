@@ -1,7 +1,11 @@
-<div class="alert-container">
-  <form [formGroup]="newAlertForm" (ngSubmit)="onCreateAlert()">
+<div class="alert-container" [ngSwitch]="isAlertMode | async">
+  <form
+    [formGroup]="newAlertForm"
+    (ngSubmit)="onCreateAlert()"
+    *ngSwitchCase="'create'"
+  >
     <div class="alert-container-header">
-      <p>Set an alert!</p>
+      <p *ngSwitchCase="'create'">Set an alert!</p>
     </div>
     <p>Alert me when the price of</p>
     <div class="alert-details">
@@ -33,6 +37,38 @@
     </div>
     <div class="submit-button">
       <button type="submit">Create alert</button>
+    </div>
+  </form>
+  <form
+    [formGroup]="newAlertForm"
+    (ngSubmit)="onEditAlert()"
+    *ngSwitchCase="'edit'"
+  >
+    <div class="alert-container-header">
+      <p>Edit your alert!</p>
+    </div>
+    <p>Alert me when the price of</p>
+    <div class="alert-details">
+      <select name="crypto-name" id="select" formControlName="cryptoName">
+        <option [ngValue]="editedCryptoItemObject.cryptoName">
+          {{ editedCryptoItemObject.cryptoName }}
+        </option>
+      </select>
+      <select name="condition" id="select" formControlName="isGreater">
+        <option [ngValue]="null" disabled>Please select a condition:</option>
+        <option [ngValue]="true">is greater than or equal</option>
+        <option [ngValue]="false">is less than or equal</option>
+      </select>
+      <div class="input-details">
+        <input type="text" formControlName="price" />
+        <p class="input-note">
+          *The prices here are in US dollar. Please keep this in mind when
+          setting an alert!
+        </p>
+      </div>
+    </div>
+    <div class="submit-button">
+      <button type="submit">Edit alert</button>
     </div>
   </form>
 </div>

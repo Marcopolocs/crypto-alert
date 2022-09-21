@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AlertsStorageService } from 'src/app/services/alerts-storage.service';
+import { CryptoItemsService } from 'src/app/services/crypto-items.service';
 import { AlertItem } from 'src/app/shared/alert-item.interface';
 
 @Component({
@@ -11,7 +12,10 @@ import { AlertItem } from 'src/app/shared/alert-item.interface';
 export class AlertsComponent implements OnInit {
   alertItems$!: Observable<AlertItem[]>;
 
-  constructor(private alertsStorageService: AlertsStorageService) {}
+  constructor(
+    private alertsStorageService: AlertsStorageService,
+    private cryptoItemsService: CryptoItemsService
+  ) {}
 
   ngOnInit(): void {
     this.alertsStorageService.fetchAllAlertItems();

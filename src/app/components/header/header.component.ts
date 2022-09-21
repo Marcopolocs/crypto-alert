@@ -33,7 +33,8 @@ export class HeaderComponent implements OnInit {
   isLoading: boolean = false;
   isSearcResulthWindowOpen: boolean = false;
 
-  imageSrc: string = 'assets/bitcoin-logo.png';
+  // imageSrc: string = 'assets/bitcoin-logo.png';
+  imageSrc: string = 'assets/shiba-inu-logo.png';
   searchInput: UntypedFormControl = new UntypedFormControl(null);
   cryptoName!: string;
 
