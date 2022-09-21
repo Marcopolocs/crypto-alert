@@ -37,5 +37,6 @@ export class AlertItemComponent implements OnInit {
 
   hideAlertPanel(value: boolean) {
     this.isEditMode = value;
+    this.alertsService.alertPanelType$.next(AlertPanelEnum.CREATE);
   }
 }
