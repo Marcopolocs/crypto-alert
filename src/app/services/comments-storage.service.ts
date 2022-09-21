@@ -8,14 +8,14 @@ import { Comment } from '../shared/comment.interface';
   providedIn: 'root',
 })
 export class CommentsStorageService {
+  FB_URL =
+    'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts';
   commentsSubject$ = new BehaviorSubject<Comment[]>([]);
   constructor(private http: HttpClient) {}
 
   fetchComments(): void {
     this.http
-      .get<any>(
-        `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts.json`
-      )
+      .get<any>(`${this.FB_URL}.json`)
       .pipe(
         map((responseData) => {
           console.log(responseData);
@@ -42,38 +42,24 @@ export class CommentsStorageService {
   }
 
   postComment(newComment: Comment): void {
-    this.http
-      .post(
-        'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts.json',
-        newComment
-      )
-      .subscribe((data) => {
-        const addFirebaseIdToCommentObject = {
-          ...newComment,
-          firebaseId: Object.values(data)[0],
-        };
-        const retrieveItemsFromSubject: Comment[] =
-          this.commentsSubject$.getValue();
-        retrieveItemsFromSubject.push(addFirebaseIdToCommentObject);
-        this.commentsSubject$.next(retrieveItemsFromSubject);
-      });
+    this.http.post(`${this.FB_URL}.json`, newComment).subscribe((data) => {
+      const addFirebaseIdToCommentObject = {
+        ...newComment,
+        firebaseId: Object.values(data)[0],
+      };
+      const retrieveItemsFromSubject: Comment[] =
+        this.commentsSubject$.getValue();
+      retrieveItemsFromSubject.push(addFirebaseIdToCommentObject);
+      this.commentsSubject$.next(retrieveItemsFromSubject);
+    });
   }
 
   updateComment(firebaseId: string, newComment: Comment): void {
-    this.http
-      .put(
-        `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts/${firebaseId}.json`,
-        newComment
-      )
-      .subscribe();
+    this.http.put(`${this.FB_URL}/${firebaseId}.json`, newComment).subscribe();
   }
 
   deleteComment(firebaseId: string): void {
-    this.http
-      .delete(
-        `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/commentPosts/${firebaseId}.json`
-      )
-      .subscribe();
+    this.http.delete(`${this.FB_URL}/${firebaseId}.json`).subscribe();
   }
 
   dateFormatting(date: number): string {

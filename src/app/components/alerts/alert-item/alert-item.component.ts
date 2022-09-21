@@ -34,4 +34,8 @@ export class AlertItemComponent implements OnInit {
   onDeleteAlertItem(item: AlertItem): void {
     this.deletedAlertObject.emit(item);
   }
+
+  hideAlertPanel(value: boolean) {
+    this.isEditMode = value;
+  }
 }

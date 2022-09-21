@@ -24,7 +24,7 @@ export class AddAlertContainerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // DO I HAVE TO UNSUBSCRIBE HERE? IT EMITS ONLY ONE DATA SO IT SHOULD NOT BE NECESSARY RIGHT? OR...
+    // DO I HAVE TO UNSUBSCRIBE WITH ONDESTROY? IT EMITS ONLY ONE DATA SO IT SHOULD NOT BE NECESSARY RIGHT? OR...
     this.alertsService.setCryptoItem$.subscribe((item) => {
       this.pickedCryptoItem = item;
     });

@@ -7,6 +7,7 @@
   padding: 3rem 3rem;
   background-color: var(--main-bg-color);
   box-shadow: 0 0 3px 1px var(--main-bg-color);
+  position: relative;
 }
 
 p {
@@ -95,4 +96,12 @@ button {
 button:hover,
 button:active {
   box-shadow: 0 0 3px 3px var(--bitcoin-color);
+}
+
+.btn-close {
+  background-color: var(--bitcoin-color);
+  position: absolute;
+  padding: 0.3rem;
+  right: 3%;
+  top: 0;
 }

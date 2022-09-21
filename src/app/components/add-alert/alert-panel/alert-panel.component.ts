@@ -23,6 +23,7 @@ export class AlertPanelComponent implements OnInit {
   @Input() cryptoItems$!: Observable<CryptoItem[]>;
   @Input() singleCryptoItem!: CryptoItem | null;
   @Output() alertObject = new EventEmitter<AlertItem>();
+  @Output() alertModeDisabled = new EventEmitter<boolean>();
 
   newAlertForm: FormGroup<AlertForm> = this.fb.nonNullable.group({
     cryptoName: ['', [Validators.required]],
@@ -65,19 +66,23 @@ export class AlertPanelComponent implements OnInit {
   }
 
   onCreateAlert(): void {
-    this.alertObject.emit({
-      cryptoName: this.newAlertForm.controls.cryptoName.value,
-      price: this.newAlertForm.controls.price.value,
-      isGreater: this.newAlertForm.controls.isGreater.value,
-    });
+    this.alertObject.emit(this.alertFormObject());
   }
 
   onEditAlert(): void {
-    this.alertObject.emit({
+    const object = this.alertFormObject();
+    this.alertObject.emit({ ...object, id: this.editedCryptoItemObject.id });
+  }
+
+  alertFormObject() {
+    return {
       cryptoName: this.newAlertForm.controls.cryptoName.value,
       price: this.newAlertForm.controls.price.value,
       isGreater: this.newAlertForm.controls.isGreater.value,
-      id: this.editedCryptoItemObject.id,
-    });
+    };
+  }
+
+  hideAlertPanel() {
+    this.alertModeDisabled.emit(false);
   }
 }

@@ -42,6 +42,7 @@
         <app-alert-panel
           class="edit-panel"
           (alertObject)="editingAlertObject($event)"
+          (alertModeDisabled)="hideAlertPanel($event)"
         ></app-alert-panel>
       </div>
     </ng-container>
