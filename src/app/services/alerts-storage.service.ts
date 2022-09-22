@@ -7,18 +7,15 @@ import { AlertItem } from '../shared/alert-item.interface';
   providedIn: 'root',
 })
 export class AlertsStorageService {
+  FB_URL =
+    'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList';
   alertsList$ = new BehaviorSubject<AlertItem[]>([]);
   constructor(private http: HttpClient) {}
 
-  postAlertItem(alertData: AlertItem) {
+  postAlertItemInDatabase(alertData: AlertItem) {
     this.http
-      .post<AlertItem>(
-        'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList.json',
-        alertData
-      )
+      .post<AlertItem>(`${this.FB_URL}.json`, alertData)
       .subscribe((respData) => {
-        console.log(respData);
-
         const addFirebaseIdToCommentObject = {
           ...alertData,
           id: Object.values(respData)[0],
@@ -31,11 +28,9 @@ export class AlertsStorageService {
       });
   }
 
-  fetchAllAlertItems() {
+  fetchAllAlertItemsFromDatabase() {
     this.http
-      .get<{ [key: string]: AlertItem }>(
-        'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList.json'
-      )
+      .get<{ [key: string]: AlertItem }>(`${this.FB_URL}.json`)
       .pipe(
         map((responseData) => {
           const alertItems: AlertItem[] = [];
@@ -51,21 +46,13 @@ export class AlertsStorageService {
       .subscribe();
   }
 
-  updateAlertItem(updatedAlertItem: AlertItem): void {
-    console.log(updatedAlertItem);
+  updateAlertItemInDatabase(updatedAlertItem: AlertItem): void {
     this.http
-      .put(
-        `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList/${updatedAlertItem.id}.json`,
-        updatedAlertItem
-      )
+      .put(`${this.FB_URL}/${updatedAlertItem.id}.json`, updatedAlertItem)
       .subscribe();
   }
 
-  deleteAlertItem(key: string): void {
-    this.http
-      .delete(
-        `https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList/${key}.json`
-      )
-      .subscribe();
+  deleteAlertItemInDatabase(key: string): void {
+    this.http.delete(`${this.FB_URL}/${key}.json`).subscribe();
   }
 }

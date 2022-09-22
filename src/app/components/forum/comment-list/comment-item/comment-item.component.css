@@ -48,7 +48,7 @@
 
 .btn {
   background-color: var(--main-bg-color);
-  margin-right: 5px;
+  margin-left: 5px;
   color: #fff;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.6);
 }
@@ -73,21 +73,27 @@
 }
 
 .comment-paragraph {
-  max-width: 45rem;
+  max-width: 35rem;
   word-break: break-word;
 }
 
 .edit-wrapper {
   display: flex;
+  width: 45rem;
   flex-direction: column;
 }
 
-.btn-wrapper {
+.edit-btn-wrapper {
+  display: flex;
   justify-content: flex-end;
 }
 
+.btn-wrapper {
+  justify-content: end;
+}
+
 textarea {
-  width: 87%;
+  width: 100%;
   resize: none;
   outline: none;
   min-height: 7rem;
@@ -111,4 +117,8 @@ textarea {
 .editDate {
   color: var(--main-bg-color);
   font-weight: 600;
+}
+
+.btn-change {
+  background-color: var(--bitcoin-color);
 }

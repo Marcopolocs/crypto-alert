@@ -10,9 +10,10 @@ import { AlertsStorageService } from './alerts-storage.service';
 })
 export class AlertsService {
   setCryptoItem$ = new BehaviorSubject<CryptoItem | null>(null);
-  setEditedCryptoItem!: AlertItem;
   alertPanelType$ = new BehaviorSubject<AlertPanelEnum>(AlertPanelEnum.CREATE);
-  fetchedAlertsList$!: Observable<AlertItem[]>;
+
+  fetchedAlertItemList$!: Observable<AlertItem[]>;
+  setEditedCryptoItem!: AlertItem;
 
   constructor(private alertsStorageService: AlertsStorageService) {}
 
@@ -21,12 +22,12 @@ export class AlertsService {
   }
 
   getAlertsList() {
-    this.alertsStorageService.fetchAllAlertItems();
-    this.fetchedAlertsList$ = this.alertsStorageService.alertsList$;
+    this.alertsStorageService.fetchAllAlertItemsFromDatabase();
+    this.fetchedAlertItemList$ = this.alertsStorageService.alertsList$;
   }
 
   editAlertItem(item: AlertItem) {
-    this.alertsStorageService.updateAlertItem(item);
+    this.alertsStorageService.updateAlertItemInDatabase(item);
     const alertsList = this.alertsStorageService.alertsList$.getValue();
 
     const updatedAlertsList: AlertItem[] = alertsList.map((alertItem) => {
@@ -44,7 +45,7 @@ export class AlertsService {
   }
 
   deleteAlertItem(itemId: string) {
-    this.alertsStorageService.deleteAlertItem(itemId);
+    this.alertsStorageService.deleteAlertItemInDatabase(itemId);
 
     const alerts = this.alertsStorageService.alertsList$.getValue();
     const newAlertsList = alerts.filter((alert) => alert.id !== itemId);

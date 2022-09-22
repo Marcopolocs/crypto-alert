@@ -9,9 +9,9 @@
   </div>
   <div class="body-container">
     <div class="alerts-list-container">
-      <ng-container *ngIf="alertItems$ | async as alertItems">
+      <ng-container *ngIf="alertItemList$ | async as alertItemList">
         <app-alert-item
-          [alertObjects]="alertItems"
+          [alertObjects]="alertItemList"
           (deletedAlertObject)="deleteAlertObject($event)"
           (editedAlertObject)="editAlertObject($event)"
         ></app-alert-item>

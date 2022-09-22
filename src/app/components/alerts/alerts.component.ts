@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AlertsStorageService } from 'src/app/services/alerts-storage.service';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { AlertItem } from 'src/app/shared/alert-item.interface';
 
@@ -10,13 +9,13 @@ import { AlertItem } from 'src/app/shared/alert-item.interface';
   styleUrls: ['./alerts.component.css'],
 })
 export class AlertsComponent implements OnInit {
-  alertItems$!: Observable<AlertItem[]>;
+  alertItemList$!: Observable<AlertItem[]>;
 
   constructor(private alertsService: AlertsService) {}
 
   ngOnInit(): void {
     this.alertsService.getAlertsList();
-    this.alertItems$ = this.alertsService.fetchedAlertsList$;
+    this.alertItemList$ = this.alertsService.fetchedAlertItemList$;
   }
 
   editAlertObject(item: AlertItem) {

@@ -31,10 +31,12 @@ export class AddAlertContainerComponent implements OnInit {
   }
 
   onPostObject(item: AlertItem) {
-    this.alertsStorageService.postAlertItem(item);
+    this.alertsStorageService.postAlertItemInDatabase(item);
     this.createdAlertItemPopupList.push(item);
-    // This could have been solved using a boolean value which we set dynamically
-    // but I found the shift method to be useful for such cases
+    this.onHidePopupWindow();
+  }
+
+  onHidePopupWindow() {
     setTimeout(() => {
       this.createdAlertItemPopupList.shift();
     }, 3000);

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CryptoListitemsComponent } from './components/cryptos/all-cryptos-container/crypto-listitems/crypto-listitems.component';
 import { CryptoContainerComponent } from './components/cryptos/all-cryptos-container/crypto-container.component';
 import { CryptoDetailsComponent } from './components/cryptos/crypto-details/crypto-details.component';
-import { CryptoForumComponent } from './components/crypto-forum/crypto-forum.component';
+import { ForumContainerComponent } from './components/forum/forum-container.component';
 import { AddAlertContainerComponent } from './components/add-alert/add-alert-container.component';
 import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
 import { LoginFormComponent } from './components/auth/login-form/login-form.component';
@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'alert-history', component: HistoryAlertsContainerComponent },
   {
     path: 'community',
-    component: CryptoForumComponent,
+    component: ForumContainerComponent,
   },
   { path: 'sign-up', component: RegisterFormComponent },
   { path: 'login', component: LoginFormComponent },

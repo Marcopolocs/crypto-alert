@@ -12,10 +12,10 @@ import { CryptoItemComponent } from './components/cryptos/all-cryptos-container/
 import { HeaderComponent } from './components/header/header.component';
 import { CryptoDetailsComponent } from './components/cryptos/crypto-details/crypto-details.component';
 import { CryptoContainerComponent } from './components/cryptos/all-cryptos-container/crypto-container.component';
-import { CryptoForumComponent } from './components/crypto-forum/crypto-forum.component';
-import { CommentListComponent } from './components/crypto-forum/comment-list/comment-list.component';
-import { CommentItemComponent } from './components/crypto-forum/comment-list/comment-item/comment-item.component';
-import { NewCommentComponent } from './components/crypto-forum/new-comment/new-comment.component';
+import { ForumContainerComponent } from './components/forum/forum-container.component';
+import { CommentListComponent } from './components/forum/comment-list/comment-list.component';
+import { CommentItemComponent } from './components/forum/comment-list/comment-item/comment-item.component';
+import { NewCommentComponent } from './components/forum/new-comment/new-comment.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddAlertContainerComponent } from './components/add-alert/add-alert-container.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
@@ -36,7 +36,7 @@ import { AlertPopupComponent } from './components/add-alert/alert-popup/alert-po
     HeaderComponent,
     CryptoDetailsComponent,
     CryptoContainerComponent,
-    CryptoForumComponent,
+    ForumContainerComponent,
     CommentListComponent,
     CommentItemComponent,
     NewCommentComponent,

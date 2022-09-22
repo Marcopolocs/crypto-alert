@@ -1,10 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { AlertForm, AlertItem } from 'src/app/shared/alert-item.interface';
@@ -56,7 +51,7 @@ export class AlertPanelComponent implements OnInit {
     }
   }
 
-  setEditedCryptoItemValuesAsDefault() {
+  setEditedCryptoItemValuesAsDefault(): void {
     this.newAlertForm
       .get('cryptoName')
       ?.patchValue(this.editedCryptoItemObject.cryptoName);
@@ -82,7 +77,7 @@ export class AlertPanelComponent implements OnInit {
     };
   }
 
-  hideAlertPanel() {
+  hideAlertPanelByCloseButton(): void {
     this.alertModeDisabled.emit(false);
   }
 }
