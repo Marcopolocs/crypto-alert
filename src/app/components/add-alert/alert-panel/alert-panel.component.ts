@@ -16,7 +16,7 @@ export class AlertPanelComponent implements OnInit {
   editedCryptoItemObject!: AlertItem;
 
   @Input() cryptoItems$!: Observable<CryptoItem[]>;
-  @Input() singleCryptoItem!: CryptoItem | null;
+  @Input() singleCryptoItemPickedInCryptoList!: CryptoItem | null;
   @Output() alertObject = new EventEmitter<AlertItem>();
   @Output() alertModeDisabled = new EventEmitter<boolean>();
 
@@ -41,11 +41,13 @@ export class AlertPanelComponent implements OnInit {
   }
 
   setDefaultCryptoNameValue(): void {
-    if (this.singleCryptoItem !== null) {
+    if (this.singleCryptoItemPickedInCryptoList !== null) {
       this.newAlertForm
         .get('cryptoName')
-        ?.patchValue(this.singleCryptoItem.symbol);
-      this.newAlertForm.get('price')?.patchValue(this.singleCryptoItem.price);
+        ?.patchValue(this.singleCryptoItemPickedInCryptoList.symbol);
+      this.newAlertForm
+        .get('price')
+        ?.patchValue(this.singleCryptoItemPickedInCryptoList.price);
     } else {
       this.newAlertForm.get('cryptoName')?.patchValue('BTC');
     }
