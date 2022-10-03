@@ -58,12 +58,21 @@ export class CommentItemComponent implements OnInit {
     }
     const commentsList: Comment[] =
       this.commentsStorageService.commentsSubject$.getValue();
+
+    this.commentsService.editComment(
+      this.updateCommentItemWithNewText(commentsList)
+    );
+    this.router.navigate(['community']);
+    this.isEditMode = false;
+  }
+
+  updateCommentItemWithNewText(commentsList: Comment[]) {
     const newCommentsList = commentsList.map((comment: Comment) => {
       if (
         comment.firebaseId &&
         comment.firebaseId === this.commentObject.firebaseId
       ) {
-        const updateCommentItem = {
+        const updatedCommentItem = {
           ...comment,
           text: this.editedText,
           editTimestamp: Date.now(),
@@ -71,15 +80,13 @@ export class CommentItemComponent implements OnInit {
         };
         this.commentsStorageService.updateComment(
           comment.firebaseId,
-          updateCommentItem
+          updatedCommentItem
         );
 
-        return updateCommentItem;
+        return updatedCommentItem;
       }
       return comment;
     });
-    this.commentsService.editComment(newCommentsList);
-    this.router.navigate(['community']);
-    this.isEditMode = false;
+    return newCommentsList;
   }
 }

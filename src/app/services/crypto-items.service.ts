@@ -9,83 +9,10 @@ import { CryptoItem } from '../shared/crypto-item.interface';
   providedIn: 'root',
 })
 export class CryptoItemsService {
-  // API Documentation (COINMARKETCAP)
-  // https://coinmarketcap.com/api/documentation/v1/#operation/getV2CryptocurrencyQuotesLatest
-
-  // API Documentation (COINBASE)
-  // https://docs.cloud.coinbase.com/exchange/docs/authorization-and-authentication#api-key-permissions
-
-  // API KEY (COINBASE)
-  // 742f5140f84afef89c1c38c587d5c33a
-  // API SECRET (COINBASE)
-  // wtdcqOCcHpttonO3PwVOXODbZeEhDhA0dcCZt4CMkbiivi2grPfDR/sQpr0YqCl2JZdD0/zyoKkrW962Okg8mA==
-  // API Passphrase (COINBASE)
-  // 6v5wfy5lhxg
-
   getDate$ = new BehaviorSubject<string>('');
   cryptoParam!: string;
 
   constructor(private http: HttpClient) {}
-
-  // fetchingSingleCryptoPricesForDetailsPage() {
-  //   return this.http
-  //     .get<any>(
-  //       `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=${this.cryptoParam}`,
-  //       {
-  //         headers: {
-  //           'X-CMC_PRO_API_KEY': '3d4f7c0c-5ad5-4156-8199-d94f16f8eacf',
-  //         },
-  //       }
-  //     )
-  //     .pipe(
-  //       map((fetchedItem) => {
-  //         const { data: dataObject, status: statusObject } = fetchedItem;
-  //         const cryptoItem: any = Object.values(dataObject);
-  //         console.log(fetchedItem);
-  //         const [destructuredCryptoItem] = cryptoItem;
-  //         return this.structuringNewCryptoPriceDetailsObject(
-  //           destructuredCryptoItem
-  //         );
-  //       })
-  //     );
-  // }
-
-  // fetchingSingleCryptoMetadataForDetailsPage() {
-  //   return this.http
-  //     .get<any>(
-  //       `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?slug=${this.cryptoParam}`,
-  //       {
-  //         headers: {
-  //           'X-CMC_PRO_API_KEY': '3d4f7c0c-5ad5-4156-8199-d94f16f8eacf',
-  //         },
-  //       }
-  //     )
-  //     .pipe(
-  //       map((fetchedItem) => {
-  //         const { data: dataObject, status: statusObject } = fetchedItem;
-  //         const cryptoItem: any = Object.values(dataObject);
-  //         console.log(fetchedItem);
-  //         const [destructuredCryptoItem] = cryptoItem;
-  //         return this.structuringNewMetadataObject(destructuredCryptoItem);
-  //       })
-  //     );
-  // }
-
-  // setSingleCryptoItemParam(item: string) {
-  //   this.cryptoParam = item;
-  // }
-
-  // mergingSingleCryptoDataForDetailsPage() {
-  //   return forkJoin(
-  //     this.fetchingSingleCryptoPricesForDetailsPage(),
-  //     this.fetchingSingleCryptoMetadataForDetailsPage()
-  //   ).pipe(
-  //     map(([prices, details]) => {
-  //       const mergedObjects = { ...prices, ...details };
-  //       return mergedObjects;
-  //     })
-  //   );
-  // }
 
   fetchingAllCryptoPriceDetails() {
     return this.http
@@ -101,25 +28,33 @@ export class CryptoItemsService {
       .pipe(
         map((fetchedItems) => {
           const { data: dataObject, status: statusObject } = fetchedItems;
-          const cryptoItems: any = Object.values(dataObject);
           this.getDate$.next(this.formattedDate());
-
-          const items: any = [];
-          cryptoItems.forEach((item: any) => {
-            const [itemPieces] = item;
-            items.push(itemPieces);
-          });
-
           const newItemList: any = [];
-          items.forEach((item: any) => {
-            const formattedObject =
-              this.structuringNewCryptoPriceDetailsObject(item);
-            newItemList.push(formattedObject);
-          });
-          newItemList.sort((a: any, b: any) => a.rank - b.rank);
-          return newItemList;
+          this.destructureNestedCryptoArrays(dataObject).forEach(
+            (item: any) => {
+              const formattedObject =
+                this.structuringNewCryptoPriceDetailsObject(item);
+              newItemList.push(formattedObject);
+            }
+          );
+          return this.sortCryptoItemsByRank(newItemList);
         })
       );
+  }
+
+  sortCryptoItemsByRank(newItemList: any) {
+    newItemList.sort((a: any, b: any) => a.rank - b.rank);
+    return newItemList;
+  }
+
+  destructureNestedCryptoArrays(dataObject: any) {
+    const cryptoItems: any = Object.values(dataObject);
+    const items: any = [];
+    cryptoItems.forEach((item: any) => {
+      const [nestedItem] = item;
+      items.push(nestedItem);
+    });
+    return items;
   }
 
   fetchingMetadata() {
@@ -132,22 +67,12 @@ export class CryptoItemsService {
       })
       .pipe(
         map((fetchedItems) => {
-          // TODO: refactor külön függvénybe
           const { status, data: metadata } = fetchedItems;
-          const cryptoItems: any = Object.values(metadata);
-
-          const items: any[] = [];
-          cryptoItems.forEach((item: any) => {
-            const [itemPieces] = item;
-            items.push(itemPieces);
-          });
-
           const newItemList: any[] = [];
-          items.forEach((item) => {
+          this.destructureNestedCryptoArrays(metadata).forEach((item: any) => {
             const newObject = this.structuringNewMetadataObject(item);
             newItemList.push(newObject);
           });
-
           return newItemList;
         })
       );
@@ -193,26 +118,29 @@ export class CryptoItemsService {
     return newItem;
   }
 
-  mergeFetchedAllCryptoObjects(): Observable<CryptoItem[]> {
+  finalCryptoObjects(): Observable<CryptoItem[]> {
     return forkJoin(
       this.fetchingAllCryptoPriceDetails(),
       this.fetchingMetadata()
     ).pipe(
-      map(([prices, details]) => {
-        const mergedObjects: CryptoItem[] = [];
-
-        prices.forEach((item: any) => {
-          const currentDetailObject = details.find(
-            (detailObject: any) => detailObject.id === item.id
-          );
-          mergedObjects.push({
-            ...item,
-            ...currentDetailObject,
-          });
-        });
-        return mergedObjects;
-      })
+      map(([prices, details]) =>
+        this.mergeDetailsAndMetaDataObjects(prices, details)
+      )
     );
+  }
+
+  mergeDetailsAndMetaDataObjects(prices: any, details: any) {
+    const mergedObjects: CryptoItem[] = [];
+    prices.forEach((item: any) => {
+      const currentDetailObject = details.find(
+        (detailObject: any) => detailObject.id === item.id
+      );
+      mergedObjects.push({
+        ...item,
+        ...currentDetailObject,
+      });
+    });
+    return mergedObjects;
   }
 
   formattedPrice(price: number): number | string {
@@ -254,3 +182,74 @@ export class CryptoItemsService {
     return new Date().toString();
   }
 }
+
+// API Documentation (COINMARKETCAP)
+// https://coinmarketcap.com/api/documentation/v1/#operation/getV2CryptocurrencyQuotesLatest
+
+// API Documentation (COINBASE)
+// https://docs.cloud.coinbase.com/exchange/docs/authorization-and-authentication#api-key-permissions
+
+// API KEY (COINBASE)
+// 742f5140f84afef89c1c38c587d5c33a
+// API SECRET (COINBASE)
+// wtdcqOCcHpttonO3PwVOXODbZeEhDhA0dcCZt4CMkbiivi2grPfDR/sQpr0YqCl2JZdD0/zyoKkrW962Okg8mA==
+// API Passphrase (COINBASE)
+// 6v5wfy5lhxg
+
+// fetchingSingleCryptoPricesForDetailsPage() {
+//   return this.http
+//     .get<any>(
+//       `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=${this.cryptoParam}`,
+//       {
+//         headers: {
+//           'X-CMC_PRO_API_KEY': '3d4f7c0c-5ad5-4156-8199-d94f16f8eacf',
+//         },
+//       }
+//     )
+//     .pipe(
+//       map((fetchedItem) => {
+//         const { data: dataObject, status: statusObject } = fetchedItem;
+//         const cryptoItem: any = Object.values(dataObject);
+//         const [destructuredCryptoItem] = cryptoItem;
+//         return this.structuringNewCryptoPriceDetailsObject(
+//           destructuredCryptoItem
+//         );
+//       })
+//     );
+// }
+
+// fetchingSingleCryptoMetadataForDetailsPage() {
+//   return this.http
+//     .get<any>(
+//       `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?slug=${this.cryptoParam}`,
+//       {
+//         headers: {
+//           'X-CMC_PRO_API_KEY': '3d4f7c0c-5ad5-4156-8199-d94f16f8eacf',
+//         },
+//       }
+//     )
+//     .pipe(
+//       map((fetchedItem) => {
+//         const { data: dataObject, status: statusObject } = fetchedItem;
+//         const cryptoItem: any = Object.values(dataObject);
+//         const [destructuredCryptoItem] = cryptoItem;
+//         return this.structuringNewMetadataObject(destructuredCryptoItem);
+//       })
+//     );
+// }
+
+// setSingleCryptoItemParam(item: string) {
+//   this.cryptoParam = item;
+// }
+
+// mergingSingleCryptoDataForDetailsPage() {
+//   return forkJoin(
+//     this.fetchingSingleCryptoPricesForDetailsPage(),
+//     this.fetchingSingleCryptoMetadataForDetailsPage()
+//   ).pipe(
+//     map(([prices, details]) => {
+//       const mergedObjects = { ...prices, ...details };
+//       return mergedObjects;
+//     })
+//   );
+// }

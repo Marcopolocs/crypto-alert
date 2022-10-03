@@ -45,14 +45,12 @@ export class RegisterFormComponent {
       this.isLoading = true;
       this.authService.signUp(email, password).subscribe(
         (responseData) => {
-          console.log(responseData);
           this.isLoading = false;
           this.router.navigate(['login']);
         },
         (errorMessage) => {
           this.isLoading = false;
           this.error = errorMessage;
-          console.log(errorMessage);
         }
       );
     } else return;

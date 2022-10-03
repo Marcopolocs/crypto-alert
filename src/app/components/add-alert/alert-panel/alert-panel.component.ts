@@ -29,7 +29,6 @@ export class AlertPanelComponent implements OnInit {
   constructor(private fb: FormBuilder, private alertsService: AlertsService) {}
 
   ngOnInit(): void {
-    // THIS IF STATEMENT WAS NEEDED OTHERWISE THE LOGIC HERE WOULD RUN IN CASE OF EDITMODE AND RESULT IN ERROR
     if (
       this.alertsService.alertPanelType$.getValue() === AlertPanelEnum.CREATE
     ) {
@@ -76,6 +75,7 @@ export class AlertPanelComponent implements OnInit {
       cryptoName: this.newAlertForm.controls.cryptoName.value,
       price: this.newAlertForm.controls.price.value,
       isGreater: this.newAlertForm.controls.isGreater.value,
+      id: Date.now().toString(36),
     };
   }
 

@@ -9,41 +9,47 @@ import { AlertItem } from '../shared/alert-item.interface';
 export class AlertsStorageService {
   FB_URL =
     'https://crypt-alert-portfolio-project-default-rtdb.europe-west1.firebasedatabase.app/alertsList';
+
   alertsList$ = new BehaviorSubject<AlertItem[]>([]);
+
   constructor(private http: HttpClient) {}
 
   postAlertItemInDatabase(alertData: AlertItem) {
     this.http
-      .post<AlertItem>(`${this.FB_URL}.json`, alertData)
+      .post<{ name: string }>(`${this.FB_URL}.json`, alertData)
       .subscribe((respData) => {
-        const addFirebaseIdToCommentObject = {
-          ...alertData,
-          id: Object.values(respData)[0],
-        };
-        const retrieveItemsFromSubject: AlertItem[] =
-          this.alertsList$.getValue();
-        retrieveItemsFromSubject.push(addFirebaseIdToCommentObject);
-        this.alertsList$.next(retrieveItemsFromSubject);
-        console.log(this.alertsList$.getValue());
+        this.updateLocalAlertsContainer(alertData, respData);
       });
+  }
+
+  updateLocalAlertsContainer(alertData: AlertItem, respData: { name: string }) {
+    const addFirebaseIdToCommentObject = {
+      ...alertData,
+      id: Object.values(respData)[0],
+    };
+    const retrieveItemsFromSubject: AlertItem[] = this.alertsList$.getValue();
+    retrieveItemsFromSubject.push(addFirebaseIdToCommentObject);
+    this.alertsList$.next(retrieveItemsFromSubject);
   }
 
   fetchAllAlertItemsFromDatabase() {
     this.http
       .get<{ [key: string]: AlertItem }>(`${this.FB_URL}.json`)
       .pipe(
-        map((responseData) => {
-          const alertItems: AlertItem[] = [];
-          for (const key in responseData) {
-            alertItems.push({ ...responseData[key], id: key });
-          }
-          return alertItems;
-        }),
+        map((responseData) => this.assignFirebaseIdToItemId(responseData)),
         tap((data) => {
           this.alertsList$.next(data);
         })
       )
       .subscribe();
+  }
+
+  assignFirebaseIdToItemId(respData: { [key: string]: AlertItem }) {
+    const alertItems: AlertItem[] = [];
+    for (const key in respData) {
+      alertItems.push({ ...respData[key], id: key });
+    }
+    return alertItems;
   }
 
   updateAlertItemInDatabase(updatedAlertItem: AlertItem): void {

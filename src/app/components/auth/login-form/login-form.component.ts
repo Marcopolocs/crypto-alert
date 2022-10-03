@@ -40,14 +40,12 @@ export class LoginFormComponent implements OnInit {
 
     this.authService.login(email, password).subscribe(
       (responseData) => {
-        console.log(responseData);
         this.isLoading = false;
         this.router.navigate(['all-cryptos']);
       },
       (errorMessage) => {
         this.isLoading = false;
         this.error = errorMessage;
-        console.log(errorMessage);
       }
     );
   }

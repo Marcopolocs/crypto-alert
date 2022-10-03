@@ -28,8 +28,13 @@ export class AlertsService {
 
   editAlertItem(item: AlertItem) {
     this.alertsStorageService.updateAlertItemInDatabase(item);
-    const alertsList = this.alertsStorageService.alertsList$.getValue();
+    this.alertsStorageService.alertsList$.next(
+      this.updateLocalAlertItemWithNewData(item)
+    );
+  }
 
+  updateLocalAlertItemWithNewData(item: AlertItem) {
+    const alertsList = this.alertsStorageService.alertsList$.getValue();
     const updatedAlertsList: AlertItem[] = alertsList.map((alertItem) => {
       if (alertItem.id === item.id) {
         return {
@@ -41,12 +46,15 @@ export class AlertsService {
       }
       return alertItem;
     });
-    this.alertsStorageService.alertsList$.next(updatedAlertsList);
+    return updatedAlertsList;
   }
 
-  deleteAlertItem(itemId: string) {
+  deleteAlertItem(itemId: string): void {
     this.alertsStorageService.deleteAlertItemInDatabase(itemId);
+    this.deleteLocalAlertItem(itemId);
+  }
 
+  deleteLocalAlertItem(itemId: string) {
     const alerts = this.alertsStorageService.alertsList$.getValue();
     const newAlertsList = alerts.filter((alert) => alert.id !== itemId);
     this.alertsStorageService.alertsList$.next(newAlertsList);

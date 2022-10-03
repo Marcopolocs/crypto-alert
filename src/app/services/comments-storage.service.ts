@@ -17,23 +17,7 @@ export class CommentsStorageService {
     this.http
       .get<any>(`${this.FB_URL}.json`)
       .pipe(
-        map((responseData) => {
-          console.log(responseData);
-          const newCommentArray: Comment[] = [];
-          if (responseData) {
-            for (const [key, value] of Object.entries(responseData)) {
-              newCommentArray.push({
-                ...responseData[key],
-                firebaseId: key,
-                date: this.dateFormatting(responseData[key].timestamp),
-                editDate: responseData[key].editTimestamp
-                  ? this.dateFormatting(responseData[key].editTimestamp)
-                  : responseData[key].editTimestamp,
-              });
-            }
-          }
-          return newCommentArray ? newCommentArray : [];
-        }),
+        map((responseData) => this.updateFetchedCommentList(responseData)),
         tap((comments) => {
           this.commentsSubject$.next(comments);
         })
@@ -41,17 +25,40 @@ export class CommentsStorageService {
       .subscribe();
   }
 
+  updateFetchedCommentList(respData: any) {
+    const newCommentArray: Comment[] = [];
+    if (respData) {
+      for (const [key, value] of Object.entries(respData)) {
+        newCommentArray.push({
+          ...respData[key],
+          firebaseId: key,
+          date: this.dateFormatting(respData[key].timestamp),
+          editDate: respData[key].editTimestamp
+            ? this.dateFormatting(respData[key].editTimestamp)
+            : respData[key].editTimestamp,
+        });
+      }
+    }
+    return newCommentArray;
+  }
+
   postComment(newComment: Comment): void {
-    this.http.post(`${this.FB_URL}.json`, newComment).subscribe((data) => {
-      const addFirebaseIdToCommentObject = {
-        ...newComment,
-        firebaseId: Object.values(data)[0],
-      };
-      const retrieveItemsFromSubject: Comment[] =
-        this.commentsSubject$.getValue();
-      retrieveItemsFromSubject.push(addFirebaseIdToCommentObject);
-      this.commentsSubject$.next(retrieveItemsFromSubject);
-    });
+    this.http
+      .post<{ name: string }>(`${this.FB_URL}.json`, newComment)
+      .subscribe((data) => this.updateLocalIdWithFirebaseId(newComment, data));
+  }
+
+  // Add Firebase key on POST REQUEST so user can delete their
+  // comment immediately without needing to refresh page
+  updateLocalIdWithFirebaseId(newComment: Comment, data: { name: string }) {
+    const addFirebaseIdToCommentObject = {
+      ...newComment,
+      firebaseId: Object.values(data)[0],
+    };
+    const retrieveItemsFromSubject: Comment[] =
+      this.commentsSubject$.getValue();
+    retrieveItemsFromSubject.push(addFirebaseIdToCommentObject);
+    this.commentsSubject$.next(retrieveItemsFromSubject);
   }
 
   updateComment(firebaseId: string, newComment: Comment): void {
@@ -73,16 +80,3 @@ export class CommentsStorageService {
     return new Date(date).toLocaleString();
   }
 }
-
-// get(url: string, params: string): Observable<any> => {
-//   return this.httpClient.get(url, params);
-// }
-// put(url: string, body: Object): Observable<any> => {
-//   return this.httpClient.get(url, body);
-// }
-// delete(url: string, params: string): Observable<any> => {
-//   return this.httpClient.get(url, params);
-// }
-// post(url: string, body: Object): Observable<any> => {
-//   return this.httpClient.get(url, body);
-// }

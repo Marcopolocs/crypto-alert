@@ -23,9 +23,7 @@ export class AlertsComponent implements OnInit {
   }
 
   deleteAlertObject(item: AlertItem) {
-    if (item.id) {
-      const itemId = item.id;
-      this.alertsService.deleteAlertItem(itemId);
-    }
+    const itemId = item.id;
+    this.alertsService.deleteAlertItem(itemId);
   }
 }

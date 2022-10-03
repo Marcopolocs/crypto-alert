@@ -13,7 +13,7 @@ import { CryptoItem } from 'src/app/shared/crypto-item.interface';
 })
 export class AddAlertContainerComponent implements OnInit {
   cryptoItems$: Observable<CryptoItem[]> =
-    this.cryptoItemsService.mergeFetchedAllCryptoObjects();
+    this.cryptoItemsService.finalCryptoObjects();
   pickedCryptoItem!: CryptoItem | null;
   createdAlertItemPopupList: AlertItem[] = [];
 

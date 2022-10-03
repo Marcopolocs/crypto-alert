@@ -36,9 +36,7 @@ export class HeaderComponent implements OnInit {
   searchInput: UntypedFormControl = new UntypedFormControl(null);
   cryptoName!: string;
 
-  @ViewChild('searchInputElement', {
-    static: true,
-  })
+  @ViewChild('searchInputElement')
   searchInputElement!: ElementRef;
   @HostListener('window:click', ['$event']) clickEvent(event: any) {
     if (this.isAuthenticated) {
@@ -63,7 +61,7 @@ export class HeaderComponent implements OnInit {
 
   searchResults$: Observable<CryptoItem[]> = this.searchTerms$.pipe(
     switchMap((data) =>
-      this.cryptoItemsService.mergeFetchedAllCryptoObjects().pipe(
+      this.cryptoItemsService.finalCryptoObjects().pipe(
         map((cryptoList) => {
           return cryptoList.filter(
             (cryptoItem) =>
