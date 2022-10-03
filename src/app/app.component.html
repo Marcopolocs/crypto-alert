@@ -1,12 +1,12 @@
 <section class="page-wrapper">
   <app-header></app-header>
-  <!-- <div class="login-container" *ngIf="!isAuthenticated"> -->
-  <div class="login-container">
+  <div class="login-container" *ngIf="!isAuthenticated">
+    <!-- <div class="login-container"> -->
     <app-login-form *ngIf="hasRoute('login')"></app-login-form>
     <app-register-form *ngIf="hasRoute('sign-up')"></app-register-form>
   </div>
-  <!-- <div class="main-container-body" *ngIf="isAuthenticated"> -->
-  <div class="main-container-body">
+  <div class="main-container-body" *ngIf="isAuthenticated">
+    <!-- <div class="main-container-body"> -->
     <app-navbar></app-navbar>
     <div class="list-items">
       <router-outlet></router-outlet>

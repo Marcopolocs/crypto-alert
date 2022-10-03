@@ -2,7 +2,7 @@
   <div class="navbar-container">
     <div class="logo-container">
       <img [src]="imageSrc" alt="header-logo" width="88px" />
-      <a href="" class="nav-bar-brand">Coinbase-Alert</a>
+      <a class="nav-bar-brand">Coinbase-Alert</a>
     </div>
 
     <div class="btn-wrapper">
@@ -15,7 +15,7 @@
             aria-label="Search"
             [formControl]="searchInput"
             #searchInputElement
-            (click)="preventPageReloadOnEnter($event)"
+            (keydown.enter)="preventPageReloadOnEnter($event)"
           />
         </form>
         <section
