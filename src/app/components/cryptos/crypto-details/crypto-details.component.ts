@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { map, Subject } from 'rxjs';
 import { CryptoItemsService } from 'src/app/services/crypto-items.service';
 import { CryptoItem } from 'src/app/shared/crypto-item.interface';
@@ -10,7 +10,7 @@ import { CryptoItem } from 'src/app/shared/crypto-item.interface';
   styleUrls: ['./crypto-details.component.css'],
 })
 export class CryptoDetailsComponent implements OnInit {
-  cryptoName!: string;
+  cryptoName!: string | null;
   cryptoItem$ = new Subject<any>();
 
   constructor(
@@ -20,15 +20,10 @@ export class CryptoDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.cryptoName = this.route.snapshot.params['name'];
-    this.route.paramMap
-      .pipe(
-        map((params: any) => {
-          this.getCryptoDetails();
-          this.cryptoName = params.get('name');
-        })
-      )
-      .subscribe();
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.cryptoName = params.get('name');
+      this.getCryptoDetails();
+    });
   }
 
   getCryptoDetails() {

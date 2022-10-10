@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
+import { catchError, Subject, tap, throwError } from 'rxjs';
 import { AuthResponseData } from 'src/app/shared/auth-response-data.interface';
 import { User } from './user.model';
 
@@ -87,28 +87,28 @@ export class AuthService {
     localStorage.removeItem('userData');
   }
 
-  // autoLogin() {
-  //   const userData: {
-  //     email: string;
-  //     id: string;
-  //     _token: string;
-  //     _tokenExpirationDate: string;
-  //   } = JSON.parse(localStorage.getItem('userData') || '{}');
-  //   if (!userData) {
-  //     return;
-  //   }
+  autoLogin() {
+    const userData: {
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
+    } = JSON.parse(localStorage.getItem('userData') || '{}');
+    if (!userData) {
+      return;
+    }
 
-  //   const loadedUser = new User(
-  //     userData.email,
-  //     userData.id,
-  //     userData._token,
-  //     new Date(userData._tokenExpirationDate)
-  //   );
+    const loadedUser = new User(
+      userData.email,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
 
-  //   if (loadedUser.token) {
-  //     this.user.next(loadedUser);
-  //   }
-  // }
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+    }
+  }
 
   private handleAuthentication(
     email: string,

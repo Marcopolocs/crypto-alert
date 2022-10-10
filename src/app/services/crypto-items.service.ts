@@ -27,16 +27,15 @@ export class CryptoItemsService {
       )
       .pipe(
         map((fetchedItems) => {
-          const { data: dataObject, status: statusObject } = fetchedItems;
-          this.getDate$.next(this.formattedDate());
           const newItemList: any = [];
-          this.destructureNestedCryptoArrays(dataObject).forEach(
+          this.destructureNestedCryptoArrays(fetchedItems.data).forEach(
             (item: any) => {
               const formattedObject =
                 this.structuringNewCryptoPriceDetailsObject(item);
               newItemList.push(formattedObject);
             }
           );
+          this.getDate$.next(this.formattedDate());
           return this.sortCryptoItemsByRank(newItemList);
         })
       );
@@ -67,12 +66,13 @@ export class CryptoItemsService {
       })
       .pipe(
         map((fetchedItems) => {
-          const { status, data: metadata } = fetchedItems;
           const newItemList: any[] = [];
-          this.destructureNestedCryptoArrays(metadata).forEach((item: any) => {
-            const newObject = this.structuringNewMetadataObject(item);
-            newItemList.push(newObject);
-          });
+          this.destructureNestedCryptoArrays(fetchedItems.data).forEach(
+            (item: any) => {
+              const newObject = this.structuringNewMetadataObject(item);
+              newItemList.push(newObject);
+            }
+          );
           return newItemList;
         })
       );
