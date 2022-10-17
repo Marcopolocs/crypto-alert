@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { AlertItem } from 'src/app/shared/alert-item.interface';
 import { AlertPanelEnum } from 'src/app/shared/alert.enum';
@@ -16,6 +23,16 @@ export class AlertItemComponent implements OnInit {
   @Output() editedAlertObject = new EventEmitter<AlertItem>();
 
   constructor(private alertsService: AlertsService) {}
+
+  @HostListener('window:keyup.escape', ['$event']) escapeEvent(
+    event: KeyboardEvent
+  ) {
+    // The target of the event is the body here!
+    // The event itself is a KeyboardEvent
+    if (this.isEditMode) {
+      this.isEditMode = false;
+    }
+  }
 
   ngOnInit(): void {}
 

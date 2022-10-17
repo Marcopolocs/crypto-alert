@@ -8,7 +8,7 @@ import { AuthService } from './components/auth/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
   userSubscription!: Subscription;
 

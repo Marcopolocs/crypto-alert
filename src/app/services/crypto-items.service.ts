@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, map, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Observable, retry } from 'rxjs';
 import { FETCH_CRYPTO_METADATA_HTTP_PARAMS } from '../constants/fetch-crypto-metadata-http-params.constants';
 import { FETCH_CRYPTOS_HTTP_PARAMS } from '../constants/fetch-cryptos-http-params.constants';
 import { CryptoItem } from '../shared/crypto-item.interface';
@@ -10,11 +10,11 @@ import { CryptoItem } from '../shared/crypto-item.interface';
 })
 export class CryptoItemsService {
   getDate$ = new BehaviorSubject<string>('');
-  cryptoParam!: string;
+  // cryptoParam!: string;
 
   constructor(private http: HttpClient) {}
 
-  fetchingAllCryptoPriceDetails() {
+  private fetchingAllCryptoPriceDetails() {
     return this.http
       .get<any>(
         'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest',
@@ -41,12 +41,12 @@ export class CryptoItemsService {
       );
   }
 
-  sortCryptoItemsByRank(newItemList: any) {
+  private sortCryptoItemsByRank(newItemList: any) {
     newItemList.sort((a: any, b: any) => a.rank - b.rank);
     return newItemList;
   }
 
-  destructureNestedCryptoArrays(dataObject: any) {
+  private destructureNestedCryptoArrays(dataObject: any) {
     const cryptoItems: any = Object.values(dataObject);
     const items: any = [];
     cryptoItems.forEach((item: any) => {
@@ -56,7 +56,7 @@ export class CryptoItemsService {
     return items;
   }
 
-  fetchingMetadata() {
+  private fetchingMetadata() {
     return this.http
       .get<any>('https://pro-api.coinmarketcap.com/v2/cryptocurrency/info', {
         headers: {
@@ -65,6 +65,7 @@ export class CryptoItemsService {
         params: FETCH_CRYPTO_METADATA_HTTP_PARAMS,
       })
       .pipe(
+        retry(3),
         map((fetchedItems) => {
           const newItemList: any[] = [];
           this.destructureNestedCryptoArrays(fetchedItems.data).forEach(
@@ -78,7 +79,7 @@ export class CryptoItemsService {
       );
   }
 
-  structuringNewMetadataObject(item: any) {
+  private structuringNewMetadataObject(item: any) {
     const newObject = {
       id: item.id,
       description: item.description,
@@ -90,7 +91,7 @@ export class CryptoItemsService {
     return newObject;
   }
 
-  structuringNewCryptoPriceDetailsObject(item: any) {
+  private structuringNewCryptoPriceDetailsObject(item: any) {
     const newItem = {
       id: item.id,
       name: item.name,
@@ -118,7 +119,7 @@ export class CryptoItemsService {
     return newItem;
   }
 
-  finalCryptoObjects(): Observable<CryptoItem[]> {
+  public finalCryptoObjects(): Observable<CryptoItem[]> {
     return forkJoin(
       this.fetchingAllCryptoPriceDetails(),
       this.fetchingMetadata()
@@ -129,7 +130,7 @@ export class CryptoItemsService {
     );
   }
 
-  mergeDetailsAndMetaDataObjects(prices: any, details: any) {
+  private mergeDetailsAndMetaDataObjects(prices: any, details: any) {
     const mergedObjects: CryptoItem[] = [];
     prices.forEach((item: any) => {
       const currentDetailObject = details.find(
@@ -143,7 +144,7 @@ export class CryptoItemsService {
     return mergedObjects;
   }
 
-  formattedPrice(price: number): number | string {
+  private formattedPrice(price: number): number | string {
     if (price >= 300) {
       const item = +price.toFixed(0);
       const newItem = new Intl.NumberFormat('en-US').format(item);
@@ -161,7 +162,7 @@ export class CryptoItemsService {
     return +price;
   }
 
-  formattedPercentage(percentage: number): number | null {
+  private formattedPercentage(percentage: number): number | null {
     if (percentage >= 0.01) {
       return +percentage.toFixed(2);
     }
@@ -178,7 +179,7 @@ export class CryptoItemsService {
     return null;
   }
 
-  formattedDate(): string {
+  private formattedDate(): string {
     return new Date().toString();
   }
 }

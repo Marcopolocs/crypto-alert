@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { map, Subject } from 'rxjs';
 import { CryptoItemsService } from 'src/app/services/crypto-items.service';
 import { CryptoItem } from 'src/app/shared/crypto-item.interface';
@@ -26,7 +26,7 @@ export class CryptoDetailsComponent implements OnInit {
     });
   }
 
-  getCryptoDetails() {
+  private getCryptoDetails() {
     this.cryptoItemsService
       .finalCryptoObjects()
       .subscribe((everyCryptoItem) => {

@@ -73,7 +73,6 @@ export class HeaderComponent implements OnInit {
       )
     )
   );
-  // catchError((e) => [{ data: undefined, error: 'Cannot find crypto' }]))
 
   constructor(
     private cryptoItemsService: CryptoItemsService,

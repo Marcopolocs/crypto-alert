@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +26,7 @@ import { AlertPanelComponent } from './components/add-alert/alert-panel/alert-pa
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { AlertItemComponent } from './components/alerts/alert-item/alert-item.component';
 import { AlertPopupComponent } from './components/add-alert/alert-popup/alert-popup.component';
+import { CommonInterceptor } from './shared/common-interceptor';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,13 @@ import { AlertPopupComponent } from './components/add-alert/alert-popup/alert-po
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: CommonInterceptor,
+    //   multi: true,
+    // },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
