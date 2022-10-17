@@ -27,6 +27,7 @@ import { AlertsComponent } from './components/alerts/alerts.component';
 import { AlertItemComponent } from './components/alerts/alert-item/alert-item.component';
 import { AlertPopupComponent } from './components/add-alert/alert-popup/alert-popup.component';
 import { CommonInterceptor } from './shared/common-interceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -57,13 +58,14 @@ import { CommonInterceptor } from './shared/common-interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatSnackBarModule,
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: CommonInterceptor,
-    //   multi: true,
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CommonInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

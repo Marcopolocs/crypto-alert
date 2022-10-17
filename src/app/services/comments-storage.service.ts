@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { map, tap, catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Comment } from '../shared/comment.interface';
 
 @Injectable({
@@ -14,16 +14,19 @@ export class CommentsStorageService {
   commentsSubject$ = new BehaviorSubject<Comment[]>([]);
   constructor(private http: HttpClient) {}
 
-  fetchComments(): Observable<Comment[]> {
-    return this.http.get<any>(`${this.FB_URL_COMMENTS_LIST}.json`).pipe(
-      map((responseData) => this.updateFetchedCommentList(responseData)),
-      tap((comments) => {
-        this.commentsSubject$.next(comments);
-      })
-    );
+  fetchComments(): void {
+    this.http
+      .get<any>(`${this.FB_URL_COMMENTS_LIST}.json`)
+      .pipe(
+        map((responseData) => this.updateFetchedCommentList(responseData)),
+        tap((comments) => {
+          this.commentsSubject$.next(comments);
+        })
+      )
+      .subscribe();
   }
 
-  updateFetchedCommentList(respData: any) {
+  updateFetchedCommentList(respData: any): Comment[] {
     const newCommentArray: Comment[] = [];
     if (respData) {
       for (const [key, value] of Object.entries(respData)) {

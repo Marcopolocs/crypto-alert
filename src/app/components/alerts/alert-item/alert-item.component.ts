@@ -27,8 +27,6 @@ export class AlertItemComponent implements OnInit {
   @HostListener('window:keyup.escape', ['$event']) escapeEvent(
     event: KeyboardEvent
   ) {
-    // The target of the event is the body here!
-    // The event itself is a KeyboardEvent
     if (this.isEditMode) {
       this.isEditMode = false;
     }

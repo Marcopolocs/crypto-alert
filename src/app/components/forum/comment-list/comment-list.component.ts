@@ -14,6 +14,7 @@ export class CommentListComponent implements OnInit {
   constructor(private commentsStorageService: CommentsStorageService) {}
 
   ngOnInit(): void {
+    this.commentsStorageService.fetchComments();
     this.comments$ = this.commentsStorageService.commentsSubject$;
   }
 }
