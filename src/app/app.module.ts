@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -29,15 +28,15 @@ import { AlertsModule } from './components/alerts/alerts.module';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     CryptosModule,
     ForumModule,
-    RouterModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatSnackBarModule,
     SharedModule,
     AlertsModule,
+    RouterModule,
     AppRoutingModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {
