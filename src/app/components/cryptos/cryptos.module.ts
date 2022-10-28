@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CryptosRoutingModule } from './cryptos-routing.module';
 
@@ -16,11 +15,6 @@ import { CryptoDetailsComponent } from './crypto-details/crypto-details.componen
     CryptoDetailsComponent,
     CryptoContainerComponent,
   ],
-  imports: [
-    SharedModule,
-    ReactiveFormsModule,
-    CryptosRoutingModule,
-    BrowserAnimationsModule,
-  ],
+  imports: [SharedModule, ReactiveFormsModule, CryptosRoutingModule],
 })
 export class CryptosModule {}

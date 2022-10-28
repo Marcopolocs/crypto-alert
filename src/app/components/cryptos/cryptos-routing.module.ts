@@ -6,7 +6,7 @@ import { CryptoDetailsComponent } from './crypto-details/crypto-details.componen
 
 const cryptosRoutes: Routes = [
   {
-    path: 'all-cryptos',
+    path: '',
     component: CryptoContainerComponent,
     children: [
       { path: '', component: CryptoListitemsComponent },

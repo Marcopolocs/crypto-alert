@@ -25,10 +25,7 @@ export class CommonInterceptor implements HttpInterceptor {
         const errorString =
           'An unknown error occurred. Please try again later!';
         this.errorSnackbarService.showError(errorString);
-        return throwError(() => {
-          const err = new Error(`An error occurred`);
-          return err;
-        });
+        return throwError(() => new Error(`An error occurred`));
       })
     );
   }

@@ -13,7 +13,6 @@ import { RegisterFormComponent } from './components/auth/register-form/register-
 import { CommonInterceptor } from './shared/common-interceptor';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ForumModule } from './components/forum/forum.module';
-import { CryptosModule } from './components/cryptos/cryptos.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { AlertsModule } from './components/alerts/alerts.module';
@@ -29,7 +28,6 @@ import { AlertsModule } from './components/alerts/alerts.module';
   imports: [
     BrowserModule,
     HttpClientModule,
-    CryptosModule,
     ForumModule,
     SharedModule,
     AlertsModule,

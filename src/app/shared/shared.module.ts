@@ -8,9 +8,9 @@ import { SearchSpinnerComponent } from './search-spinner/search-spinner.componen
   declarations: [LoadingSpinnerComponent, SearchSpinnerComponent],
   imports: [CommonModule, ReactiveFormsModule],
   exports: [
+    CommonModule,
     LoadingSpinnerComponent,
     SearchSpinnerComponent,
-    CommonModule,
     ReactiveFormsModule,
   ],
 })
