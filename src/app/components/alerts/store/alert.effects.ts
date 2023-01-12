@@ -23,34 +23,33 @@ export class AlertEffects {
     return this.actions$.pipe(
       ofType(loadAlerts),
       switchMap(() => {
-        return this.alertsStorage.fetchAllAlertItemsFromDatabase().pipe(
-          map((alertItems) => this.assignFirebaseIdToItemId(alertItems)),
-          map((alerts) => loadAlertsSuccess({ alertList: alerts })),
+        return this.alertsStorage.fetchAllAlertItemsFromDatabase().pipe(          
+          map((alerts) => {
+            const updatedItem = this.assignFirebaseIdToItemId()
+            loadAlertsSuccess({ alertList: alerts })}),
           catchError((error) => of(loadAlertsFailure({ error: error })))
         );
       })
     );
   });
 
-  // createAlert$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(createAlert),
-  //     switchMap((action) => {
-  //       return this.alertsStorage
-  //         .postAlertItemInDatabase(action.alertObject)
-  //         .pipe(
-  //           map((alert) => createAlertSuccess({  })),
-  //           catchError((error) => of(createAlertFailure({ error: error })))
-  //         );
-  //     })
-  //   );
-  // });
+  createAlert$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(createAlert),
+      switchMap((action) => {
+        return this.alertsStorage
+          .postAlertItemInDatabase(action.alertObject)
+          .pipe(
+            map((alert) => {
+              const updatedItem = this.assignFirebaseIdToItemId(action.alertObject, alert)
+              return createAlertSuccess({ alertObject: updatedItem })}),
+            catchError((error) => of(createAlertFailure({ error: error })))
+          );
+      })
+    );
+  });
 
-  assignFirebaseIdToItemId(respData: { [key: string]: AlertItem }) {
-    const alertItems: AlertItem[] = [];
-    for (const key in respData) {
-      alertItems.push({ ...respData[key], id: key });
-    }
-    return alertItems;
+  assignFirebaseIdToItemId(alertItem: AlertItem, firebaseID: string) {
+    return {...alertItem, alertItem.id: firebaseID}
   }
 }
