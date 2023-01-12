@@ -15,12 +15,16 @@ export class AlertsStorageService {
   constructor(private http: HttpClient) {}
 
   postAlertItemInDatabase(alertData: AlertItem) {
-    this.http
-      .post<{ name: string }>(`${this.FB_URL}.json`, alertData)
-      .subscribe((respData) => {
-        this.updateLocalAlertsContainer(alertData, respData);
-      });
+    return this.http.post<{ name: string }>(`${this.FB_URL}.json`, alertData);
   }
+
+  // postAlertItemInDatabase(alertData: AlertItem) {
+  //   this.http
+  //     .post<{ name: string }>(`${this.FB_URL}.json`, alertData)
+  //     .subscribe((respData) => {
+  //       this.updateLocalAlertsContainer(alertData, respData);
+  //     });
+  // }
 
   updateLocalAlertsContainer(alertData: AlertItem, respData: { name: string }) {
     const addFirebaseIdToCommentObject = {
@@ -33,16 +37,20 @@ export class AlertsStorageService {
   }
 
   fetchAllAlertItemsFromDatabase() {
-    this.http
-      .get<{ [key: string]: AlertItem }>(`${this.FB_URL}.json`)
-      .pipe(
-        map((responseData) => this.assignFirebaseIdToItemId(responseData)),
-        tap((data) => {
-          this.alertsList$.next(data);
-        })
-      )
-      .subscribe();
+    return this.http.get<{ [key: string]: AlertItem }>(`${this.FB_URL}.json`);
   }
+
+  // fetchAllAlertItemsFromDatabase() {
+  //   return this.http
+  //     .get<{ [key: string]: AlertItem }>(`${this.FB_URL}.json`)
+  //     .pipe(
+  //       map((responseData) => this.assignFirebaseIdToItemId(responseData)),
+  //       tap((data) => {
+  //         this.alertsList$.next(data);
+  //       })
+  //     )
+
+  // }
 
   assignFirebaseIdToItemId(respData: { [key: string]: AlertItem }) {
     const alertItems: AlertItem[] = [];

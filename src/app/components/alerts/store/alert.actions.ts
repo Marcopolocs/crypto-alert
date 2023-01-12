@@ -15,7 +15,10 @@ export const loadAlertsFailure = createAction(
 
 /////////////////////////////
 // Actions for creating Alert
-export const createAlert = createAction('[Alerts Page] Create Alert');
+export const createAlert = createAction(
+  '[Alerts Page] Create Alert',
+  props<{ alertObject: AlertItem }>()
+);
 export const createAlertSuccess = createAction(
   '[Alerts API] Create Alert Success',
   props<{ alertObject: AlertItem }>()
