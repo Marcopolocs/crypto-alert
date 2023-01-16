@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AlertsStorageService } from 'src/app/services/alerts-storage.service';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { CryptoItemsService } from 'src/app/services/crypto-items.service';
 import { AlertItem } from 'src/app/shared/alert-item.interface';
 import { CryptoItem } from 'src/app/shared/crypto-item.interface';
+import { createAlert } from '../alerts/store/alert.actions';
 
 @Component({
   selector: 'app-add-alert-container',
@@ -19,8 +20,8 @@ export class AddAlertContainerComponent implements OnInit {
 
   constructor(
     private cryptoItemsService: CryptoItemsService,
-    private alertsStorageService: AlertsStorageService,
-    private alertsService: AlertsService
+    private alertsService: AlertsService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -31,9 +32,12 @@ export class AddAlertContainerComponent implements OnInit {
   }
 
   onPostObject(item: AlertItem) {
-    this.alertsStorageService.postAlertItemInDatabase(item);
+    this.store.dispatch(createAlert({ alertObject: item }));
+
     this.createdAlertItemPopupList.push(item);
     this.onHidePopupWindow();
+
+    // this.alertsStorageService.postAlertItemInDatabase(item);
   }
 
   onHidePopupWindow() {

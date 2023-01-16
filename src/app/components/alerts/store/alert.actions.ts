@@ -1,4 +1,4 @@
-import { createAction, props } from '@ngrx/store/src';
+import { createAction, props } from '@ngrx/store';
 import { AlertItem } from 'src/app/shared/alert-item.interface';
 
 /////////////////////////////////////////////////////

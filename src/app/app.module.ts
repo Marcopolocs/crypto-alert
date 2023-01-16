@@ -16,6 +16,10 @@ import { ForumModule } from './components/forum/forum.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { AlertsModule } from './components/alerts/alerts.module';
+import { StoreModule } from '@ngrx/store';
+import { AlertEffects } from './components/alerts/store/alert.effects';
+import { alertReducer } from './components/alerts/store/alert.reducer';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,8 @@ import { AlertsModule } from './components/alerts/alerts.module';
     AppRoutingModule,
     MatSnackBarModule,
     BrowserAnimationsModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
   ],
   providers: [
     {

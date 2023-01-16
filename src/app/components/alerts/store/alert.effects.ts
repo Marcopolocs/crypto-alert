@@ -23,15 +23,25 @@ export class AlertEffects {
     return this.actions$.pipe(
       ofType(loadAlerts),
       switchMap(() => {
-        return this.alertsStorage.fetchAllAlertItemsFromDatabase().pipe(          
+        return this.alertsStorage.fetchAllAlertItemsFromDatabase().pipe(
           map((alerts) => {
-            const updatedItem = this.assignFirebaseIdToItemId()
-            loadAlertsSuccess({ alertList: alerts })}),
+            const allAlerts = this.getAllAlertItems(alerts);
+            console.log(allAlerts);
+            return loadAlertsSuccess({ alertList: allAlerts });
+          }),
           catchError((error) => of(loadAlertsFailure({ error: error })))
         );
       })
     );
   });
+
+  getAllAlertItems(alerts: { [key: string]: AlertItem }) {
+    const list: AlertItem[] = [];
+    for (const [key, value] of Object.entries(alerts)) {
+      list.push(value);
+    }
+    return list;
+  }
 
   createAlert$ = createEffect(() => {
     return this.actions$.pipe(
@@ -41,8 +51,12 @@ export class AlertEffects {
           .postAlertItemInDatabase(action.alertObject)
           .pipe(
             map((alert) => {
-              const updatedItem = this.assignFirebaseIdToItemId(action.alertObject, alert)
-              return createAlertSuccess({ alertObject: updatedItem })}),
+              const updatedItem = this.assignFirebaseIdToItemId(
+                action.alertObject,
+                alert.name
+              );
+              return createAlertSuccess({ alertObject: updatedItem });
+            }),
             catchError((error) => of(createAlertFailure({ error: error })))
           );
       })
@@ -50,6 +64,6 @@ export class AlertEffects {
   });
 
   assignFirebaseIdToItemId(alertItem: AlertItem, firebaseID: string) {
-    return {...alertItem, alertItem.id: firebaseID}
+    return { ...alertItem, id: firebaseID };
   }
 }

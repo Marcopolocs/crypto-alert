@@ -1,5 +1,5 @@
 import { createReducer } from '@ngrx/store';
-import { on } from '@ngrx/store/src';
+import { on } from '@ngrx/store';
 import { AlertItem } from 'src/app/shared/alert-item.interface';
 import {
   createAlert,
@@ -21,13 +21,13 @@ const updateAlertFn = (alerts: AlertItem[], updatedAlertItem: AlertItem) =>
       : alert;
   });
 
-export interface State {
+export interface AlertListState {
   alertList: AlertItem[];
   error: string | null;
   status: 'loading' | 'error' | 'success' | 'not_asked';
 }
 
-export const initialState: State = {
+export const initialState: AlertListState = {
   alertList: [],
   error: null,
   status: 'not_asked',
@@ -40,9 +40,9 @@ export const alertReducer = createReducer(
     ...state,
     status: 'loading',
   })),
-  on(loadAlertsSuccess, (state) => ({
+  on(loadAlertsSuccess, (state, action) => ({
     ...state,
-    alertList: [...state.alertList],
+    alertList: [...action.alertList],
     error: null,
     status: 'success',
   })),

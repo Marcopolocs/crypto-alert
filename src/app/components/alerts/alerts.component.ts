@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store/public_api';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { AlertItem } from 'src/app/shared/alert-item.interface';
-import { deleteAlert } from './store/alert.actions';
+import { deleteAlert, loadAlerts } from './store/alert.actions';
+import { selectAllAlerts } from './store/alert.selectors';
+import { AlertState } from './store/alert.store';
 
 @Component({
   selector: 'app-alerts',
@@ -11,13 +13,15 @@ import { deleteAlert } from './store/alert.actions';
   styleUrls: ['./alerts.component.css'],
 })
 export class AlertsComponent implements OnInit {
-  alertItemList$!: Observable<AlertItem[]>;
+  alertItemList$: Observable<AlertItem[]> = this.store.select(selectAllAlerts);
 
-  constructor(private alertsService: AlertsService, private store: Store) {}
+  constructor(
+    private alertsService: AlertsService,
+    private store: Store<AlertState>
+  ) {}
 
   ngOnInit(): void {
-    this.alertsService.getAlertsList();
-    this.alertItemList$ = this.alertsService.fetchedAlertItemList$;
+    this.store.dispatch(loadAlerts());
   }
 
   editAlertObject(item: AlertItem) {
